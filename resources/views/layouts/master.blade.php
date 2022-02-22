@@ -76,7 +76,7 @@
                         <div id="settings_box" class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 absolute mt-10 -ml-32 z-10">
                             <ul class="py-1" aria-labelledby="dropdownLeftButton">
                               <li>
-                                <a href="{{ route('employees') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</a>
+                                <a href="{{ route('employees.index') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</a>
                               </li>
                               <li>
                                 <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Shfts</a>
@@ -125,7 +125,7 @@
     <!-- content -->
     <div class="bg-stone-200">
         <div class="relative">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-screen">
                 
                 @yield('content')
 

@@ -26,6 +26,14 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 /* Employee */
-Route::get('/employees', [EmployeesController::class, 'index'])->name('employees');
+Route::get('/employees', [EmployeesController::class, 'index'])->name('employees.index');
 
+Route::get('/employees/create', [EmployeesController::class, 'create'])->name('employees.create');
 
+Route::post('/employees/store', [EmployeesController::class, 'store'])->name('employees.store');
+
+Route::delete('/employees/destroy/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
+
+Route::get('/employees/edit/{employee}', [EmployeesController::class, 'edit'])->name('employees.edit');
+
+Route::post('/employees/update/{user}', [EmployeesController::class, 'update'])->name('employees.update');
