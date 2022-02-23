@@ -1,16 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeesController;
-<<<<<<< HEAD
 use App\Http\Controllers\ShiftsController;
-=======
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\SupervisorsController;
 
->>>>>>> 3ada91cdbcaa5e8db45bac726cc1acc921d76c2c
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +42,6 @@ Route::post('/employees/update/{user}', [EmployeesController::class, 'update'])-
 Route::delete('/employees/destroy/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
 
 
-<<<<<<< HEAD
-
 /* Shift */
 
 Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
@@ -61,7 +55,7 @@ Route::get('/shifts/edit/{shift}', [ShiftsController::class, 'edit'])->name('shi
 Route::post('/shifts/update/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
 
 Route::delete('/shifts/destroy/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
-=======
+
 /* Clients */
 Route::get('/clients', [ClientsController::class, 'index'])->name('clients');
 
@@ -75,7 +69,7 @@ Route::post('/clients/update/{user}', [ClientsController::class, 'update'])->nam
 
 Route::delete('/clients/destroy/{client}', [ClientsController::class, 'destroy'])->name('clients.destroy');
 
-<<<<<<< HEAD
+
 
 /* Supervisors */
 Route::get('/supervisors', [SupervisorsController::class, 'index'])->name('supervisors');
@@ -90,6 +84,3 @@ Route::post('/supervisors/update/{user}', [SupervisorsController::class, 'update
 
 Route::delete('/supervisors/destroy/{supervisor}', [SupervisorsController::class, 'destroy'])->name('supervisors.destroy');
 
-=======
->>>>>>> 3ada91cdbcaa5e8db45bac726cc1acc921d76c2c
->>>>>>> ef703cacb9207afdeceddfc30ddd36cd45049353
