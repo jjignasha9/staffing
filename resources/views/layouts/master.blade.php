@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
     <title>Dashboard</title>
 </head>
 
-<body>
+<body class="bg-stone-200">
     <!-- header section -->
     <div class="relative bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -76,19 +76,13 @@
                         <div id="settings_box" class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 absolute mt-10 -ml-32 z-10">
                             <ul class="py-1" aria-labelledby="dropdownLeftButton">
                               <li>
-                                <a href="{{ route('employees.index') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</a>
+                                <a href="{{ route('employees') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</a>
+                              </li>
+                              <li>
+                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Clients</a>
                               </li>
                               <li>
                                 <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Shfts</a>
-                              </li>
-                              <li>
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Checkque</a>
-                              </li>
-                              <li>
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Quickbooks</a>
-                              </li>
-                              <li>
-                                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">clean Data</a>
                               </li>
                             </ul>
                         </div>
@@ -126,6 +120,52 @@
     <div class="bg-stone-200">
         <div class="relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 h-screen">
+
+                <div class="flex mt-5 items-center gap-2">
+                    <span>
+                        <a href="/home">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                        </a>
+                    </span> 
+
+                    @if(Request::segment(1) && Request::segment(1) != 'home') 
+
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+
+                        <span class="text-gray-600 font-semibold">
+                            <a href="{{ route(Request::segment(1)) }}" class="capitalize">
+                                {{ Request::segment(1) }}
+                            </a>
+                        </span>
+
+                    @endif
+
+                    @if(Request::segment(2)) 
+
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+
+                        <span class="text-gray-600 font-semibold">
+                            @if (Request::segment(2) == 'create')
+                                Add 
+                            @elseif (Request::segment(2) == 'edit')
+                                Update
+                            @endif
+                        </span>
+
+                    @endif
+
+                </div>
+                
                 
                 @yield('content')
 
@@ -168,6 +208,67 @@
             }
         });
 
+        // when delete any record
+        $(".delete").click(function(){
+
+            let token = $(this).attr('token');
+            let url = $(this).attr('route') + $(this).attr('id');
+
+            swal({
+              title: "Are you sure?", 
+              text: "You want to delete this record.", 
+              type: "warning",
+              confirmButtonText: "Yes, Delete It!",
+              showCancelButton: true
+            })
+            .then((result) => {
+              if (result.value) {
+
+                  $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: { 
+                      "_token": token, 
+                      "_method": 'DELETE' 
+                    }
+                  }).done(function( response ) {
+
+                    swal(
+                      'Success', 
+                      response.message, 
+                      'success'
+                    ).then((result) => {
+                      if (result.value) {
+                        window.location.reload();
+                      }
+                    });
+
+                  });
+                
+              } else if (result.dismiss === 'cancel') {    
+                swal(
+                  'Cancelled',
+                  'Your data is safe :)',
+                  'error'
+                )
+              }
+            })
+        });
 
     });
 </script>
+
+@if(session()->has('message'))
+
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+
+      let msg = "{{ session()->get('message') }}";
+        swal('Success', msg, 'success');
+      });
+    </script>
+
+@endif
+
+@stack('scripts')

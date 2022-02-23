@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeesController extends Controller
 {
@@ -27,9 +28,9 @@ class EmployeesController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required', 
+            'email' => 'required|unique:users,email', 
             'address' => 'required',           
-            'password' => 'required'           
+                    
         ]);
 
         $role = Role::where('name', 'employee')->first();
@@ -38,12 +39,12 @@ class EmployeesController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->address = $request->address;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->role = $role->id;
 
         $user->save();
 
-        return redirect()->route('employees.index')->with('success','Employee has been created successfully.');
+        return redirect()->route('employees')->with('message', 'Employee added successfully!');
     }
 
     public function edit(User $employee)
@@ -55,24 +56,27 @@ class EmployeesController extends Controller
     {
        $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users,email,'.$id,
             'address' => 'required',           
-            'password' => 'required'  
         ]);
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->address = $request->address;
-        $user->password = $request->password;
         $user->save();
-        return redirect()->route('employees.index')
-        ->with('success','Employee Has Been updated successfully');
+        
+        return redirect()->route('employees')->with('message', 'Employee updated successfully!');
+        
     }
 
     public function destroy(User $employee)
     {
 
-         $employee->delete();
-         return redirect()->route('employees.index')->with('delete','Employee has been deleted successfully.');
+        $employee->delete();
+
+        return response([
+            'status' => 'success',
+            'message' => 'Employee deleted successfully!'
+        ], 200);
     }
 }
