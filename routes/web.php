@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\ShiftsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +40,17 @@ Route::post('/employees/update/{user}', [EmployeesController::class, 'update'])-
 Route::delete('/employees/destroy/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
 
 
-/* Clients */
+
+/* Shift */
+
+Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
+
+Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
+
+Route::post('/shifts/store', [ShiftsController::class, 'store'])->name('shifts.store');
+
+Route::get('/shifts/edit/{shift}', [ShiftsController::class, 'edit'])->name('shifts.edit');
+
+Route::post('/shifts/update/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
+
+Route::delete('/shifts/destroy/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');

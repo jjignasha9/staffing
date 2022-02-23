@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\UserSeeder;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\ShiftSeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             RoleSeeder::class,
+            ShiftSeeder::class,
         ]);
     }
 }
