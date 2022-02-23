@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeesController;
+<<<<<<< HEAD
 use App\Http\Controllers\ShiftsController;
+=======
+use App\Http\Controllers\ClientsController;
+
+>>>>>>> 3ada91cdbcaa5e8db45bac726cc1acc921d76c2c
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +45,7 @@ Route::post('/employees/update/{user}', [EmployeesController::class, 'update'])-
 Route::delete('/employees/destroy/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
 
 
+<<<<<<< HEAD
 
 /* Shift */
 
@@ -54,3 +60,18 @@ Route::get('/shifts/edit/{shift}', [ShiftsController::class, 'edit'])->name('shi
 Route::post('/shifts/update/{shift}', [ShiftsController::class, 'update'])->name('shifts.update');
 
 Route::delete('/shifts/destroy/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
+=======
+/* Clients */
+Route::get('/clients', [ClientsController::class, 'index'])->name('clients');
+
+Route::get('/clients/create', [ClientsController::class, 'create'])->name('clients.create');
+
+Route::post('/clients/store', [ClientsController::class, 'store'])->name('clients.store');
+
+Route::get('/clients/edit/{client}', [ClientsController::class, 'edit'])->name('clients.edit');
+
+Route::post('/clients/update/{user}', [ClientsController::class, 'update'])->name('clients.update');
+
+Route::delete('/clients/destroy/{client}', [ClientsController::class, 'destroy'])->name('clients.destroy');
+
+>>>>>>> 3ada91cdbcaa5e8db45bac726cc1acc921d76c2c
