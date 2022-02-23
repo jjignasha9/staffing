@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\SupervisorsController;
 
 
 /*
@@ -53,4 +54,18 @@ Route::get('/clients/edit/{client}', [ClientsController::class, 'edit'])->name('
 Route::post('/clients/update/{user}', [ClientsController::class, 'update'])->name('clients.update');
 
 Route::delete('/clients/destroy/{client}', [ClientsController::class, 'destroy'])->name('clients.destroy');
+
+
+/* Supervisors */
+Route::get('/supervisors', [SupervisorsController::class, 'index'])->name('supervisors');
+
+Route::get('/supervisors/create', [SupervisorsController::class, 'create'])->name('supervisors.create');
+
+Route::post('/supervisors/store', [SupervisorsController::class, 'store'])->name('supervisors.store');
+
+Route::get('/supervisors/edit/{supervisor}', [SupervisorsController::class, 'edit'])->name('supervisors.edit');
+
+Route::post('/supervisors/update/{user}', [SupervisorsController::class, 'update'])->name('supervisors.update');
+
+Route::delete('/supervisors/destroy/{supervisor}', [SupervisorsController::class, 'destroy'])->name('supervisors.destroy');
 

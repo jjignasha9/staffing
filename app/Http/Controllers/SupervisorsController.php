@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Models\Supervisor;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class ClientsController extends Controller
+class SupervisorsController extends Controller
 {
     public function index()
     {
-        $clients = User::where('role', '3')->get();
-        return view('clients.index', compact('clients'));
+        $supervisors = User::where('role', '4')->get();
     }
 
     public function create()
     { 
-      $clients = User::orderby('id','asc')->get();
+      $supervisors = User::orderby('id','asc')->get();
      
-        return view('clients.create', compact('clients'));
+        return view('supervisors.create', compact('supervisors'));
     }
 
     public function store(Request $request)
@@ -33,7 +30,7 @@ class ClientsController extends Controller
                     
         ]);
 
-        $role = Role::where('name', 'client')->first();
+        $role = Role::where('name', 'supervisor')->first();
 
         $user = new User;
         $user->name = $request->name;
@@ -44,13 +41,12 @@ class ClientsController extends Controller
 
         $user->save();
 
-        return redirect()->route('clients')->with('message', 'Client added successfully!');
+
     }
 
-    public function edit(User $client)
+    public function edit(User $supervisor)
     {
-          $supervisors = User::where('role', '4')->get();
-          return view('clients.edit',compact(['client', 'supervisors']));
+         return view('supervisors.edit',compact('supervisor'));
     }
 
     public function update(Request $request, $id)
@@ -66,18 +62,18 @@ class ClientsController extends Controller
         $user->address = $request->address;
         $user->save();
         
-        return redirect()->route('clients')->with('message', 'Client updated successfully!');
+        return redirect()->route('supervisors')->with('message', 'Supervisor updated successfully!');
         
     }
 
-    public function destroy(User $client)
+    public function destroy(User $supervisor)
     {
 
-        $client->delete();
+        $supervisor->delete();
 
         return response([
             'status' => 'success',
-            'message' => 'Client deleted successfully!'
+            'message' => 'Supervisor deleted successfully!'
         ], 200);
     }
 }
