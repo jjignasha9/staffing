@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\ClientsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +42,15 @@ Route::delete('/employees/destroy/{employee}', [EmployeesController::class, 'des
 
 
 /* Clients */
+Route::get('/clients', [ClientsController::class, 'index'])->name('clients');
+
+Route::get('/clients/create', [ClientsController::class, 'create'])->name('clients.create');
+
+Route::post('/clients/store', [ClientsController::class, 'store'])->name('clients.store');
+
+Route::get('/clients/edit/{client}', [ClientsController::class, 'edit'])->name('clients.edit');
+
+Route::post('/clients/update/{user}', [ClientsController::class, 'update'])->name('clients.update');
+
+Route::delete('/clients/destroy/{client}', [ClientsController::class, 'destroy'])->name('clients.destroy');
+
