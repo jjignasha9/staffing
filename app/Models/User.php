@@ -58,4 +58,5 @@ class User extends Authenticatable
         return $this->hasMany(ClientSupervisor::class, 'client_id', 'id');
     }
 
+   
 }

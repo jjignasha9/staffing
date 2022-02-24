@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\SupervisorsController;
+use App\Http\Controllers\RatesController;
 
 
 /*
@@ -44,7 +45,6 @@ Route::delete('/employees/destroy/{employee}', [EmployeesController::class, 'des
 
 
 /* Shift */
-
 Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
 
 Route::get('/shifts/create', [ShiftsController::class, 'create'])->name('shifts.create');
@@ -72,7 +72,6 @@ Route::post('/clients/update/{user}', [ClientsController::class, 'update'])->nam
 Route::delete('/clients/destroy/{client}', [ClientsController::class, 'destroy'])->name('clients.destroy');
 
 
-
 /* Supervisors */
 Route::get('/supervisors', [SupervisorsController::class, 'index'])->name('supervisors');
 
@@ -85,4 +84,20 @@ Route::get('/supervisors/edit/{supervisor}', [SupervisorsController::class, 'edi
 Route::post('/supervisors/update/{user}', [SupervisorsController::class, 'update'])->name('supervisors.update');
 
 Route::delete('/supervisors/destroy/{supervisor}', [SupervisorsController::class, 'destroy'])->name('supervisors.destroy');
+
+
+/* Rates */
+Route::get('/rates', [RatesController::class, 'index'])->name('rates');
+
+Route::get('/rates/create', [RatesController::class, 'create'])->name('rates.create');
+
+Route::post('/rates/store', [RatesController::class, 'store'])->name('rates.store');
+
+Route::get('/rates/edit/{rate}', [RatesController::class, 'edit'])->name('rates.edit');
+
+Route::post('/rates/update/{rate}', [RatesController::class, 'update'])->name('rates.update');
+
+Route::delete('/rates/destroy/{rate}', [RatesController::class, 'destroy'])->name('rates.destroy');
+
+
 

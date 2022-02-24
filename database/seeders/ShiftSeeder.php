@@ -15,20 +15,20 @@ class ShiftSeeder extends Seeder
      */
     public function run()
     {
-        $shifts = [
+        $name = [
             [
-                'shifts' => 'regular',              
+                'name' => 'regular',              
             ], [
-                'shifts' => '1st shift',
+                'name' => '1st shift',
             ], [
-                'shifts' => '2nd shift',
+                'name' => '2nd shift',
             ],  [
-                'shifts' => '3rd shift',
+                'name' => '3rd shift',
             ], [
-                'shifts' => 'we shift',
+                'name' => 'we shift',
             ]
         ];
 
-        Shift::insert($shifts);
+        Shift::insert($name);
     }
 }
