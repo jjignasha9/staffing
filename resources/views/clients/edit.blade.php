@@ -38,7 +38,7 @@
 
 <div class="mt-5">
     <div class="flex items-center justify-end mb-5">
-        <a href="{{ route('supervisors.create') }}" class="bg-blue-400 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-600">Add Supervisor</a>
+        <a href="{{ route('supervisors.create', $client->id) }}" class="bg-blue-400 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-600">Add Supervisor</a>
     </div>
 
     <div class="flex flex-col">

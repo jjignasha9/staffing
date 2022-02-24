@@ -49,8 +49,12 @@ class ClientsController extends Controller
 
     public function edit(User $client)
     {
-          $supervisors = User::where('role', '4')->get();
-          return view('clients.edit',compact(['client', 'supervisors']));
+
+        $supervisor_ids = $client->supervisors->pluck('supervisor_id');
+
+        $supervisors = User::where('role', '4')->whereIn('id', $supervisor_ids)->get();
+
+        return view('clients.edit',compact(['client', 'supervisors']));
     }
 
     public function update(Request $request, $id)

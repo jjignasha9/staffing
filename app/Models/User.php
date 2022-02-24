@@ -48,4 +48,14 @@ class User extends Authenticatable
     }
 
 
+    public function client()
+    {
+        return $this->hasOne(ClientSupervisor::class, 'supervisor_id', 'id');
+    }
+
+    public function supervisors()
+    {
+        return $this->hasMany(ClientSupervisor::class, 'client_id', 'id');
+    }
+
 }

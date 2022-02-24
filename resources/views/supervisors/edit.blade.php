@@ -1,8 +1,8 @@
-<!-- @extends('layouts.master')
+@extends('layouts.master')
 
 @section('content')
 <div class="p-10 mt-5 bg-white rounded-lg">
-	<form action="{{ route('supervisors.update',$supervisor->id) }}" method="POST">
+	<form action="{{ route('supervisors.update', $supervisor->id) }}" method="POST">
 		@csrf  
 	  	<div class="font-bold">
 	    	<label class="ml-5 text-gray-600">Name</label>
@@ -29,10 +29,10 @@
 	    </div>
 
     	<div class="mt-5">
-			<a href="{{ route('supervisors') }}" class="bg-white border-2 border-black py-2 px-8 text-black font-semibold font-medium rounded-full hover:bg-black hover:text-white mr-5">Cancel</a> 
+			<a href="{{ route('clients.edit', $supervisor->client->client_id) }}" class="bg-white border-2 border-black py-2 px-8 text-black font-semibold font-medium rounded-full hover:bg-black hover:text-white mr-5">Cancel</a> 
 
 			<button class="bg-blue-400 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-600">Update</button> 
     	</div>
     </form>
 </div>
-@endsection -->
+@endsection

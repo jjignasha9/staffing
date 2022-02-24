@@ -17,15 +17,15 @@ class ShiftSeeder extends Seeder
     {
         $shifts = [
             [
-                'shifts' => 'First shift',              
+                'shifts' => 'regular',              
             ], [
-                'shifts' => 'Second shift',
+                'shifts' => '1st shift',
             ], [
-                'shifts' => 'Third shift',
+                'shifts' => '2nd shift',
             ],  [
-                'shifts' => 'Forth shift',
+                'shifts' => '3rd shift',
             ], [
-                'shifts' => 'Weekend shift',
+                'shifts' => 'we shift',
             ]
         ];
 

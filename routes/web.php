@@ -28,6 +28,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+
 /* Employee */
 Route::get('/employees', [EmployeesController::class, 'index'])->name('employees');
 
@@ -56,6 +57,7 @@ Route::post('/shifts/update/{shift}', [ShiftsController::class, 'update'])->name
 
 Route::delete('/shifts/destroy/{shift}', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
 
+
 /* Clients */
 Route::get('/clients', [ClientsController::class, 'index'])->name('clients');
 
@@ -74,7 +76,7 @@ Route::delete('/clients/destroy/{client}', [ClientsController::class, 'destroy']
 /* Supervisors */
 Route::get('/supervisors', [SupervisorsController::class, 'index'])->name('supervisors');
 
-Route::get('/supervisors/create', [SupervisorsController::class, 'create'])->name('supervisors.create');
+Route::get('/supervisors/create/{client_id}', [SupervisorsController::class, 'create'])->name('supervisors.create');
 
 Route::post('/supervisors/store', [SupervisorsController::class, 'store'])->name('supervisors.store');
 
