@@ -20,12 +20,12 @@ class ShiftsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'shifts' => 'required',            
+            'name' => 'required',            
         ]);
 
       
         $shift = new Shift;
-        $shift->shifts = $request->shifts;
+        $shift->name = $request->name;
         $shift->save();
 
         return redirect()->route('shifts')->with('message', 'Shift added successfully!');
@@ -39,11 +39,11 @@ class ShiftsController extends Controller
     public function update(Request $request, $id)
     {
        $request->validate([
-            'shifts' => 'required',
+            'name' => 'required',
                        
         ]);
         $shift = Shift::find($id);
-        $shift->shifts = $request->shifts;
+        $shift->name = $request->name;
         $shift->save();
         
         return redirect()->route('shifts')->with('message', 'Shift updated successfully!');
