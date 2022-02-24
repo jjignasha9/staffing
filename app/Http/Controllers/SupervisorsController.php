@@ -46,7 +46,7 @@ class SupervisorsController extends Controller
         $client_supervisor->supervisor_id = $supervisor->id;
         $client_supervisor->save();
 
-        return redirect()->route('clients.edit', $request->client_id)->with('message', 'Supervisor updated successfully!');
+        return redirect()->route('clients.edit', $request->client_id)->with('message', 'Supervisor added successfully!');
 
     }
 
