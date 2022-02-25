@@ -7,6 +7,7 @@ use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\SupervisorsController;
 use App\Http\Controllers\RatesController;
+use App\Http\Controllers\TimesheetsController;
 
 
 /*
@@ -98,6 +99,20 @@ Route::get('/rates/edit/{rate}', [RatesController::class, 'edit'])->name('rates.
 Route::post('/rates/update/{rate}', [RatesController::class, 'update'])->name('rates.update');
 
 Route::delete('/rates/destroy/{rate}', [RatesController::class, 'destroy'])->name('rates.destroy');
+
+
+/* Timesheet */
+Route::get('/timesheets', [TimesheetsController::class, 'index'])->name('timesheets');
+
+Route::get('/timesheets/create', [TimesheetsController::class, 'create'])->name('timesheets.create');
+
+Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store');
+
+Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
+
+Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
+
+Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 
 
 
