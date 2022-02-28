@@ -104,7 +104,7 @@ Route::delete('/rates/destroy/{rate}', [RatesController::class, 'destroy'])->nam
 /* Timesheet */
 Route::get('/timesheets', [TimesheetsController::class, 'index'])->name('timesheets');
 
-Route::get('/timesheets/create', [TimesheetsController::class, 'create'])->name('timesheets.create');
+Route::get('/timesheets/create/{weekend?}', [TimesheetsController::class, 'create'])->name('timesheets.create');
 
 Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store');
 
