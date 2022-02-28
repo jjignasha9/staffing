@@ -11,4 +11,9 @@ class TimesheetsController extends Controller
         return view('timesheets.index');
     }
 
+    public function create()
+    {
+        return view('timesheets.create');
+    }
+
 }

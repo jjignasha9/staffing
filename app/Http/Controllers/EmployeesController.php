@@ -19,9 +19,7 @@ class EmployeesController extends Controller
 
     public function create()
     { 
-      $employees = User::orderby('id','asc')->get();
-     
-        return view('employees.create', compact('employees'));
+        return view('employees.create');
     }
 
     public function store(Request $request)
