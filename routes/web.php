@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\ClientsController;
-use App\Http\Controllers\SupervisorsController;
+use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RatesController;
+use App\Http\Controllers\ShiftsController;
+use App\Http\Controllers\SupervisorsController;
 use App\Http\Controllers\TimesheetsController;
+use App\Http\Controllers\WorkdaysController;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -107,12 +108,26 @@ Route::get('/timesheets', [TimesheetsController::class, 'index'])->name('timeshe
 Route::get('/timesheets/create/{weekend?}', [TimesheetsController::class, 'create'])->name('timesheets.create');
 
 Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store');
-
+    
 Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
 
 Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
 
 Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
+
+
+/* Workdays */
+Route::get('/workdays', [WorkdaysController::class, 'index'])->name('workdays');
+
+Route::get('/workdays/create', [WorkdaysController::class, 'create'])->name('workdays.create');
+
+Route::post('/workdays/store', [WorkdaysController::class, 'store'])->name('workdays.store');
+
+Route::get('/workdays/edit/{timesheet}', [WorkdaysController::class, 'edit'])->name('workdays.edit');
+
+Route::post('/workdays/update/{timesheet}', [WorkdaysController::class, 'update'])->name('workdays.update');
+
+Route::delete('/workdays/destroy/{timesheet}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
 
 
 

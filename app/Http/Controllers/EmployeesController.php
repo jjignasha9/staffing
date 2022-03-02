@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientEmployee;
 use App\Models\Employee;
+use App\Models\EmployeeClient;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +21,8 @@ class EmployeesController extends Controller
 
     public function create()
     { 
-        return view('employees.create');
+        $clients = User::where('role', '3')->get();
+        return view('employees.create',compact('clients'));
     }
 
     public function store(Request $request)
@@ -33,21 +36,26 @@ class EmployeesController extends Controller
 
         $role = Role::where('name', 'employee')->first();
 
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->password = Hash::make($request->password);
-        $user->role = $role->id;
+        $employee = new User;
+        $employee->name = $request->name;
+        $employee->email = $request->email;
+        $employee->address = $request->address;
+        $employee->password = Hash::make($request->password);
+        $employee->role = $role->id;
+        $employee->save();
 
-        $user->save();
+        $client_employee = new ClientEmployee;
+        $client_employee->client_id = $request->client_id; 
+        $client_employee->employee_id = $employee->id; 
+        $client_employee->save();
 
         return redirect()->route('employees')->with('message', 'Employee added successfully!');
     }
 
     public function edit(User $employee)
     {
-         return view('employees.edit',compact('employee'));
+        $clients = User::where('role', '3')->get();
+        return view('employees.edit',compact(['employee','clients']));
     }
 
     public function update(Request $request, $id)
@@ -57,11 +65,17 @@ class EmployeesController extends Controller
             'email' => 'required|unique:users,email,'.$id,
             'address' => 'required',           
         ]);
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->save();
+
+        $employee = User::find($id);
+        $employee->name = $request->name;
+        $employee->email = $request->email;
+        $employee->address = $request->address;
+        $employee->save();
+
+        $client_employee = ClientEmployee::where('employee_id', $id)->first();
+        $client_employee->client_id = $request->client_id; 
+        $client_employee->employee_id = $id; 
+        $client_employee->save();
         
         return redirect()->route('employees')->with('message', 'Employee updated successfully!');
         

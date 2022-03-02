@@ -7,13 +7,8 @@
         <div class="relative">
             <div class=" align-middle inline-block min-w-full">
                 <div class="flex justify-between items-center mt-4">
-                    <div class="border border-gray-300 w-1/5 rounded-lg">
-                        <select class="w-full p-3 rounded-lg shadow-sm" name="">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                        </select>
+                    <div class="w-1/5 rounded-lg bg-white p-3 border border-gray-300">
+                       Client Name: {{ Auth::user()->client_by_employee->client->name }}
                     </div>
                     <div class="flex border border-gray-300 rounded-lg shadow-sm">
                         <nav class="inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
@@ -78,7 +73,7 @@
 
                                 @foreach($weekdays as $day)
 
-                                <tr class="p-3 add-workday">
+                                <tr class="p-3 add-workday cursor-pointer hover:bg-gray-100" date="{{ $day['date'] }}">
                                     <td class="py-4 whitespace-nowrap">
                                         <div class="flex items-center">
 
@@ -88,16 +83,16 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class=" text-md text-gray-900 text-left tracking-wider">9:30 Am</div>
+                                        <div class=" text-md text-gray-900 text-left tracking-wider">{{ $day['workday'] ? Carbon\carbon::parse($day['workday']['in_time'])->format('H:i A') : '' }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-md text-gray-900 text-left tracking-wider">9:30 Am</div>
+                                        <div class=" text-md text-gray-900 text-left tracking-wider">{{ $day['workday'] ? Carbon\carbon::parse($day['workday']['out_time'])->format('H:i A') : '' }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-md text-gray-900 text-left tracking-wider">9:30 Am</div>
+                                        <div class=" text-md text-gray-900 text-left tracking-wider">{{ $day['workday'] && $day['workday']['break'] > 0 ? $day['workday']['break'] : '' }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-left">
-                                        <div class="text-md text-gray-900 tracking-wider">9:30 Am</div>
+                                        {{ $day['workday'] && $day['workday']['total_hours'] > 0 ? $day['workday']['total_hours'] : '' }}
                                     </td>
                                 </tr>
                                 
@@ -147,7 +142,12 @@
 
 
             <div class="px-10 py-5 bg-white rounded-lg shadow-2xl">
-                <form action="" method="">
+                <form action="{{ route('workdays.store') }}" method="POST">
+                    @csrf
+
+
+                    <input type="hidden" name="day_weekend" value="{{ $weekend }}">
+                    <input type="hidden" name="date" class="workday-date">
 
                     <div>
                         <div class="flex justify-end">
@@ -161,8 +161,8 @@
                             <center><h1 class="mb-5 text-xl font-semibold text-gray-600">Tue 03/01 - Elon Musk</h1></center>
 
                             <div class="flex my-3">
-                                <label>Start time</label>
-                                <select name="starttime" class="w-48 ml-5 p-1 border border-gray-400 outline-none rounded-lg">
+                                <label>In time</label>
+                                <select name="in_time" class="w-48 ml-5 p-1 border border-gray-400 outline-none rounded-lg">
                                     <option value="00:00">00:00</option>
                                     <option value="00:30">00:30</option>
                                     <option value="01:00">01:00</option>
@@ -215,8 +215,8 @@
                             </div>
 
                             <div class="flex my-3">
-                                <label>End time</label>
-                                <select name="endtime" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg">
+                                <label>Out time</label>
+                                <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg">
                                     <option value="00:00">00:00</option>
                                     <option value="00:30">00:30</option>
                                     <option value="01:00">01:00</option>
@@ -270,14 +270,26 @@
 
                             <div class="flex my-3">
                                 <label>Break time</label>
-                                <select name="breaktime" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
-                                    <option value="00:00">00:00</option>
-                                    <option value="00:30">00:30</option>
-                                    <option value="01:00">01:00</option>
-                                    <option value="01:30">01:30</option>
-                                    <option value="02:00">02:00</option>
-                                    <option value="02:30">02:30</option>
-                                    <option value="03:00">03:00</option>
+                                <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
+                                    <option value="0">00:00</option>
+                                    <option value="0.50">00:30</option>
+                                    <option value="01">01:00</option>
+                                    <option value="01.50">01:30</option>
+                                    <option value="02">02:00</option>
+                                    <option value="02.50">02:30</option>
+                                    <option value="03">03:00</option>
+                                </select>              
+                            </div>
+
+                            <div class="flex my-3">
+                                <label>Shift</label>
+                                <select name="shift_id" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
+                                    <option>Select</option>
+
+                                    @foreach($shifts as $shift)
+                                        <option value="{{ $shift->id }}">{{ $shift->name }}</option>
+                                    @endforeach
+                                    
                                 </select>              
                             </div>
 
@@ -286,12 +298,23 @@
                                 <div class="font-bold">8 hrs</div>
                             </div>
 
+                            <div class="flex justify-between mt-5">
+                                <label>Supervisor</label>
+                                <select name="supervisor_id" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
+                                    <option>Select</option>
+
+                                    @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
+                                        <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
+                                    @endforeach
+                                </select>              
+                            </div> 
+
                             <div>
-                                <textarea type="text" placeholder="you can comment here" class="bg-gray-100 outline-none font-semibold mt-5 w-full px-3 py-1 border border-gray-400 rounded-lg"></textarea>
+                                <textarea type="text" name="comment" placeholder="you can comment here" class="bg-gray-100 outline-none font-semibold mt-5 w-full px-3 py-1 border border-gray-400 rounded-lg"></textarea>
                             </div>
 
                             <div class="flex justify-center"> 
-                                <button class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Create</button>
+                                <button type="submit" class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Create</button>
                             </div>
                         </div>
                     </div>
@@ -318,6 +341,11 @@ $(document).ready(function() {
     var active_week = "{{ $temp_weekend }}";
 
     $('.add-workday').click(function() {
+        
+        var date = $(this).attr('date');
+
+        $('.workday-date').val(date);
+
         $('.workday').show();
     });
 
@@ -329,8 +357,9 @@ $(document).ready(function() {
 
         let week = $(this).attr('week');
 
-        console.log(week);
         console.log(active_week);
+        console.log(week);
+        
 
         let url = "{{ route('timesheets.create') }}"
 
@@ -380,6 +409,7 @@ $(document).ready(function() {
             window.location.href = url;
             
         }
+        console.log(week);
 
 
 

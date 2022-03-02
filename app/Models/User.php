@@ -58,5 +58,9 @@ class User extends Authenticatable
         return $this->hasMany(ClientSupervisor::class, 'client_id', 'id');
     }
 
+     public function client_by_employee()
+    {
+        return $this->belongsTo(ClientEmployee::class, 'id', 'employee_id');
+    }
    
 }
