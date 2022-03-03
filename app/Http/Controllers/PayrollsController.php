@@ -13,7 +13,7 @@ class PayrollsController extends Controller
      */
     public function index()
     {
-        //
+        return view('payrolls.index');
     }
 
     /**
