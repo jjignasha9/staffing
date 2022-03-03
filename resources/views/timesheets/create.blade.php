@@ -74,7 +74,7 @@
 
                                 @foreach($weekdays as $day)
 
-                                <tr class="p-3 add-workday cursor-pointer hover:bg-gray-100" date="{{ $day['date'] }}" id="{{ $day['workday'] ? $day['workday']['id'] : '' }}">
+                                <tr class="p-3 add-workday cursor-pointer hover:bg-gray-100" date="{{ $day['date'] }}" day="{{ $day['name'] }}" id="{{ $day['workday'] ? $day['workday']['id'] : '' }}">
                                     <td class="py-4 whitespace-nowrap">
                                         <div class="flex items-center">
 
@@ -160,14 +160,13 @@
                         </div>
                         <div>
                             <center><h1 class="mb-5 text-xl font-semibold text-gray-600">
-                                @foreach($weekdays as $day)
-                                    {{ $day['name'] . ' ' . $day['date'] }}
-                                @endforeach    
+                               
+                                 <span id="workday_heading_date"></span>   
                                  - {{ Auth::user()->client_by_employee->client->name }}</h1></center>
 
                             <div class="flex my-3">
                                 <label>In time</label>
-                                <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg cal_in_time" id="update_in_time">
+                                <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
                                     <option value="">Select</option>
                                     <option value="00:00:00">00:00</option>
                                     <option value="00:30:00">00:30</option>
@@ -222,7 +221,7 @@
 
                             <div class="flex my-3">
                                 <label>Out time</label>
-                                <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg cal_out_time" id="update_out_time">
+                                <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_out_time">
                                      <option value="">Select</option>
                                     <option value="00:00:00">00:00</option>
                                     <option value="00:30:00">00:30</option>
@@ -277,7 +276,7 @@
 
                             <div class="flex my-3">
                                 <label>Break time</label>
-                                <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg cal_break" id="update_break" >
+                                <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
                                      <option value="">Select</option>
                                     <option value="0">00:00</option>
                                     <option value="0.5">00:30</option>
@@ -303,7 +302,7 @@
 
                             <div class="flex justify-between">
                                 <div class="font-bold">Total</div>
-                                <div class="font-bold answer">8 hrs</div>
+                                <div class="font-bold" id="total_hours"></div>
                             </div>
 
                             <!-- <div class="flex justify-between mt-5">
@@ -343,7 +342,11 @@
 
 @push('scripts')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script type="text/javascript">
+
+
 $(document).ready(function() {
 
     var active_week = "{{ $temp_weekend }}";
@@ -351,9 +354,10 @@ $(document).ready(function() {
     $('.add-workday').click(function() {
         
         var date = $(this).attr('date');
+        var day = $(this).attr('day');
         var id = $(this).attr('id');
         var url = "/workdays/show/" + id;
-        
+        $('#workday_heading_date').text(day + ' ' + date);
         if (id) {
             $.ajax({
                 method:"GET",
@@ -364,7 +368,9 @@ $(document).ready(function() {
                 $('#update_in_time').val(data.in_time);
                 $('#update_out_time').val(data.out_time);
                 $('#update_break').val(data.break);
+                $('#total_hours').text(data.total_hours + ' hrs');
             }); 
+
             $('#workday_form').attr('action', '/workdays/update/' + id);
 
         } else {
@@ -375,20 +381,7 @@ $(document).ready(function() {
             $('#update_break').val('');
 
             $('#workday_form').attr('action', "{{ route('workdays.store') }}");
-
         }
-         var in_time=parseInt($(".cal_in_time").val());    
-         var out_time=parseInt($(".cal_out_time").val());   
-
-       if(data.in_time == $(this).parseInt($(".cal_in_time").val()))
-       {
-          {{ 1 }}
-       }
-
-
-         
-        console.log(in_time);
-        console.log(out_time);
 
         $('.workday-date').val(date);
 
@@ -403,62 +396,51 @@ $(document).ready(function() {
 
         let week = $(this).attr('week');
 
-        console.log(active_week);
-        console.log(week);
-        
-
         let url = "{{ route('timesheets.create') }}"
 
         if (week == 'next') {
-
             var counter = parseInt(active_week) + 1;
-
-
             window.location.href = url + '/' + counter;
-
         }
 
 
         if (week == 'previous') {
-
             var counter = parseInt(active_week) - 1;
-
             window.location.href = url + '/' + counter;
-
         }
 
 
         if (week == 'minus') {
-
             active_week = parseInt(active_week) - 1; 
-
-            console.log(active_week);
-
             window.location.href = url + '/' + active_week;
-            
         }
 
 
         if (week == 'plus') {
-
             active_week = parseInt(active_week) + 1; 
-
-            console.log(active_week);
-
             window.location.href = url + '/' + active_week;
-            
         }
 
 
         if (week == 'current') {
-
             window.location.href = url;
-            
         }
-        console.log(week)
+        
+
+    });
 
 
+    $('.calc-total-hours').change(function(){
 
+        var in_time = $('#update_in_time').val();
+        var out_time = $('#update_out_time').val();
+        var break_time = $('#update_break').val();
+
+        var total_hours = moment(out_time, "HH:mm:ss").diff(moment(in_time, "HH:mm:ss"), 'minutes');
+        total_hours = total_hours / 60;
+        total_hours = parseFloat(total_hours) - parseFloat(break_time);
+
+        $('#total_hours').text(total_hours + ' hrs');
     });
 
 });
