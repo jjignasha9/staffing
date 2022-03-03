@@ -69,9 +69,9 @@ class WorkdaysController extends Controller
     }
 
     
-    public function show($id)
+    public function show(Workday $workday)
     {
-        //
+        return response($workday, 200);
     }
 
     
@@ -83,7 +83,25 @@ class WorkdaysController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
+        
+        $in_time = Carbon::parse($request->in_time);
+        $out_time = Carbon::parse($request->out_time);
+        $total_hours = $out_time->diffInMinutes($in_time) / 60;
+        $total_hours = (float) $total_hours - $request->break;
+
+    
+        $workday = Workday::where('id', $id)->update([
+            'date' => Carbon::parse($request->date)->format('Y-m-d'),
+            'in_time' => $in_time->format('H:i:s'),
+            'out_time' => $out_time->format('H:i:s'),
+            'break' => $request->break,
+            'shift_id' => $request->shift_id,
+            'total_hours' => $total_hours,
+            'comment' => $request->comment,
+        ]);
+
+        
+        return redirect()->route('timesheets.create')->with('success', 'Workday updated successfully!');
     }
 
     

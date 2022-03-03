@@ -69,11 +69,12 @@
                                     <th scope="col" class="px-4 py-4 text-left text-lg font-medium text-black-800  tracking-wider">Total</th>    
                                 </tr>
                             </thead>
+                            
                             <tbody class="bg-white divide-y divide-gray-200 items-start">
 
                                 @foreach($weekdays as $day)
 
-                                <tr class="p-3 add-workday cursor-pointer hover:bg-gray-100" date="{{ $day['date'] }}">
+                                <tr class="p-3 add-workday cursor-pointer hover:bg-gray-100" date="{{ $day['date'] }}" id="{{ $day['workday'] ? $day['workday']['id'] : '' }}">
                                     <td class="py-4 whitespace-nowrap">
                                         <div class="flex items-center">
 
@@ -142,7 +143,7 @@
 
 
             <div class="px-10 py-5 bg-white rounded-lg shadow-2xl">
-                <form action="{{ route('workdays.store') }}" method="POST">
+                <form action="{{ route('workdays.store') }}" method="POST" id="workday_form">
                     @csrf
 
 
@@ -158,133 +159,140 @@
                             </button>
                         </div>
                         <div>
-                            <center><h1 class="mb-5 text-xl font-semibold text-gray-600">Tue 03/01 - Elon Musk</h1></center>
+                            <center><h1 class="mb-5 text-xl font-semibold text-gray-600">
+                                @foreach($weekdays as $day)
+                                    {{ $day['name'] . ' ' . $day['date'] }}
+                                @endforeach    
+                                 - {{ Auth::user()->client_by_employee->client->name }}</h1></center>
 
                             <div class="flex my-3">
                                 <label>In time</label>
-                                <select name="in_time" class="w-48 ml-5 p-1 border border-gray-400 outline-none rounded-lg">
-                                    <option value="00:00">00:00</option>
-                                    <option value="00:30">00:30</option>
-                                    <option value="01:00">01:00</option>
-                                    <option value="01:30">01:30</option>
-                                    <option value="02:00">02:00</option>
-                                    <option value="02:30">02:30</option>
-                                    <option value="03:00">03:00</option>
-                                    <option value="03:30">03:30</option>
-                                    <option value="04:00">04:00</option>
-                                    <option value="04:30">04:30</option>
-                                    <option value="05:00">05:00</option>
-                                    <option value="05:30">05:30</option>
-                                    <option value="06:00">06:00</option>
-                                    <option value="06:30">06:30</option>
-                                    <option value="07:00">07:00</option>
-                                    <option value="07:30">07:30</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="08:30">08:30</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="09:30">09:30</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="10:30">10:30</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="11:30">11:30</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="12:30">12:30</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="13:30">13:30</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="14:30">14:30</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="15:30">15:30</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="16:30">16:30</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="17:30">17:30</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="18:30">18:30</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="19:30">19:30</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="20:30">20:30</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="21:30">21:30</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="22:30">22:30</option>
-                                    <option value="23:00">23:00</option>
-                                    <option value="23:30">23:30</option>
+                                <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg cal_in_time" id="update_in_time">
+                                    <option value="">Select</option>
+                                    <option value="00:00:00">00:00</option>
+                                    <option value="00:30:00">00:30</option>
+                                    <option value="01:00:00">01:00</option>
+                                    <option value="01:30:00">01:30</option>
+                                    <option value="02:00:00">02:00</option>
+                                    <option value="02:30:00">02:30</option>
+                                    <option value="03:00:00">03:00</option>
+                                    <option value="03:30:00">03:30</option>
+                                    <option value="04:00:00">04:00</option>
+                                    <option value="04:30:00">04:30</option>
+                                    <option value="05:00:00">05:00</option>
+                                    <option value="05:30:00">05:30</option>
+                                    <option value="06:00:00">06:00</option>
+                                    <option value="06:30:00">06:30</option>
+                                    <option value="07:00:00">07:00</option>
+                                    <option value="07:30:00">07:30</option>
+                                    <option value="08:00:00">08:00</option>
+                                    <option value="08:30:00">08:30</option>
+                                    <option value="09:00:00">09:00</option>
+                                    <option value="09:30:00">09:30</option>
+                                    <option value="10:00:00">10:00</option>
+                                    <option value="10:30:00">10:30</option>
+                                    <option value="11:00:00">11:00</option>
+                                    <option value="11:30:00">11:30</option>
+                                    <option value="12:00:00">12:00</option>
+                                    <option value="12:30:00">12:30</option>
+                                    <option value="13:00:00">13:00</option>
+                                    <option value="13:30:00">13:30</option>
+                                    <option value="14:00:00">14:00</option>
+                                    <option value="14:30:00">14:30</option>
+                                    <option value="15:00:00">15:00</option>
+                                    <option value="15:30:00">15:30</option>
+                                    <option value="16:00:00">16:00</option>
+                                    <option value="16:30:00">16:30</option>
+                                    <option value="17:00:00">17:00</option>
+                                    <option value="17:30:00">17:30</option>
+                                    <option value="18:00:00">18:00</option>
+                                    <option value="18:30:00">18:30</option>
+                                    <option value="19:00:00">19:00</option>
+                                    <option value="19:30:00">19:30</option>
+                                    <option value="20:00:00">20:00</option>
+                                    <option value="20:30:00">20:30</option>
+                                    <option value="21:00:00">21:00</option>
+                                    <option value="21:30:00">21:30</option>
+                                    <option value="22:00:00">22:00</option>
+                                    <option value="22:30:00">22:30</option>
+                                    <option value="23:00:00">23:00</option>
+                                    <option value="23:30:00">23:30</option>
                                 </select>
                             </div>
 
                             <div class="flex my-3">
                                 <label>Out time</label>
-                                <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg">
-                                    <option value="00:00">00:00</option>
-                                    <option value="00:30">00:30</option>
-                                    <option value="01:00">01:00</option>
-                                    <option value="01:30">01:30</option>
-                                    <option value="02:00">02:00</option>
-                                    <option value="02:30">02:30</option>
-                                    <option value="03:00">03:00</option>
-                                    <option value="03:30">03:30</option>
-                                    <option value="04:00">04:00</option>
-                                    <option value="04:30">04:30</option>
-                                    <option value="05:00">05:00</option>
-                                    <option value="05:30">05:30</option>
-                                    <option value="06:00">06:00</option>
-                                    <option value="06:30">06:30</option>
-                                    <option value="07:00">07:00</option>
-                                    <option value="07:30">07:30</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="08:30">08:30</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="09:30">09:30</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="10:30">10:30</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="11:30">11:30</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="12:30">12:30</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="13:30">13:30</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="14:30">14:30</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="15:30">15:30</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="16:30">16:30</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="17:30">17:30</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="18:30">18:30</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="19:30">19:30</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="20:30">20:30</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="21:30">21:30</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="22:30">22:30</option>
-                                    <option value="23:00">23:00</option>
-                                    <option value="23:30">23:30</option>
+                                <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg cal_out_time" id="update_out_time">
+                                     <option value="">Select</option>
+                                    <option value="00:00:00">00:00</option>
+                                    <option value="00:30:00">00:30</option>
+                                    <option value="01:00:00">01:00</option>
+                                    <option value="01:30:00">01:30</option>
+                                    <option value="02:00:00">02:00</option>
+                                    <option value="02:30:00">02:30</option>
+                                    <option value="03:00:00">03:00</option>
+                                    <option value="03:30:00">03:30</option>
+                                    <option value="04:00:00">04:00</option>
+                                    <option value="04:30:00">04:30</option>
+                                    <option value="05:00:00">05:00</option>
+                                    <option value="05:30:00">05:30</option>
+                                    <option value="06:00:00">06:00</option>
+                                    <option value="06:30:00">06:30</option>
+                                    <option value="07:00:00">07:00</option>
+                                    <option value="07:30:00">07:30</option>
+                                    <option value="08:00:00">08:00</option>
+                                    <option value="08:30:00">08:30</option>
+                                    <option value="09:00:00">09:00</option>
+                                    <option value="09:30:00">09:30</option>
+                                    <option value="10:00:00">10:00</option>
+                                    <option value="10:30:00">10:30</option>
+                                    <option value="11:00:00">11:00</option>
+                                    <option value="11:30:00">11:30</option>
+                                    <option value="12:00:00">12:00</option>
+                                    <option value="12:30:00">12:30</option>
+                                    <option value="13:00:00">13:00</option>
+                                    <option value="13:30:00">13:30</option>
+                                    <option value="14:00:00">14:00</option>
+                                    <option value="14:30:00">14:30</option>
+                                    <option value="15:00:00">15:00</option>
+                                    <option value="15:30:00">15:30</option>
+                                    <option value="16:00:00">16:00</option>
+                                    <option value="16:30:00">16:30</option>
+                                    <option value="17:00:00">17:00</option>
+                                    <option value="17:30:00">17:30</option>
+                                    <option value="18:00:00">18:00</option>
+                                    <option value="18:30:00">18:30</option>
+                                    <option value="19:00:00">19:00</option>
+                                    <option value="19:30:00">19:30</option>
+                                    <option value="20:00:00">20:00</option>
+                                    <option value="20:30:00">20:30</option>
+                                    <option value="21:00:00">21:00</option>
+                                    <option value="21:30:00">21:30</option>
+                                    <option value="22:00:00">22:00</option>
+                                    <option value="22:30:00">22:30</option>
+                                    <option value="23:00:00">23:00</option>
+                                    <option value="23:30:00">23:30</option>
                                 </select>
                             </div>
 
                             <div class="flex my-3">
                                 <label>Break time</label>
-                                <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
+                                <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg cal_break" id="update_break" >
+                                     <option value="">Select</option>
                                     <option value="0">00:00</option>
-                                    <option value="0.50">00:30</option>
-                                    <option value="01">01:00</option>
-                                    <option value="01.50">01:30</option>
-                                    <option value="02">02:00</option>
-                                    <option value="02.50">02:30</option>
-                                    <option value="03">03:00</option>
+                                    <option value="0.5">00:30</option>
+                                    <option value="1">01:00</option>
+                                    <option value="1.5">01:30</option>
+                                    <option value="2">02:00</option>
+                                    <option value="2.5">02:30</option>
+                                    <option value="3">03:00</option>
                                 </select>              
                             </div>
 
                             <div class="flex my-3">
                                 <label>Shift</label>
-                                <select name="shift_id" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
-                                    <option>Select</option>
+                                <select name="shift_id" class="w-48 ml-14 p-1 border border-gray-400 outline-none rounded-lg" id="update_shift">
+                                    <option value="">Select</option>
 
                                     @foreach($shifts as $shift)
                                         <option value="{{ $shift->id }}">{{ $shift->name }}</option>
@@ -295,26 +303,26 @@
 
                             <div class="flex justify-between">
                                 <div class="font-bold">Total</div>
-                                <div class="font-bold">8 hrs</div>
+                                <div class="font-bold answer">8 hrs</div>
                             </div>
 
-                            <div class="flex justify-between mt-5">
+                            <!-- <div class="flex justify-between mt-5">
                                 <label>Supervisor</label>
-                                <select name="supervisor_id" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg">
+                                <select name="supervisor_id" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg" id="update_supervisor_id">
                                     <option>Select</option>
 
                                     @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
                                         <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
                                     @endforeach
                                 </select>              
-                            </div> 
+                            </div>  -->
 
                             <div>
-                                <textarea type="text" name="comment" placeholder="you can comment here" class="bg-gray-100 outline-none font-semibold mt-5 w-full px-3 py-1 border border-gray-400 rounded-lg"></textarea>
+                                <textarea type="text" name="comment" placeholder="you can comment here" class="bg-gray-100 outline-none font-semibold mt-5 w-full px-3 py-1 border border-gray-400 rounded-lg" id="comment"></textarea>
                             </div>
 
                             <div class="flex justify-center"> 
-                                <button type="submit" class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Create</button>
+                                <button type="submit" class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Save</button>
                             </div>
                         </div>
                     </div>
@@ -343,6 +351,44 @@ $(document).ready(function() {
     $('.add-workday').click(function() {
         
         var date = $(this).attr('date');
+        var id = $(this).attr('id');
+        var url = "/workdays/show/" + id;
+        
+        if (id) {
+            $.ajax({
+                method:"GET",
+                url: url,
+            }).done(function(data) {
+                $('#comment').val(data.comment);
+                $('#update_shift').val(data.shift_id);
+                $('#update_in_time').val(data.in_time);
+                $('#update_out_time').val(data.out_time);
+                $('#update_break').val(data.break);
+            }); 
+            $('#workday_form').attr('action', '/workdays/update/' + id);
+
+        } else {
+            $('#comment').val('');
+            $('#update_shift').val('');
+            $('#update_in_time').val('');
+            $('#update_out_time').val('');
+            $('#update_break').val('');
+
+            $('#workday_form').attr('action', "{{ route('workdays.store') }}");
+
+        }
+         var in_time=parseInt($(".cal_in_time").val());    
+         var out_time=parseInt($(".cal_out_time").val());   
+
+       if(data.in_time == $(this).parseInt($(".cal_in_time").val()))
+       {
+          {{ 1 }}
+       }
+
+
+         
+        console.log(in_time);
+        console.log(out_time);
 
         $('.workday-date').val(date);
 
@@ -409,8 +455,7 @@ $(document).ready(function() {
             window.location.href = url;
             
         }
-        console.log(week);
-
+        console.log(week)
 
 
 

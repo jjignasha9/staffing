@@ -55,47 +55,55 @@ class TimesheetsController extends Controller
             'day_weekend' => Carbon::parse($weekend)->format('Y-m-d')
         ])->first();
 
+       
+
         $workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
-    
 
         $weekdays = [
-            [
+            [   
                 'name' => 'Mon',
                 'date' => Carbon::parse($weekend)->subDays(6)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(6)->format('Y-m-d'))->first() : [],
             ], [
+              
                 'name' => 'Tue',
                 'date' => Carbon::parse($weekend)->subDays(5)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(5)->format('Y-m-d'))->first() : [],
             ], [
+               
                 'name' => 'Wed',
                 'date' => Carbon::parse($weekend)->subDays(4)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(4)->format('Y-m-d'))->first() : [],
             ], [
+              
                 'name' => 'Thu',
                 'date' => Carbon::parse($weekend)->subDays(3)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(3)->format('Y-m-d'))->first() : [],
             ], [
+               
                 'name' => 'Fri',
                 'date' => Carbon::parse($weekend)->subDays(2)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(2)->format('Y-m-d'))->first() : [],
             ], [
+                 
                 'name' => 'Sat',
                 'date' => Carbon::parse($weekend)->subDays(1)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(1)->format('Y-m-d'))->first() : [],
             ], [
+                
                 'name' => 'Sun',
                 'date' => Carbon::parse($weekend)->format('m/d'),
                 'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->format('Y-m-d'))->first() : [],
             ], 
         ];
 
+       
         
 
 
         $shifts = Shift::all();
 
-        return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts',]));
+        return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts']));
     }
 
 }

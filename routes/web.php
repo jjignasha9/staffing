@@ -123,11 +123,13 @@ Route::get('/workdays/create', [WorkdaysController::class, 'create'])->name('wor
 
 Route::post('/workdays/store', [WorkdaysController::class, 'store'])->name('workdays.store');
 
-Route::get('/workdays/edit/{timesheet}', [WorkdaysController::class, 'edit'])->name('workdays.edit');
+Route::get('/workdays/edit/{workday}', [WorkdaysController::class, 'edit'])->name('workdays.edit');
 
-Route::post('/workdays/update/{timesheet}', [WorkdaysController::class, 'update'])->name('workdays.update');
+Route::get('/workdays/show/{workday}', [WorkdaysController::class, 'show'])->name('workdays.show');
 
-Route::delete('/workdays/destroy/{timesheet}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
+Route::post('/workdays/update/{workday}', [WorkdaysController::class, 'update'])->name('workdays.update');
+
+Route::delete('/workdays/destroy/{workday}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
 
 
 
