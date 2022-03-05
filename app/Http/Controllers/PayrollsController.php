@@ -23,7 +23,7 @@ class PayrollsController extends Controller
      */
     public function create()
     {
-        //
+        return view('payrolls.create');
     }
 
     /**

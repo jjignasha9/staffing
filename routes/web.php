@@ -110,7 +110,7 @@ Route::get('/timesheets/create/{weekend?}', [TimesheetsController::class, 'creat
 
 Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store');
     
-Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
+Route::get('/timesheets/edit', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
 
 Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
 
@@ -131,6 +131,7 @@ Route::get('/workdays/show/{workday}', [WorkdaysController::class, 'show'])->nam
 Route::post('/workdays/update/{workday}', [WorkdaysController::class, 'update'])->name('workdays.update');
 
 Route::delete('/workdays/destroy/{workday}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
+
 
 /* Payrolls */
 Route::get('/payrolls', [PayrollsController::class, 'index'])->name('payrolls');
