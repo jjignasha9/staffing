@@ -33,23 +33,24 @@
 	    		</div>
 	    	</div>    
 
-	    	<div class="flex justify-between items-center">
-	 	   		<div class="mt-3">
-	    			<select name="" class="p-2 rounded-full border-2 border-black w-96">
+    		<div class="flex items-center grid grid-cols-12 my-5">
+    			<div class="col-span-6">
+	    			<select name="" class="p-2 rounded-full border-2 border-black w-full">
 	    				<option value="" class="text-slate-500">Select</option>
 	    				<option value="">1</option>
 	    				<option value="">2</option>
 	    				<option value="">3</option>
 	    				<option value="">4</option>
 	    			</select>
-	    		</div>
-
-	    		<div class="rounded-full border border-black p-2 hover:bg-white cursor-pointer">
-	    			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-					  <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
-					</svg>
-	    		</div>
-	    	</div>  
+        		</div>
+    			<div class="flex justify-end col-span-6">
+	    			<div class="rounded-full border border-black p-2 hover:bg-white cursor-pointer">
+		    			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+						  <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+						</svg>
+	    			</div>
+    			</div>
+    		</div>
 
 	    	<div class="bg-white mt-3 rounded-full px-5 py-1.5">
 	    		<div class="grid grid-cols-12">

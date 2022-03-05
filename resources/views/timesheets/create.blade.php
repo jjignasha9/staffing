@@ -155,10 +155,10 @@
                                  </div>
                             </div>
                             </center>
-                            <div class="text-gray-400 font-semibold text-lg mt-5">
+                            <div class="text-gray-400 font-semibold text-lg mt-5 text-center">
                                 SUPERVISORS
                             </div>
-                            <div>
+                            <div class="text-center">
                               <input type="checkbox" name="check" class="my-5">  sagar
                             </div>
 

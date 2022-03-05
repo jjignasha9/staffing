@@ -29,103 +29,123 @@
                </div>
 			</div>
 			<div class="bg-white mt-5 rounded-xl p-5">
-				<div class="flex items-center">
-					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-		                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-		                </svg>
-	                </div>
-	                <div class="px-10 text-sm">testemp</div>
-                    <div class="px-72">
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">hourly<sup>reg</sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$10.00</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">20hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">reimbursement</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm"></sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm font-bold">38hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm font-bold">$469.00</div>
-                    	</div>
+				<div class="items-center">
+                    <div class="grid grid-cols-12">
+                    	 <div class="col-span-6">
+                    	 	<div class="flex items-center gap-10">
+                    	 		<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+		                     	<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+		               			 </svg>
+		               			 <div class="text-sm">testemp</div>
+		            		</div>
+                    	 </div>
+
+                    	 <div class="col-span-6">
+                    	 	<div class="grid grid-cols-12 tracking-wide text-sm">
+                    	 		<div class="col-span-4">
+                    	 			<div>hourly<sup>reg</sup></div>
+		                    		<div>reimbursement</div>
+		                    		
+                    	 		</div>
+                    	 		<div class="col-span-3">
+                    	 			<div>$ 10.00</div>
+                    	 		</div>
+                    	 		<div class="col-span-2">
+                    	 			<div>20 hrs</div>
+                    	 		</div>
+                    	 		<div class="col-span-3 text-center">
+                    	 			<div>$ 200.00</div>
+                    	 			<div>$ 200.00</div>
+                    	 		</div>
+                    	 	</div>
+                    	 	<div class="grid grid-cols-8 mt-5">
+                    	 		<div class="text-sm font-bold col-start-5 col-span-2 ml-10">20 hrs</div>
+                    	 		<div class="text-sm font-bold col-start-7 col-span-2 ml-8">$ 400.00</div>
+                    	 	</div>
+                    	 </div>
                     </div>
                 </div>
 			</div>
 
-			<div class="bg-white mt-5 rounded-xl p-5">
-				<div class="flex items-center">
-					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-		                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-		                </svg>
-	                </div>
-	                <div class="px-10 text-sm">testemp</div>
-                    <div class="px-72">
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">hourly<sup>reg</sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$10.00</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">20hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">reimbursement</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm"></sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm font-bold">38hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm font-bold">$469.00</div>
-                    	</div>
+			<div class="bg-white mt-2 rounded-xl p-5">
+				<div class="items-center">
+                    <div class="grid grid-cols-12">
+                    	 <div class="col-span-6">
+                    	 	<div class="flex items-center gap-10">
+                    	 		<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+		                     	<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+		               			 </svg>
+		               			 <div class="text-sm">testemp</div>
+		            		</div>
+                    	 </div>
+
+                    	 <div class="col-span-6">
+                    	 	<div class="grid grid-cols-12 tracking-wide text-sm">
+                    	 		<div class="col-span-4">
+                    	 			<div>hourly<sup>reg</sup></div>
+		                    		<div>reimbursement</div>
+		                    		
+                    	 		</div>
+                    	 		<div class="col-span-3">
+                    	 			<div>$10.00</div>
+                    	 		</div>
+                    	 		<div class="col-span-2">
+                    	 			<div>20hrs</div>
+                    	 		</div>
+                    	 		<div class="col-span-3 text-center">
+                    	 			<div>$200.00</div>
+                    	 			<div>$200.00</div>
+                    	 		</div>
+                    	 	</div>
+                    	 		<div class="grid grid-cols-8 mt-5">
+                    	 		<div class="text-sm font-bold col-start-5 col-span-2 ml-10">20 hrs</div>
+                    	 		<div class="text-sm font-bold col-start-7 col-span-2 ml-8">$ 400.00</div>
+                    	 	</div>
+                    	 </div>
                     </div>
                 </div>
 			</div>
 
-			<div class="bg-white mt-5 rounded-xl p-5">
-				<div class="flex items-center">
-					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-		                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-		                </svg>
-	                </div>
-	                <div class="px-10 text-sm">testemp</div>
-                    <div class="px-72">
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">hourly<sup>reg</sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$10.00</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">20hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">hourly<sup>reg</sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$10.00</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">20hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm">reimbursement</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$10.00</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">20hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm">$200.00</div>
-                    	</div>
-                    	<div class="grid grid-cols-12">
-                    		<div class="col-span-3 ml-40 pr-20 text-sm"></sup></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm"></div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm font-bold">38hrs</div>
-                    		<div class="col-span-3 ml-40 pl-20 text-sm font-bold">$469.00</div>
-                    	</div>
+			<div class="bg-white mt-2 rounded-xl p-5">
+				<div class="items-center">
+                    <div class="grid grid-cols-12">
+                    	 <div class="col-span-6">
+                    	 	<div class="flex items-center gap-10">
+                    	 		<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+		                     	<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+		               			 </svg>
+		               			 <div class="text-sm">testemp</div>
+		            		</div>
+                    	 </div>
+
+                    	 <div class="col-span-6">
+                    	 	<div class="grid grid-cols-12 tracking-wide text-sm">
+                    	 		<div class="col-span-4">
+                    	 			<div>hourly<sup>reg</sup></div>
+		                    		<div>reimbursement</div>
+		                    		
+                    	 		</div>
+                    	 		<div class="col-span-3">
+                    	 			<div>$10.00</div>
+                    	 		</div>
+                    	 		<div class="col-span-2">
+                    	 			<div>20hrs</div>
+                    	 		</div>
+                    	 		<div class="col-span-3 text-center">
+                    	 			<div>$200.00</div>
+                    	 			<div>$200.00</div>
+                    	 		</div>
+                    	 	</div>
+                    	 		<div class="grid grid-cols-8 mt-5">
+                    	 		<div class="text-sm font-bold col-start-5 col-span-2 ml-10">20 hrs</div>
+                    	 		<div class="text-sm font-bold col-start-7 col-span-2 ml-8">$ 400.00</div>
+                    	 	</div>
+                    	 </div>
                     </div>
                 </div>
-	        </div>
+			</div>
+
+		
 	        <div class="mt-5">
 	        	<a href="" class="flex items-center justify-center">
 	        		<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 p-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -159,17 +179,17 @@
             		</div>
             	</div>
             	<div class="flex items-center justify-between">
-            		<div class="flex items-center">
-		            	<div class="mt-5">
+            		<div class="flex items-center mt-10">
+		            	<div>
 		            		<div>
 			            		<span class="m-3">Pay day</span>
-			            	    <div class="bg-stone-200 rounded-full py-1 px-5 text-sm w-40 mt-2">2/27/2022</div>
+			            	    <div class="bg-slate-100 rounded-full py-1 px-5 text-sm w-40 mt-2">2/27/2022</div>
 				            </div>
 			           </div>
-			            <div class="mt-5 ml-20">
+			            <div class="ml-20">
 		            		<div>
 			            		<span class="m-3">Pay period</span>
-			            	    <div class="bg-stone-200 rounded-full py-1 px-5 text-sm w-40 mt-2">2/27/2022</div>
+			            	    <div class="bg-slate-100 rounded-full py-1 px-5 text-sm w-40 mt-2">2/27/2022</div>
 				            </div>
 			            </div>
 		            </div>
