@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\PayrollsController;
 use App\Http\Controllers\RatesController;
 use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\SupervisorsController;
@@ -110,7 +111,7 @@ Route::get('/timesheets/create/{weekend?}', [TimesheetsController::class, 'creat
 
 Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store');
     
-Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
+Route::get('/timesheets/edit', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
 
 Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
 
@@ -147,5 +148,17 @@ Route::post('/invoices/update/{invoice}', [InvoicesController::class, 'update'])
 Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destroy'])->name('timesheets.destroy');
 
 
+/* Payrolls */
+Route::get('/payrolls', [PayrollsController::class, 'index'])->name('payrolls');
 
+Route::get('/payrolls/create', [PayrollsController::class, 'create'])->name('payrolls.create');
 
+Route::post('/payrolls/store', [PayrollsController::class, 'store'])->name('payrolls.store');
+
+Route::get('/payrolls/edit/{payroll}', [PayrollsController::class, 'edit'])->name('payrolls.edit');
+
+Route::get('/payrolls/show/{payroll}', [PayrollsController::class, 'show'])->name('payrolls.show');
+
+Route::post('/payrolls/update/{payroll}', [PayrollsController::class, 'update'])->name('payrolls.update');
+
+Route::delete('/payrolls/destroy/{payroll}', [PayrollsController::class, 'destroy'])->name('payrolls.destroy');
