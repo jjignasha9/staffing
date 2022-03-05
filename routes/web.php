@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\RatesController;
 use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\SupervisorsController;
@@ -130,6 +131,21 @@ Route::get('/workdays/show/{workday}', [WorkdaysController::class, 'show'])->nam
 Route::post('/workdays/update/{workday}', [WorkdaysController::class, 'update'])->name('workdays.update');
 
 Route::delete('/workdays/destroy/{workday}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
+
+
+/* Invoices */
+Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices');
+
+Route::get('/invoices/create/', [InvoicesController::class, 'create'])->name('invoices.create');
+
+Route::post('/invoices/store', [InvoicesController::class, 'store'])->name('invoices.store');
+    
+Route::get('/invoices/edit', [InvoicesController::class, 'edit'])->name('invoices.edit');
+
+Route::post('/invoices/update/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
+
+Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destroy'])->name('timesheets.destroy');
+
 
 
 
