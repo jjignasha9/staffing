@@ -6,8 +6,9 @@ use App\Models\Shift;
 use App\Models\Timesheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
-
+use Storage;
 
 class TimesheetsController extends Controller
 {
@@ -104,6 +105,17 @@ class TimesheetsController extends Controller
         $shifts = Shift::all();
 
         return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts']));
+    }
+
+    public function createPdf(Timesheet $timesheet)
+    {
+        //$pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
+
+        //Storage::put('public/timesheets/timesheet.pdf', $pdf->output());
+
+
+        return view('timesheets.pdf', compact(['timesheet']));
+
     }
 
 }

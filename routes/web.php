@@ -117,6 +117,8 @@ Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'upd
 
 Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 
+Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf');
+
 
 /* Workdays */
 Route::get('/workdays', [WorkdaysController::class, 'index'])->name('workdays');

@@ -9,10 +9,10 @@
 <body>
     <div class="px-72 py-36">
         <div class="grid grid-cols-12">
-            <div class="col-span-4">
+            <div class="col-span-3">
 
             </div>
-            <div class="col-span-4">
+            <div class="col-span-6">
                 <center>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -60,7 +60,7 @@
                     </form>
                 </center>
             </div>
-            <div class="col-span-4">
+            <div class="col-span-3">
 
             </div>
         </div>
