@@ -11,15 +11,17 @@ class SubmitTimesheetEmail extends Mailable
 {
     use Queueable, SerializesModels;
      public $mailData;
+     public $timesheet;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mailData)
+    public function __construct($mailData, $timesheet)
     {
         $this->mailData = $mailData;
+        $this->timesheet = $timesheet;
     }
 
     /**
@@ -31,5 +33,9 @@ class SubmitTimesheetEmail extends Mailable
     {
         return $this->markdown('email.submit_timesheet')
         ->with('mailData', $this->mailData)->attach($this->mailData['file']);
+        ->with([
+            'mailData'=> $this->mailData,
+            'timesheet'=> $this->timesheet,
+        ]);
     }
 }

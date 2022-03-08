@@ -365,17 +365,16 @@
 
                 <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST">
                     @csrf
-                    
+
                     <div id="mailsend" class="text-center mt-4">
                         @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
                         <div class="flex items-center justify-center">
-                            <input type="checkbox" name="check" class="my-2 mx-2"> 
-                            <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
+                            <input type="checkbox" name="supervisor_ids[]" value="{{ $row->supervisor->id }}" class="my-2 mx-2"> {{ $row->supervisor->name }}
                         </div>
                         @endforeach
                     </div>
                     <div class="flex justify-center">
-                        <button id="sendemail" type="submit" name="submit" class="hover:bg-blue-500 p-2 rounded-full my-3 border-2 border-black hover:text-white px-4 ">Submit</button> 
+                        <button id="sendemail" type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
                     </div>
                 </form>
 
