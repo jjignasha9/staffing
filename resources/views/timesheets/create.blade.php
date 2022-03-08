@@ -121,57 +121,14 @@
             </div>
         </div>
         <div class="flex justify-end">
-            <button class="hover:bg-blue-500 p-2 rounded-full my-3 border-2 border-black hover:text-white px-4 ">+ expenses</button>
+            <button class="hover:bg-blue-500 p-2 rounded-full my-3 border-2 border-black hover:text-white px-4">+ expenses</button>
        </div>
 
+        @if($timesheet)
         <div class="flex justify-center">
              <button class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
-       </div>
-     
-           
-       <div class="show_email hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
-                        <div class="px-10 py-5 bg-white rounded-lg shadow-2xl">
-                            <div class="flex justify-end">
-                                <button type="button" class="close-mail">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <center>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-600 h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"     stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                 <div class="text-zinc-600 text-xl font-semibold mt-2">
-                                    Email timesheet
-                                 </div>
-                                 <div class="text-gray-500 mt-3 font-semibold">
-                                    {{ Auth::user()->client_by_employee->client->name }}
-                                 </div>
-                            </div>
-                            </center>
-                            <div class="text-gray-400 font-semibold text-lg mt-5 text-center">
-                                SUPERVISORS
-                            </div>
-                            <div class="text-center">
-                              <input type="checkbox" name="check" class="my-5">  sagar
-                            </div>
-
-                            <div class="flex justify-center">
-                              <button class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-5 text-white px-4">Submit</button>
-                            </div>
-
-                        
-                        </div>
-                    </div>
-                </div>
-            </div> 
-       </div>
+        </div>
+        @endif
 </div>
 
 
@@ -377,7 +334,60 @@
     </div>
 </div>
 
+@if($timesheet)
+<div class="show_email hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
+            <div class="px-10 py-5 bg-white rounded-lg shadow-2xl">
+                <div class="flex justify-end">
+                    <button type="button" class="close-mail">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <center>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-600 h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"     stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <div class="text-zinc-600 text-xl font-semibold mt-2">
+                            Email timesheet
+                        </div>
+                        <div class="text-gray-500 mt-3 font-semibold">
+                            {{ Auth::user()->client_by_employee->client->name }}
+                        </div>
+                    </div>
+                </center>
+                <div class="text-gray-400 font-semibold text-lg mt-5 text-center">
+                    SUPERVISORS
+                </div>
+
+
+                <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST">
+                    @csrf
+                    
+                    <div id="mailsend" class="text-center mt-4">
+                        @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
+                        <div class="flex items-center justify-center">
+                            <input type="checkbox" name="check" class="my-2 mx-2"> 
+                            <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="flex justify-center">
+                        <button id="sendemail" type="submit" name="submit" class="hover:bg-blue-500 p-2 rounded-full my-3 border-2 border-black hover:text-white px-4 ">Submit</button> 
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div> 
+@endif
 
 @endsection
 
@@ -492,6 +502,7 @@ $(document).ready(function() {
 
         $('#total_hours').text(total_hours + ' hrs');
     });
+
 
 });
 </script>
