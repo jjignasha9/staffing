@@ -111,13 +111,17 @@ Route::get('/timesheets/create/{weekend?}', [TimesheetsController::class, 'creat
 
 Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store');
     
-Route::get('/timesheets/edit', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
+Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
 
 Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
 
 Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 
+
+Route::get('/timesheets/approve/{timesheet}', [TimesheetsController::class, 'approve'])->name('timesheets.approve');
+
 Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf');
+
 
 
 /* Workdays */
