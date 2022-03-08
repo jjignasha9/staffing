@@ -30,7 +30,7 @@ class WorkdaysController extends Controller
         $timesheet = Timesheet::where([
             'employee_id' => Auth::user()->id,
             'client_id' => Auth::user()->client_by_employee->client_id,
-            'day_weekend' => Carbon::parse($request->day_weekend)->format('Y-m-d')
+            'day_weekend' => Carbon::parse($request->day_weekend)->format('Y-m-d'),
         ])->first();
 
 

@@ -26,36 +26,23 @@
                                  </tr>
                               </thead>
                               <tbody class="bg-white divide-y divide-gray-200">
-                                   <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm font-medium text-gray-900">Temp Button Internal(Sick)</div>
-                                        </td>
+                                   @foreach($timesheets as $timesheet)
+                                       <tr class="cursor-pointer hover:bg-gray-100" onclick="window.location.replace('{{ route('timesheets.edit', $timesheet->id) }}')">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                              <div class="text-sm font-medium text-gray-900">{{ $timesheet->client->name }}</div>
+                                            </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm text-gray-900">Sample temp</div>
-                                        </td>
-                                        
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm text-gray-900">3/6/22</div>
-                                        </td>
-                                        
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0 hrs</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm font-medium text-gray-900">Elon Musk</div>
-                                        </td>
-
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm text-gray-900">Sample temp</div>
-                                        </td>
-                                        
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm text-gray-900">3/6/22</div>
-                                        </td>
-                                        
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16 hrs</td>
-                                </tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                              <div class="text-sm text-gray-900">{{ $timesheet->employee->name }}</div>
+                                            </td>
+                                            
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                              <div class="text-sm text-gray-900">{{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d/y') }}</div>
+                                            </td>
+                                            
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
+                                        </tr>
+                                    @endforeach
                               </tbody>
                           </table>
                        </div>
@@ -80,26 +67,28 @@
                                   </tr>
                                </thead>
                                <tbody class="bg-white divide-y divide-gray-200">
-                                   <tr>
-                                        
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm text-gray-900">3/6/22</div>
-                                        </td>
+                                    @foreach($timesheets as $timesheet)
+                                       <tr>
+                                            
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                              <div class="text-sm text-gray-900">{{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d/y') }}</div>
+                                            </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                   <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                                {{ $timesheet->workdays->sum('id') }}
+                                            </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16 hrs</td>
-                                    </tr>
-                                    <tr>
-                                        
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                          <div class="text-sm text-gray-900">3/6/22</div>
-                                        </td>
-
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
-
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16 hrs</td>
-                                    </tr>
+                                            <td class="py-4 whitespace-nowrap text-sm text-gray-500">{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
+                                            <td>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                                </svg>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                               </tbody>
                            </table>
                         </div>
