@@ -185,9 +185,9 @@ class TimesheetsController extends Controller
 
         $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
 
-        //$pdf = $pdf->setPaper('a4', 'landscape');
+        $pdf = $pdf->setPaper('a4', 'landscape');
 
-        $save = Storage::put('public/timesheets/timesheet.pdf', $pdf->output());
+        $save = Storage::put('public/timesheets/timesheet_'.$timesheet->id.'.pdf', $pdf->output());
 
 
         return view('timesheets.pdf', compact(['timesheet']));

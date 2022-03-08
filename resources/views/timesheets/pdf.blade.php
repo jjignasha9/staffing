@@ -6,9 +6,12 @@
     <title>pdf</title>
 </head>
 <body>
-    <p >WEEK ENDING SUNDAY <span>{{ $timesheet->day_weekend }}</span></p>
-    <p >FIRM NAME <h3>{{ Auth::user()->client_by_employee->client->name }}</h3></p>
-    <p >EMPLOYEE'S NAME <h3>{{ Auth::user()->client_by_employee}}</h3></p>
+    <h1 class="heading">TIMESHEET</h1>
+    <p >WEEK ENDING SUNDAY <span class="text-bold">{{ $timesheet->day_weekend }}</span></p>
+    <p >EMPLOYEE'S NAME <span class="text-bold">{{ $timesheet->employee->name }}</span></p>
+    <p >CLIENT NAME <span class="text-bold">{{ $timesheet->client->name }}</span></p>
+    <p >SUPERVISOR NAME <span class="text-bold">{{ $timesheet->supervisor->name }}</span></p>
+
 
     <table style="width:100%">
         <tr>
@@ -17,89 +20,26 @@
             <th>TIME OUT</th>
             <th>BREAK</th>
             <th>TOTAL</th>
-            <th>SIGNATURE</th>
         </tr>
+        @foreach($timesheet->workdays as $workday)
+        <tr>
+            <td>{{ Carbon\carbon::parse($workday->date)->format('D m/d') }}</td>
+            <td>{{ Carbon\carbon::parse($workday->in_time)->format('H:i A') }}</td>
+            <td>{{ Carbon\carbon::parse($workday->out_time)->format('H:i A') }}</td>
+            <td>{{ $workday->break }}</td>
+            <td>{{ $workday->total_hours }}</td>
+        </tr>
+        @endforeach
+
+    
 
         <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td>Mon 2/28</td>
-            <td>9:30 AM</td>
-            <td>3:15 AM</td>
-            <td></td>
-            <td>17.75</td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td colspan="4">TOTAL HOURS WORKED TO NEAREST 1/4 HOUR</td>
-            <td>118.25</td>
-            <td></td>
+            <td colspan="4" class="text-bold">TOTAL HOURS WORKED</td>
+            <td class="text-bold">{{ $timesheet->workdays->sum('total_hours') }}</td>
         </tr>
     </table>
 
-    <span>
-        <div>EMPLOYEE'S SIGNATURE</div>
-
-
-        <div>SUPERVISOR'S NAME</div>
-
-
-        <div>SUPERVISOR'S SIGNATURE</div>
-
-    </span>
+    
 </body>
 </html>
 
@@ -107,22 +47,32 @@
 
 
 <style type="text/css">
-    p{
+    p {
         font-size:small;
         font-family: sans-serif;
     }
 
-    table,th,td{
+    table, th, td {
         border:1px solid black;
         border-collapse: collapse;
         padding: 7px;
+        text-align: center;
     }
 
-    span{
+    span {
         height:50px;
     }
 
-    div{
+    div {
         margin-top:15px;
+    }
+
+    .text-bold {
+        font-weight: bold;
+    }   
+
+    .heading {
+        font-weight: bold;
+        text-align: center;
     }
 </style>
