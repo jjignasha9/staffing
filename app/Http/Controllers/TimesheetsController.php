@@ -8,7 +8,13 @@ use App\Models\TimesheetStatuses;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 
+=======
+use Barryvdh\DomPDF\Facade\Pdf;
+use Auth;
+use Storage;
+>>>>>>> be3482c5f341c2a12dd75cd1d2f6f86200d694ec
 
 class TimesheetsController extends Controller
 {
@@ -124,6 +130,7 @@ class TimesheetsController extends Controller
         return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts']));
     }
 
+<<<<<<< HEAD
     public function edit(Timesheet $timesheet)
     {
 
@@ -176,4 +183,17 @@ class TimesheetsController extends Controller
     }
 
 
+=======
+    public function createPdf(Timesheet $timesheet)
+    {
+        //$pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
+
+        //Storage::put('public/timesheets/timesheet.pdf', $pdf->output());
+
+
+        return view('timesheets.pdf', compact(['timesheet']));
+
+    }
+
+>>>>>>> be3482c5f341c2a12dd75cd1d2f6f86200d694ec
 }

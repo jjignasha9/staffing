@@ -117,7 +117,11 @@ Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'upd
 
 Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 
+
 Route::get('/timesheets/approve/{timesheet}', [TimesheetsController::class, 'approve'])->name('timesheets.approve');
+
+Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf');
+
 
 
 /* Workdays */

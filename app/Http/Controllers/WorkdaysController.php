@@ -25,8 +25,6 @@ class WorkdaysController extends Controller
     
     public function store(Request $request)
     {
-
-
         $timesheet = Timesheet::where([
             'employee_id' => Auth::user()->id,
             'client_id' => Auth::user()->client_by_employee->client_id,
@@ -39,7 +37,6 @@ class WorkdaysController extends Controller
             $timesheet = Timesheet::create([
                 'employee_id' => Auth::user()->id,
                 'client_id' => Auth::user()->client_by_employee->client_id,
-                'supervisor_id' => $request->supervisor_id,
                 'day_weekend' => Carbon::parse($request->day_weekend)->format('Y-m-d')
             ]);
 

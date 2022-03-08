@@ -125,7 +125,7 @@
        </div>
 
         <div class="flex justify-center">
-             <button class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Resubmit</button>
+             <button class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
        </div>
      
            
@@ -212,8 +212,7 @@
                             <div class="flex my-3">
                                 <label>In time</label>
                                 <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
-                                    <option value="">Select</option>
-                                    <option value="00:00:00">00:00</option>
+                                    <option value="">00:00</option>
                                     <option value="00:30:00">00:30</option>
                                     <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
@@ -267,8 +266,7 @@
                             <div class="flex my-3">
                                 <label>Out time</label>
                                 <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_out_time">
-                                     <option value="">Select</option>
-                                    <option value="00:00:00">00:00</option>
+                                      <option value="">00:00</option>
                                     <option value="00:30:00">00:30</option>
                                     <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
@@ -322,8 +320,7 @@
                             <div class="flex my-3">
                                 <label>Break time</label>
                                 <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
-                                     <option value="">Select</option>
-                                    <option value="0">00:00</option>
+                                      <option value="">00:00</option>
                                     <option value="0.5">00:30</option>
                                     <option value="1">01:00</option>
                                     <option value="1.5">01:30</option>
