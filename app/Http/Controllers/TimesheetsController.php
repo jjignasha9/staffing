@@ -7,6 +7,9 @@ use App\Models\Timesheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubmitTimesheetEmail;
+use Symfony\Component\HttpFoundation\Response;
 use Auth;
 use Storage;
 
@@ -104,7 +107,7 @@ class TimesheetsController extends Controller
 
         $shifts = Shift::all();
 
-        return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts']));
+        return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts', 'timesheet']));
     }
 
     public function createPdf(Timesheet $timesheet)
@@ -115,6 +118,29 @@ class TimesheetsController extends Controller
 
 
         return view('timesheets.pdf', compact(['timesheet']));
+
+    }
+
+    public function submit(Timesheet $timesheet)
+    {    
+        $email = 'janvikabriya289@gmail.com';
+   
+        $mailData = [
+            'title' => 'Demo Email',
+            'url' => 'https://www.positronx.io'
+        ];
+  
+        Mail::to($email)->send(new SubmitTimesheetEmail($mailData));
+   
+        /*return response()->json([
+            'message' => 'Email has been sent.'
+        ], Response::HTTP_OK);
+
+           $mailData = [
+            'title' => 'Demo Email',
+            'url' => 'https://www.positronx.io'
+        ];*/
+        return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
 
     }
 
