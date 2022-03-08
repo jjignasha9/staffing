@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 use Storage;
+use Dompdf\Dompdf;
 
 class TimesheetsController extends Controller
 {
@@ -101,7 +102,6 @@ class TimesheetsController extends Controller
        
         
 
-
         $shifts = Shift::all();
 
         return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts']));
@@ -109,9 +109,12 @@ class TimesheetsController extends Controller
 
     public function createPdf(Timesheet $timesheet)
     {
-        //$pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
 
-        //Storage::put('public/timesheets/timesheet.pdf', $pdf->output());
+        $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
+
+        //$pdf = $pdf->setPaper('a4', 'landscape');
+
+        $save = Storage::put('public/timesheets/timesheet.pdf', $pdf->output());
 
 
         return view('timesheets.pdf', compact(['timesheet']));
