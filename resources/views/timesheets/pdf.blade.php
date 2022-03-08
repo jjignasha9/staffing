@@ -11,7 +11,7 @@
     <p >EMPLOYEE'S NAME <span class="text-bold">{{ $timesheet->employee->name }}</span></p>
     <p >CLIENT NAME <span class="text-bold">{{ $timesheet->client->name }}</span></p>
     <p >SUPERVISOR NAME <span class="text-bold">{{ $timesheet->supervisor->name }}</span></p>
-
+    
 
     <table style="width:100%">
         <tr>

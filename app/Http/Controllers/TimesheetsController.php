@@ -9,11 +9,9 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubmitTimesheetEmail;
 use Symfony\Component\HttpFoundation\Response;
-use Auth;
 use Storage;
 use Dompdf\Dompdf;
 
@@ -201,12 +199,19 @@ class TimesheetsController extends Controller
 
     public function submit(Timesheet $timesheet)
     {    
+        $this->createPdf($timesheet);
+
         $email = 'janvikabriya289@gmail.com';
    
+        $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
+
         $mailData = [
             'title' => 'Demo Email',
-            'url' => 'https://www.positronx.io'
+            'url' => 'https://www.positronx.io',
+            'file' => $file,
         ];
+
+        
   
         Mail::to($email)->send(new SubmitTimesheetEmail($mailData));
    

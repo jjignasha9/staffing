@@ -13,7 +13,7 @@ class Timesheet extends Model
 
     protected $guarded  = [];
 
-
+    
     public function workdays()
     {
         return $this->hasMany(Workday::class, 'timesheet_id', 'id');
@@ -21,6 +21,7 @@ class Timesheet extends Model
 
     public function client()
     {
+        
         return $this->hasOne(User::class, 'id', 'client_id');
     }
 
