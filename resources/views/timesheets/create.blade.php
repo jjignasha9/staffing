@@ -107,7 +107,7 @@
                                 <tr class="w-full">
                         
                                     <th scope="col" colspan="4" class="py-4  text-left px-3 text-lg font-medium text-black-800  tracking-wider">Total hours</th>    
-                                    <th >{{ $timesheet->workdays->sum('total_hours') }} hrs</th>
+                                    <th></th>
 
                                 </tr>
                             </tfoot>
