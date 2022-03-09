@@ -27,7 +27,7 @@
             <td>{{ Carbon\carbon::parse($workday->in_time)->format('H:i A') }}</td>
             <td>{{ Carbon\carbon::parse($workday->out_time)->format('H:i A') }}</td>
             <td>{{ $workday->break }}</td>
-            <td>{{ $workday->total_hours }}</td>
+            <td>{{ $workday->total_hours }} hrs</td>
         </tr>
         @endforeach
 
@@ -35,7 +35,7 @@
 
         <tr>
             <td colspan="4" class="text-bold">TOTAL HOURS WORKED</td>
-            <td class="text-bold">{{ $timesheet->workdays->sum('total_hours') }}</td>
+            <td class="text-bold">{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
         </tr>
     </table>
 

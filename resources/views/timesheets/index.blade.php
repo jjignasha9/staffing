@@ -67,8 +67,8 @@
                                   </tr>
                                </thead>
                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($timesheetsapp as $timesheet)
-                                       <tr>  
+                                    @foreach($approved_timesheets as $timesheet)
+                                       <tr class="hover:bg-gray-100">  
                                             <td class="px-6 py-4 whitespace-nowrap">
                                               <div class="text-sm text-gray-900">{{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d/y') }}</div>
                                             </td>
@@ -77,13 +77,14 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
-                                                {{ $timesheet->workdays->count('id') }}
+                                                {{ $timesheet->total_timesheets }}
                                             </td>
 
                                             <td class="py-4 whitespace-nowrap text-sm text-gray-500">
                                                 <div class="flex items-center">
-                                                    {{ $timesheet->workdays->sum('total_hours') }} hrs 
-                                                    <a href="{{ route('timesheets.approve', $timesheet->id) }}">
+                                                    {{ $timesheet->total_hours }} hrs 
+
+                                                    <a href="{{ route('timesheets.approved', $timesheet->day_weekend) }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                                         </svg> 

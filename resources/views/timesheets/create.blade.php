@@ -107,7 +107,7 @@
                                 <tr class="w-full">
                         
                                     <th scope="col" colspan="4" class="py-4  text-left px-3 text-lg font-medium text-black-800  tracking-wider">Total hours</th>    
-                                    <th >{{ $timesheet->workdays->sum('total_hours') }} hrs</th>
+                                    <th > hrs</th>
 
                                 </tr>
                             </tfoot>
@@ -117,9 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-end">
-            <button class="hover:bg-blue-500 p-2 rounded-full my-3 border-2 border-black hover:text-white px-4">+ expenses</button>
-       </div>
+
 
         @if($timesheet)
         <div class="flex justify-center">
@@ -166,7 +164,7 @@
                             <div class="flex my-3">
                                 <label>In time</label>
                                 <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
-                                    <option value="">00:00</option>
+                                    <option value="00:00" selected>00:00</option>
                                     <option value="00:30:00">00:30</option>
                                     <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
@@ -220,7 +218,7 @@
                             <div class="flex my-3">
                                 <label>Out time</label>
                                 <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_out_time">
-                                      <option value="">00:00</option>
+                                    <option value="00:00" selected>00:00</option>
                                     <option value="00:30:00">00:30</option>
                                     <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
@@ -274,7 +272,7 @@
                             <div class="flex my-3">
                                 <label>Break time</label>
                                 <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
-                                      <option value="">00:00</option>
+                                    <option value="0" selected>00:00</option>
                                     <option value="0.5">00:30</option>
                                     <option value="1">01:00</option>
                                     <option value="1.5">01:30</option>
@@ -424,9 +422,10 @@ $(document).ready(function() {
         } else {
             $('#comment').val('');
             $('#update_shift').val('');
-            $('#update_in_time').val('');
-            $('#update_out_time').val('');
-            $('#update_break').val('');
+            $('#update_in_time').val('00:00');
+            $('#update_out_time').val('00:00');
+            $('#update_break').val('0');
+            $('#total_hours').text('0 hrs');
 
             $('#workday_form').attr('action', "{{ route('workdays.store') }}");
         }

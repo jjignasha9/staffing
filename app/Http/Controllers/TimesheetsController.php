@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use Storage;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\DB;
+
 
 
 class TimesheetsController extends Controller
@@ -33,9 +35,16 @@ class TimesheetsController extends Controller
 
         $timesheets = Timesheet::where('status_id', $status_pending->id)->get();
 
-        $timesheetsapp = Timesheet::where('status_id', $status_approved->id)->get();
+        $approved_timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
+        ->select('timesheets.day_weekend')
+        ->addSelect(DB::raw('COUNT(DISTINCT(timesheets.id)) as total_timesheets'))
+        ->addSelect(DB::raw('SUM(workdays.total_hours) as total_hours'))
+        ->where('timesheets.status_id', $status_approved->id)
+        ->groupBy('timesheets.day_weekend')
+        ->get();
 
-        return view('timesheets.index', compact(['timesheets','timesheetsapp']));
+
+        return view('timesheets.index', compact(['timesheets','approved_timesheets']));
     }
 
     public function update(Timesheet $timesheet)
@@ -53,17 +62,15 @@ class TimesheetsController extends Controller
         return redirect()->route('timesheets')->with('message', 'Timesheet approved successfully!');
     }
 
-    public function approve(Timesheet $timesheet)
+    public function approved($day_weekend)
     {
-        $weekend = $timesheet->day_weekend;
-
         $status_approved = TimesheetStatuses::where('name','approved')->first();
 
-        $timesheet_ids = $timesheet->where('id',$timesheet->id)->pluck('id');
+        $timesheets = Timesheet::where('status_id', $status_approved->id)->where('day_weekend', $day_weekend)->get();
 
-        $timesheets = Timesheet::where('status_id', $status_approved->id)->whereIn('id', $timesheet_ids)->get();
+        $weekend = $day_weekend;
 
-        return view('timesheets.approve', compact(['timesheets','weekend', 'timesheet']));
+        return view('timesheets.approved', compact(['timesheets', 'weekend']));
     }
 
     public function create($weekend = 0)
@@ -222,8 +229,6 @@ class TimesheetsController extends Controller
     {    
 
         $this->createPdf($timesheet);
-
-        $email = 'janvikabriya289@gmail.com';
 
          $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
    

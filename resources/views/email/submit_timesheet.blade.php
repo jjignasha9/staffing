@@ -8,12 +8,11 @@
 <body>
 	<center>
      <header>Timesheet</header>
-     <div class="name">{{ $timesheet->client->name }}</div>
 
-     <div class="expenses">{{ $timesheet->employee->name }} 56 hrs and $45 expenses</div>
-
-     <div class="list">{{ $timesheet->supervisor->name }}</div>
-     <div class="list">weekending</div>
+     Employee name: {{ $timesheet->employee->name }}
+     Client name: {{ $timesheet->client->name }}
+     Supervisor name: {{ $timesheet->supervisor->name }}
+     Weekending date: {{ $timesheet->workdays->sum('total_hours') }} hrs
 
      <button class="button">View and approve</button>
 
@@ -23,10 +22,12 @@
 
 <style type="text/css">
 
-	header{
-		background-color:rgb(52, 152, 219);
-		color:white;
-		font-size:30px;
+	header {
+		background-color: rgb(52, 152, 219);
+		color: white;
+		font-size: 30px;
+		width: 50%;
+		text-align: center;
 	}
 
 	.name{
