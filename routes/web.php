@@ -114,14 +114,11 @@ Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('
     
 Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit');
 
-Route::post('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
+Route::get('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update');
 
 Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 
 Route::get('/timesheets/approve/{timesheet}', [TimesheetsController::class, 'approve'])->name('timesheets.approve');
-
-Route::get('/timesheets/approvetimesheet/{timesheet}', [TimesheetsController::class, 'approvetimesheet'])->name('timesheets.approvetimesheet');
-
 
 Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf');
 

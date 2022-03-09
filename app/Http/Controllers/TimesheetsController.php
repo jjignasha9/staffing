@@ -38,7 +38,7 @@ class TimesheetsController extends Controller
         return view('timesheets.index', compact(['timesheets','timesheetsapp']));
     }
 
-    public function approve(Timesheet $timesheet)
+    public function update(Timesheet $timesheet)
     {   
         $status_approved = TimesheetStatuses::where('name','approved')->first();
 
@@ -53,7 +53,7 @@ class TimesheetsController extends Controller
         return redirect()->route('timesheets')->with('message', 'Timesheet approved successfully!');
     }
 
-    public function approvetimesheet(Timesheet $timesheet)
+    public function approve(Timesheet $timesheet)
     {
         $weekend = $timesheet->day_weekend;
 
@@ -63,7 +63,7 @@ class TimesheetsController extends Controller
 
         $timesheets = Timesheet::where('status_id', $status_approved->id)->whereIn('id', $timesheet_ids)->get();
 
-        return view('timesheets.approvetimesheet', compact(['timesheets','weekend', 'timesheet']));
+        return view('timesheets.approve', compact(['timesheets','weekend', 'timesheet']));
     }
 
     public function create($weekend = 0)
