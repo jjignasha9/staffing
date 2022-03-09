@@ -93,7 +93,7 @@
 
         @if(Auth::user()->user_role->name == 'supervisor')
         <div class="flex justify-center">
-             <a href="{{ route('timesheets.approve', $timesheet->id) }}" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Approve</a>
+             <a href="{{ route('timesheets.update', $timesheet->id) }}" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Approve</a>
        </div>
        @endif
 </div>
