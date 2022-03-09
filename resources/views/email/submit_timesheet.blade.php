@@ -14,6 +14,11 @@
      Supervisor name: {{ $timesheet->supervisor->name }}
      Weekending date: {{ $timesheet->workdays->sum('total_hours') }} hrs
 
+     <div class="expenses">{{ $timesheet->employee->name }} {{ $timesheet->workdays->sum('total_hours') }} hrs and $45 expenses</div>
+
+     <div class="list">{{ $timesheet->supervisor->name }}</div>
+     <div class="list">weekending {{ $timesheet->day_weekend }}</div>
+
      <button class="button">View and approve</button>
 
     </center>

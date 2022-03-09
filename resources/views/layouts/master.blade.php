@@ -14,7 +14,7 @@
     <title>Dashboard</title>
 </head>
 
-<body class="bg-zinc-100">
+<body class="bg-stone-200">
     <!-- header section -->
     <div class="relative bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -120,7 +120,7 @@
 
 
     <!-- content -->
-    <div class="bg-zinc-100">
+    <div class="bg-stone-200">
         <div class="relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 h-screen">
 

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto  h-screen mt-3">
-    <div class="bg-zinc-100">
+    <div class="bg-stone-200">
         <div class="relative">
             <div class=" align-middle inline-block min-w-full">
                 <div class="flex justify-between items-center mt-4">
