@@ -8,12 +8,12 @@
 <body>
 	<center>
      <header>Timesheet</header>
-     <div class="name">Zboncak Walter and Ebert</div>
+     <div class="name">{{ $timesheet->client->name }}</div>
 
-     <div class="expenses">Alivia Yundt 56 hrs and $45 expenses</div>
+     <div class="expenses">{{ $timesheet->employee->name }} 56 hrs and $45 expenses</div>
 
-     <p class="list">Kuhic-Jaskolski</p>
-     <p class="list">weekending 3/6/22</p>
+     <div class="list">{{ $timesheet->supervisor->name }}</div>
+     <div class="list">weekending</div>
 
      <button class="button">View and approve</button>
 
@@ -22,6 +22,7 @@
 </html>
 
 <style type="text/css">
+
 	header{
 		background-color:rgb(52, 152, 219);
 		color:white;
@@ -43,10 +44,12 @@
 	.list{
 		font-size:20px;
 		margin-top:5px;
+		font-size:20px;
+
 	}
 
 	button{
-		background-color: #4CAF50;
+		background-color: rgb(0, 163, 108);
 		color:white;
 	    border: none;
 	    padding: 15px 32px;
@@ -54,91 +57,8 @@
 	    text-decoration: none;
 	    display: inline-block;
 	    font-size: 16px;
-	    margin: 4px 2px;
+	    margin: 14px 2px;
 	    cursor: pointer;
 	}
+  }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-{{ $mailData['title'] }}<br>
- 
-hello mail
-hii
-jnkdfhj
-
-shaloni
-
-<br>
- 
-
-Cheers!
-<br>
- 
-Thanks,<br>
-{{ config('app.name') }}
-
- -->

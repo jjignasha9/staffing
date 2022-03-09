@@ -28,4 +28,9 @@ class Timesheet extends Model
     {
         return $this->hasOne(User::class, 'id', 'employee_id');
     }
+
+    public function supervisor()
+    {
+        return $this->hasOne(User::class, 'id', 'supervisor_id');
+    }
 }

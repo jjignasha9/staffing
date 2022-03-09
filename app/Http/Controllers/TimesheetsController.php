@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SubmitTimesheetEmail;
 use App\Models\Shift;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
+use App\Models\User;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SubmitTimesheetEmail;
-use Symfony\Component\HttpFoundation\Response;
-use Auth;
 use Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class TimesheetsController extends Controller
@@ -196,16 +195,20 @@ class TimesheetsController extends Controller
 
     }
 
-    public function submit(Timesheet $timesheet)
+    public function submit(Request $request, Timesheet $timesheet)
     {    
-        $email = 'janvikabriya289@gmail.com';
+         $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
    
         $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io'
         ];
+
+
   
-        Mail::to($email)->send(new SubmitTimesheetEmail($mailData));
+        Mail::to($supervisor_emails)->send(new SubmitTimesheetEmail($mailData, $timesheet));
+
+
    
         /*return response()->json([
             'message' => 'Email has been sent.'
@@ -215,6 +218,7 @@ class TimesheetsController extends Controller
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io'
         ];*/
+
         return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
 
     }
