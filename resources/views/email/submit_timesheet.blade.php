@@ -10,10 +10,10 @@
      <header>Timesheet</header>
      <div class="name">{{ $timesheet->client->name }}</div>
 
-     <div class="expenses">{{ $timesheet->employee->name }} 56 hrs and $45 expenses</div>
+     <div class="expenses">{{ $timesheet->employee->name }} {{ $timesheet->workdays->sum('total_hours') }} hrs and $45 expenses</div>
 
      <div class="list">{{ $timesheet->supervisor->name }}</div>
-     <div class="list">weekending</div>
+     <div class="list">weekending {{ $timesheet->day_weekend }}</div>
 
      <button class="button">View and approve</button>
 

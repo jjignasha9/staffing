@@ -219,13 +219,10 @@ class TimesheetsController extends Controller
     }
 
     public function submit(Request $request, Timesheet $timesheet)
-    {    
-
+    {   
         $this->createPdf($timesheet);
 
-        $email = 'janvikabriya289@gmail.com';
-
-         $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
+        $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
    
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 
@@ -236,17 +233,15 @@ class TimesheetsController extends Controller
         ];
   
         Mail::to($supervisor_emails)->send(new SubmitTimesheetEmail($mailData, $timesheet));
-
-
    
-        /*return response()->json([
+        return response()->json([
             'message' => 'Email has been sent.'
         ], Response::HTTP_OK);
 
            $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io'
-        ];*/
+        ];
 
         return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
 
