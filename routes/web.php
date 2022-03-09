@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceMailController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\PayrollsController;
 use App\Http\Controllers\RatesController;
@@ -121,12 +122,17 @@ Route::get('/timesheets/approve/{timesheet}', [TimesheetsController::class, 'app
 
 Route::get('/timesheets/approvetimesheet/{timesheet}', [TimesheetsController::class, 'approvetimesheet'])->name('timesheets.approvetimesheet');
 
+
 Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf');
+
+Route::post('/timesheets/submit/{timesheet}', [TimesheetsController::class, 'submit'])->name('timesheets.submit');
+
+
 
 
 /* Workdays */
 Route::get('/workdays', [WorkdaysController::class, 'index'])->name('workdays');
-
+    
 Route::get('/workdays/create', [WorkdaysController::class, 'create'])->name('workdays.create');
 
 Route::post('/workdays/store', [WorkdaysController::class, 'store'])->name('workdays.store');
@@ -168,3 +174,5 @@ Route::get('/payrolls/show/{payroll}', [PayrollsController::class, 'show'])->nam
 Route::post('/payrolls/update/{payroll}', [PayrollsController::class, 'update'])->name('payrolls.update');
 
 Route::delete('/payrolls/destroy/{payroll}', [PayrollsController::class, 'destroy'])->name('payrolls.destroy');
+
+
