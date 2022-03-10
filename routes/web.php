@@ -118,13 +118,13 @@ Route::get('/timesheets/update/{timesheet}', [TimesheetsController::class, 'upda
 
 Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 
-Route::get('/timesheets/approved/{day_weekend}', [TimesheetsController::class, 'approved'])->name('timesheets.approved');
+Route::get('/timesheets/approved/{timesheet}', [TimesheetsController::class, 'approved'])->name('timesheets.approved');
 
 Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf');
 
 Route::post('/timesheets/submit/{timesheet}', [TimesheetsController::class, 'submit'])->name('timesheets.submit');
 
-
+Route::get('/timesheets/show/{timesheet}', [TimesheetsController::class, 'show'])->name('timesheets.show');
 
 
 /* Workdays */

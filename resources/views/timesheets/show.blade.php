@@ -8,43 +8,10 @@
             <div class=" align-middle inline-block min-w-full">
                 <div class="flex justify-between items-center mt-4">
                     <div class="w-1/5 rounded-lg bg-white p-3 border border-gray-300">
-                       Client Name: {{ Auth::user()->client_by_employee->client->name }}
-                    </div>
-                    <div class="flex border border-gray-300 rounded-lg shadow-sm">
-                        <nav class="inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
-                            
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend < -1 ? 'bg-blue-500 text-white' : '' }}" week="minus">
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == -1 ? 'bg-blue-500 text-white' : '' }}" week="previous">
-                                Last week
-                            </button>
-
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == 0 ? 'bg-blue-500 text-white' : '' }}" week="current"> 
-                                This week 
-                            </button>
-
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == 1 ? 'bg-blue-500 text-white' : '' }}" week="next"> 
-                                Next week 
-                            </button>
-
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend > 1 ? 'bg-blue-500 text-white' : '' }}" week="plus">
-                                <span class="sr-only">Next</span>
-                                <!-- Heroicon name: solid/chevron-right -->
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-
-                        </nav>
+                       Client Name: {{ $timesheet->client->name }}
                     </div>
                 </div>
             </div>   
-
-
         </div>
     </div>
     <div class="flex justify-center gap-2">
@@ -52,7 +19,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
         <div class="text-center text-md">
-        Week Ending {{ $weekend }}</div>   
+       Week Ending {{ $weekend }}</div>   
     </div>    
     <div class="max-w-7xl mx-full h-screen mt-3">
         <div class="flex flex-col">
@@ -74,7 +41,7 @@
 
                                 @foreach($weekdays as $day)
 
-                                <tr class="p-3 add-workday cursor-pointer hover:bg-gray-100" date="{{ $day['date'] }}" day="{{ $day['name'] }}" id="{{ $day['workday'] ? $day['workday']['id'] : '' }}">
+                                <tr class="p-3 add-workday cursor-pointer" readonly="readonly"  date="{{ $day['date'] }}" day="{{ $day['name'] }}" id="{{ $day['workday'] ? $day['workday']['id'] : '' }}">
                                     <td class="py-4 whitespace-nowrap">
                                         <div class="flex items-center">
 
@@ -104,9 +71,14 @@
                                 <!-- More people... -->
                             </tbody>
                             <tfoot class="bg-gray-50 w-full">
-                                <tr class="w-full">                       
-                                    <th scope="col" colspan="4" class="py-4  text-left px-3 text-lg font-medium text-black-800  tracking-wider">Total hours</th>    
-                                    <th> hrs</th>
+                                <tr class="w-full">
+                        
+                                    <th scope="col" class="py-4  text-left px-3 text-lg font-medium text-black-800  tracking-wider">Total hours</th>    
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+
                                 </tr>
                             </tfoot>
 
@@ -116,17 +88,16 @@
             </div>
         </div>
 
-
-        @if($timesheet)
+        @if(Auth::user()->user_role->name == 'supervisor')
         <div class="flex justify-center">
-             <button class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
-        </div>
-        @endif
+             <a href="{{ route('timesheets.update', $timesheet->id) }}" class="invisible bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Approve</a>
+       </div>
+       @endif
 </div>
 
 
 
-<div class="fixed z-10 inset-0 overflow-y-auto workday hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div class="fixed z-10 inset-0 overflow-y-auto workday hidden invisible" aria-labelledby="modal-title" role="dialog" aria-modal="true" >
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -143,7 +114,6 @@
 
 
                     <input type="hidden" name="day_weekend" value="{{ $weekend }}">
-                    <input type="hidden" name="active_week" value="{{ $temp_weekend }}">
                     <input type="hidden" name="date" class="workday-date">
 
                     <div>
@@ -158,12 +128,13 @@
                             <center><h1 class="mb-5 text-xl font-semibold text-gray-600">
                                
                                  <span id="workday_heading_date"></span>   
-                                 - {{ Auth::user()->client_by_employee->client->name }}</h1></center>
+                                 - {{ $timesheet->client->name }}</h1></center>
 
                             <div class="flex my-3">
                                 <label>In time</label>
                                 <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
-                                    <option value="00:00" selected>00:00</option>
+                                    <option value="">Select</option>
+                                    <option value="00:00:00">00:00</option>
                                     <option value="00:30:00">00:30</option>
                                     <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
@@ -217,7 +188,8 @@
                             <div class="flex my-3">
                                 <label>Out time</label>
                                 <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_out_time">
-                                    <option value="00:00" selected>00:00</option>
+                                     <option value="">Select</option>
+                                    <option value="00:00:00">00:00</option>
                                     <option value="00:30:00">00:30</option>
                                     <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
@@ -271,7 +243,8 @@
                             <div class="flex my-3">
                                 <label>Break time</label>
                                 <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
-                                    <option value="0" selected>00:00</option>
+                                     <option value="">Select</option>
+                                    <option value="0">00:00</option>
                                     <option value="0.5">00:30</option>
                                     <option value="1">01:00</option>
                                     <option value="1.5">01:30</option>
@@ -298,17 +271,6 @@
                                 <div class="font-bold" id="total_hours"></div>
                             </div>
 
-                            <!-- <div class="flex justify-between mt-5">
-                                <label>Supervisor</label>
-                                <select name="supervisor_id" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg" id="update_supervisor_id">
-                                    <option>Select</option>
-
-                                    @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
-                                        <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
-                                    @endforeach
-                                </select>              
-                            </div>  -->
-
                             <div>
                                 <textarea type="text" name="comment" placeholder="you can comment here" class="bg-gray-100 outline-none font-semibold mt-5 w-full px-3 py-1 border border-gray-400 rounded-lg" id="comment"></textarea>
                             </div>
@@ -328,59 +290,7 @@
     </div>
 </div>
 
-@if($timesheet)
-<div class="show_email hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
-            <div class="px-10 py-5 bg-white rounded-lg shadow-2xl">
-                <div class="flex justify-end">
-                    <button type="button" class="close-mail">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                <center>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-600 h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"     stroke-width="2"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <div class="text-zinc-600 text-xl font-semibold mt-2">
-                            Email timesheet
-                        </div>
-                        <div class="text-gray-500 mt-3 font-semibold">
-                            {{ Auth::user()->client_by_employee->client->name }}
-                        </div>
-                    </div>
-                </center>
-                <div class="text-gray-400 font-semibold text-lg mt-5 text-center">
-                    SUPERVISORS
-                </div>
-
-
-                <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST">
-                    @csrf
-
-                    <div id="mailsend" class="text-center mt-4">
-                        @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
-                        <div class="flex items-center justify-center">
-                            <input type="checkbox" name="supervisor_ids[]" value="{{ $row->supervisor->id }}" class="my-2 mx-2"> {{ $row->supervisor->name }}
-                        </div>
-                        @endforeach
-                    </div>
-                    <div class="flex justify-center">
-                        <button id="sendemail" type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
-                    </div>
-                </form>
-
-
-            </div>
-        </div>
-    </div>
-</div> 
-@endif
 
 @endsection
 
@@ -393,8 +303,6 @@
 
 
 $(document).ready(function() {
-
-    var active_week = "{{ $temp_weekend }}";
 
     $('.add-workday').click(function() {
         
@@ -421,10 +329,9 @@ $(document).ready(function() {
         } else {
             $('#comment').val('');
             $('#update_shift').val('');
-            $('#update_in_time').val('00:00');
-            $('#update_out_time').val('00:00');
-            $('#update_break').val('0');
-            $('#total_hours').text('0 hrs');
+            $('#update_in_time').val('');
+            $('#update_out_time').val('');
+            $('#update_break').val('');
 
             $('#workday_form').attr('action', "{{ route('workdays.store') }}");
         }
@@ -434,55 +341,17 @@ $(document).ready(function() {
         $('.workday').show();
     });
 
-       $('.emailbox').click(function() {
+    $('.emailbox').click(function() {
         $('.show_email').show();
-
-       });
+    });
 
     $('.close-workday').click(function() {
         $('.workday').hide();
     });
+
     $('.close-mail').click(function() {
         $('.show_email').hide();
     });
-
-    $('.change-week').click(function() {
-
-        let week = $(this).attr('week');
-
-        let url = "{{ route('timesheets.create') }}"
-
-        if (week == 'next') {
-            var counter = parseInt(active_week) + 1;
-            window.location.href = url + '/' + counter;
-        }
-
-
-        if (week == 'previous') {
-            var counter = parseInt(active_week) - 1;
-            window.location.href = url + '/' + counter;
-        }
-
-
-        if (week == 'minus') {
-            active_week = parseInt(active_week) - 1; 
-            window.location.href = url + '/' + active_week;
-        }
-
-
-        if (week == 'plus') {
-            active_week = parseInt(active_week) + 1; 
-            window.location.href = url + '/' + active_week;
-        }
-
-
-        if (week == 'current') {
-            window.location.href = url;
-        }
-        
-
-    });
-
 
     $('.calc-total-hours').change(function(){
 
@@ -497,8 +366,15 @@ $(document).ready(function() {
         $('#total_hours').text(total_hours + ' hrs');
     });
 
+    $('#disabled').click(function(){
+        $("#disabled").prop('disabled', true);
+
+        $("#disabled").attr('disabled','disabled');
+    }); 
 
 });
+
+
 </script>
 
 @endpush
