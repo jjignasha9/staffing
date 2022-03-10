@@ -19,7 +19,7 @@
                                 </svg>
                             </button>
 
-                            <button type="button" aria-current="page" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == -1 ? 'bg-blue-500 text-white' : '' }}" week="previous">
+                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == -1 ? 'bg-blue-500 text-white' : '' }}" week="previous">
                                 Last week
                             </button>
 
@@ -104,14 +104,9 @@
                                 <!-- More people... -->
                             </tbody>
                             <tfoot class="bg-gray-50 w-full">
-                                <tr class="w-full">
-                        
+                                <tr class="w-full">                       
                                     <th scope="col" colspan="4" class="py-4  text-left px-3 text-lg font-medium text-black-800  tracking-wider">Total hours</th>    
-                                    <th > hrs</th>
-
-                                    <th></th>
-
-
+                                    <th> hrs</th>
                                 </tr>
                             </tfoot>
 
@@ -148,6 +143,7 @@
 
 
                     <input type="hidden" name="day_weekend" value="{{ $weekend }}">
+                    <input type="hidden" name="active_week" value="{{ $temp_weekend }}">
                     <input type="hidden" name="date" class="workday-date">
 
                     <div>
