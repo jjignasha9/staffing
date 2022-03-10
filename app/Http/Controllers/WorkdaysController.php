@@ -98,7 +98,7 @@ class WorkdaysController extends Controller
         ]);
 
         
-        return redirect()->route('timesheets.create')->with('success', 'Workday updated successfully!');
+        return redirect()->route('timesheets.create', $request->active_week)->with('success', 'Workday updated successfully!');
     }
 
     
