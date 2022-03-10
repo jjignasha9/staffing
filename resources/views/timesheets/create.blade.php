@@ -317,7 +317,7 @@
                                 <textarea type="text" name="comment" placeholder="you can comment here" class="bg-gray-100 outline-none font-semibold mt-5 w-full px-3 py-1 border border-gray-400 rounded-lg" id="comment"></textarea>
                             </div>
 
-                            <div class="flex justify-center"> 
+                            <div class="flex justify-center redirect"> 
                                 <button type="submit" class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Save</button>
                             </div>
                         </div>
@@ -399,13 +399,12 @@
 $(document).ready(function() {
 
     var active_week = "{{ $temp_weekend }}";
-
     $('.add-workday').click(function() {
         
         var date = $(this).attr('date');
         var day = $(this).attr('day');
         var id = $(this).attr('id');
-        var url = "/workdays/show/" + id;
+        var url = "/workdays/show/" + id;   
         $('#workday_heading_date').text(day + ' ' + date);
         if (id) {
             $.ajax({
@@ -501,6 +500,14 @@ $(document).ready(function() {
         $('#total_hours').text(total_hours + ' hrs');
     });
 
+    $('.redirect').click(function(){
+        let url = "{{ route('timesheets.create') }}"
+        var active_week = "{{ $temp_weekend }}";
+        console.log(url + active_week)
+        var location = window.location.href = url + '/' + active_week;
+        console.log(location);
+
+    });
 
 });
 </script>
