@@ -9,62 +9,53 @@
 	<center>
      <header>Timesheet</header>
 
-     Employee name: {{ $timesheet->employee->name }}
-     Client name: {{ $timesheet->client->name }}
-     Supervisor name: {{ $timesheet->supervisor->name }}
-     Weekending date: {{ $timesheet->workdays->sum('total_hours') }} hrs
+     <div class="list">Client name: {{ $timesheet->client->name }}</div>
+     <div class="expenses">Employee name: {{ $timesheet->employee->name }} - {{ $timesheet->workdays->sum('total_hours') }} hrs</div>
+     <div class="list">Supervisor name: {{ $timesheet->supervisor->name }}</div>
+     <div class="list"> Weekending date: {{ $timesheet->day_weekend }}</div>
 
-     <div class="expenses">{{ $timesheet->employee->name }} {{ $timesheet->workdays->sum('total_hours') }} hrs and $45 expenses</div>
-
-     <div class="list">{{ $timesheet->supervisor->name }}</div>
-     <div class="list">weekending {{ $timesheet->day_weekend }}</div>
-
-     <button class="button">View and approve</button>
+     <a href="{{ route('timesheets') }}">View and approve</a>
 
     </center>
 </body>
 </html>
-
 <style type="text/css">
 
 	header {
 		background-color: rgb(52, 152, 219);
 		color: white;
 		font-size: 30px;
-		width: 50%;
 		text-align: center;
-	}
-
-	.name{
-		background-color:rgb(52, 152, 219);
-		font-size:20px;
-		color:white;
-		padding-bottom:15px;
+		padding:20px;
 	}
 
 	.expenses{
 		font-size:30px;
 		margin-top:30px;
+		color: black;
 	}
 
 	.list{
 		font-size:20px;
 		margin-top:5px;
 		font-size:20px;
+		color: black;
 
 	}
 
-	button{
-		background-color: rgb(0, 163, 108);
-		color:white;
-	    border: none;
-	    padding: 15px 32px;
-	    text-align: center;
-	    text-decoration: none;
-	    display: inline-block;
-	    font-size: 16px;
-	    margin: 14px 2px;
-	    cursor: pointer;
+	a:link, a:visited {
+	  background-color: rgb(0, 163, 108);
+	  color: white;
+	  padding: 15px 25px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 14px 2px;
+	}
+
+	body {
+		background-color: rgb(231 229 228);;
 	}
   }
 </style>
