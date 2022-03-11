@@ -36,7 +36,7 @@
      </table>
 
    
-     <a href="{{ route('timesheets') }}">View and approve</a>
+     <a href="{{ route('timesheets.edit',$timesheet->id) }}">View and approve</a>
 
     </center>
 </body>

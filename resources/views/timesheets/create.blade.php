@@ -375,7 +375,7 @@
                         
                     </div>
                     <div class="flex justify-center">
-                        <a href="{{ route('timesheets.edit', $timesheet->id) }}" id="sendemail" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</a> 
+                        <button type="submit" id="sendemail" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
                     </div>
                 </form>
 
