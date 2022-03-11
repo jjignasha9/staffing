@@ -29,17 +29,17 @@ class TimesheetsController extends Controller
     public function index()
     {   
         
-        $status_pending = TimesheetStatuses::where('name','pending')->first();
+        $status_pending = getStatusId('pending');
 
-        $status_approved = TimesheetStatuses::where('name','approved')->first();
+        $status_approved = getStatusId('approved');
 
-        $timesheets = Timesheet::where('status_id', $status_pending->id)->get();
+        $timesheets = Timesheet::where('status_id', $status_pending)->get();
 
         $approved_timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
         ->select('timesheets.day_weekend')
         ->addSelect(DB::raw('COUNT(DISTINCT(timesheets.id)) as total_timesheets'))
         ->addSelect(DB::raw('SUM(workdays.total_hours) as total_hours'))
-        ->where('timesheets.status_id', $status_approved->id)
+        ->where('timesheets.status_id', $status_approved)
         ->groupBy('timesheets.day_weekend')
         ->get();
 
@@ -151,7 +151,6 @@ class TimesheetsController extends Controller
 
        
         
-
         $shifts = Shift::all();
 
         return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts', 'timesheet']));
