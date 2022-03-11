@@ -159,6 +159,16 @@ class TimesheetsController extends Controller
 
     public function edit(Timesheet $timesheet)
     {
+        $status_pending = TimesheetStatuses::where('name','pending')->first();
+
+        $submit_status = [
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status_id' => $status_pending->id,
+        ];
+
+        $timesheet_submit = Timesheet::where('id', $timesheet->id)->update($submit_status);
+
+        return redirect()->route('timesheets.create');
 
         /*$workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
 
@@ -235,7 +245,7 @@ class TimesheetsController extends Controller
    
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 
-        /*$mailData = [
+        $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io',
             'file' => $file,
@@ -246,7 +256,7 @@ class TimesheetsController extends Controller
         return response()->json([
             'message' => 'Email has been sent.'
         ], Response::HTTP_OK);
-*/
+
            $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io'
