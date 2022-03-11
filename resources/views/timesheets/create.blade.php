@@ -106,7 +106,7 @@
                             <tfoot class="bg-gray-50 w-full">
                                 <tr class="w-full">                       
                                     <th scope="col" colspan="4" class="py-4  text-left px-3 text-lg font-medium text-black-800  tracking-wider">Total hours</th>    
-                                    <th> hrs</th>
+                                    <th> {{ isset($timesheet->workdays) ? $timesheet->workdays->sum('total_hours') : 0 }} hrs</th>
                                 </tr>
                             </tfoot>
 
