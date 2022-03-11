@@ -163,9 +163,9 @@
                             <div class="flex my-3">
                                 <label>In time</label>
                                 <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
-                                    <option value="00:00" selected>00:00</option>
+                                    <option value="00:00">00:00</option>
                                     <option value="00:30:00">00:30 AM</option>
-                                    <option value="01:00:00">01:00 AM</option>
+                                    <option value="01:00:00" selected>01:00 AM</option>
                                     <option value="01:30:00">01:30 AM</option>
                                     <option value="02:00:00">02:00 AM</option>
                                     <option value="02:30:00">02:30 AM</option>
@@ -217,7 +217,7 @@
                             <div class="flex my-3">
                                 <label>Out time</label>
                                 <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_out_time">
-                                    <option value="00:00" selected>00:00</option>
+                                    <option value="00:00">00:00</option>
                                     <option value="00:30:00">00:30 AM</option>
                                     <option value="01:00:00">01:00 AM</option>
                                     <option value="01:30:00">01:30 AM</option>
@@ -233,7 +233,7 @@
                                     <option value="06:30:00">06:30 AM</option>
                                     <option value="07:00:00">07:00 AM</option>
                                     <option value="07:30:00">07:30 AM</option>
-                                    <option value="08:00:00">08:00 AM</option>
+                                    <option value="08:00:00" selected>08:00 AM</option>
                                     <option value="08:30:00">08:30 AM</option>
                                     <option value="09:00:00">09:00 AM</option>
                                     <option value="09:30:00">09:30 AM</option>
@@ -271,9 +271,9 @@
                             <div class="flex my-3">
                                 <label>Break time</label>
                                 <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
-                                    <option value="0" selected>00:00</option>
+                                    <option value="0">00:00</option>
                                     <option value="0.5">00:30 hour</option>
-                                    <option value="1">01:00 hour</option>
+                                    <option value="1" selected>01:00 hour</option>
                                     <option value="1.5">01:30 hour</option>
                                     <option value="2">02:00 hour</option>
                                     <option value="2.5">02:30 hour</option>
@@ -364,11 +364,15 @@
                     @csrf
 
                     <div id="mailsend" class="text-center mt-4">
-                        @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
+                       
                         <div class="flex items-center justify-center">
-                            <input type="checkbox" name="supervisor_ids[]" value="{{ $row->supervisor->id }}" class="my-2 mx-2"> {{ $row->supervisor->name }}
+                            <select name="supervisor_ids[]" class="w-48 p-1 border border-gray-400 outline-none rounded-lg">
+                                @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
+                                <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        @endforeach
+                        
                     </div>
                     <div class="flex justify-center">
                         <button id="sendemail" type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
@@ -505,6 +509,10 @@ $(document).ready(function() {
 
     });
 
+     /* $('#sendemail')
+      let msg = "{{ session()->get('message') }}";
+        swal('Success', msg, 'success');
+     */
 });
 </script>
 

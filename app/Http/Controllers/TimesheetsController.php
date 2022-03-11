@@ -29,17 +29,17 @@ class TimesheetsController extends Controller
     public function index()
     {   
         
-        $status_pending = getStatusId('pending');
+        $status_pending = TimesheetStatuses::where('name','pending')->first();
 
-        $status_approved = getStatusId('approved');
+        $status_approved = TimesheetStatuses::where('name','approved')->first();
 
-        $timesheets = Timesheet::where('status_id', $status_pending)->get();
+        $timesheets = Timesheet::where('status_id', $status_pending->id)->get();
 
         $approved_timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
         ->select('timesheets.day_weekend')
         ->addSelect(DB::raw('COUNT(DISTINCT(timesheets.id)) as total_timesheets'))
         ->addSelect(DB::raw('SUM(workdays.total_hours) as total_hours'))
-        ->where('timesheets.status_id', $status_approved)
+        ->where('timesheets.status_id', $status_approved->id)
         ->groupBy('timesheets.day_weekend')
         ->get();
 
@@ -49,6 +49,7 @@ class TimesheetsController extends Controller
 
     public function update(Timesheet $timesheet)
     {   
+
         $status_approved = TimesheetStatuses::where('name','approved')->first();
 
         $update_status = [
@@ -59,7 +60,7 @@ class TimesheetsController extends Controller
 
         $timesheet = Timesheet::where('id', $timesheet->id)->update($update_status);
 
-        return redirect()->route('timesheets')->with('message', 'Timesheet approved successfully!');
+       return redirect()->route('timesheets')->with('message', 'Timesheet approved successfully!');
     }
 
     public function approved($day_weekend)
@@ -151,6 +152,7 @@ class TimesheetsController extends Controller
 
        
         
+
         $shifts = Shift::all();
 
         return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts', 'timesheet']));
@@ -235,7 +237,7 @@ class TimesheetsController extends Controller
    
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 
-        /*$mailData = [
+        $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io',
             'file' => $file,
@@ -243,16 +245,10 @@ class TimesheetsController extends Controller
   
         Mail::to($supervisor_emails)->send(new SubmitTimesheetEmail($mailData, $timesheet));
    
-        return response()->json([
-            'message' => 'Email has been sent.'
-        ], Response::HTTP_OK);
-*/
-           $mailData = [
-            'title' => 'Demo Email',
-            'url' => 'https://www.positronx.io'
-        ];
+        return redirect()->route('timesheets.create')->with('message', 'Mail send successfully!');
 
         return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
+
 
     }
 
