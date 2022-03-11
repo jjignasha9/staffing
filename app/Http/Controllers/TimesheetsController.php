@@ -161,8 +161,18 @@ class TimesheetsController extends Controller
 
     public function edit(Timesheet $timesheet)
     {
+        $status_pending = TimesheetStatuses::where('name','pending')->first();
 
-        $workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
+        $submit_status = [
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status_id' => $status_pending->id,
+        ];
+
+        $timesheet_submit = Timesheet::where('id', $timesheet->id)->update($submit_status);
+
+        return redirect()->route('timesheets.create');
+
+        /*$workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
 
         $weekend = $timesheet->day_weekend;
 
@@ -207,7 +217,7 @@ class TimesheetsController extends Controller
 
         $shifts = Shift::all();
 
-        return view('timesheets.edit', compact(['timesheet', 'weekdays', 'shifts', 'weekend']));
+        return view('timesheets.edit', compact(['timesheet', 'weekdays', 'shifts', 'weekend']));*/
     }
 
 
@@ -246,6 +256,16 @@ class TimesheetsController extends Controller
         Mail::to($supervisor_emails)->send(new SubmitTimesheetEmail($mailData, $timesheet));
    
         return redirect()->route('timesheets.create')->with('message', 'Mail send successfully!');
+
+        return response()->json([
+            'message' => 'Email has been sent.'
+        ], Response::HTTP_OK);
+
+           $mailData = [
+            'title' => 'Demo Email',
+            'url' => 'https://www.positronx.io'
+        ];
+
 
         return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
 

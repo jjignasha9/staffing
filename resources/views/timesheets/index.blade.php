@@ -27,7 +27,7 @@
                               </thead>
                               <tbody class="bg-white divide-y divide-gray-200">
                                    @foreach($timesheets as $timesheet)
-                                       <tr class="cursor-pointer hover:bg-gray-100" onclick="window.location.replace('{{ route('timesheets.edit', $timesheet->id) }}')">
+                                       <tr class="cursor-pointer hover:bg-gray-100" onclick="window.location.replace('{{ route('timesheets.show', $timesheet->id) }}')">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                               <div class="text-sm font-medium text-gray-900">{{ $timesheet->client->name }}</div>
                                             </td>
