@@ -8,17 +8,26 @@
 <body>
 	<center>
      <header>Timesheet</header>
+     <table>
+     	<tr>
+     		<td>Client name:</td>
+     		<td>{{ $timesheet->client->name }}</td>
+     	</tr>
+     </table>
 
-     <div class="list">Client name: {{ $timesheet->client->name }}</div>
-     <div class="expenses">Employee name: {{ $timesheet->employee->name }} - {{ $timesheet->workdays->sum('total_hours') }} hrs</div>
-     <div class="list">Supervisor name: {{ $timesheet->supervisor->name }}</div>
-     <div class="list"> Weekending date: {{ $timesheet->day_weekend }}</div>
-
+   
      <a href="{{ route('timesheets') }}">View and approve</a>
 
     </center>
 </body>
 </html>
+ <!--  <div class="list">Client name: {{ $timesheet->client->name }}</div>
+     <div class="expenses">Employee name: {{ $timesheet->employee->name }} - {{ $timesheet->workdays->sum('total_hours') }} hrs</div>
+     <div class="list">Supervisor name: {{ $timesheet->supervisor->name }}</div>
+     <div class="list"> Weekending date: {{ $timesheet->day_weekend }}</div> -->
+
+
+
 <style type="text/css">
 
 	header {
@@ -27,6 +36,7 @@
 		font-size: 30px;
 		text-align: center;
 		padding:20px;
+		width: 50%;
 	}
 
 	.expenses{

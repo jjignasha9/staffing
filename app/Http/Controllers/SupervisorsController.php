@@ -67,7 +67,7 @@ class SupervisorsController extends Controller
         $supervisor = User::find($id);
         $supervisor->name = $request->name;
         $supervisor->email = $request->email;
-        $supervisor->address = $request->address;
+        $supervisor->address = $request->address;,
         $supervisor->save();
 
         $client_id = $supervisor->client->client_id;
@@ -87,3 +87,9 @@ class SupervisorsController extends Controller
         ], 200);
     }
 }
+
+
+
+
+
+                                                           

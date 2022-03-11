@@ -236,7 +236,7 @@ class TimesheetsController extends Controller
    
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 
-        $mailData = [
+        /*$mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io',
             'file' => $file,
@@ -247,7 +247,7 @@ class TimesheetsController extends Controller
         return response()->json([
             'message' => 'Email has been sent.'
         ], Response::HTTP_OK);
-
+*/
            $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io'
