@@ -180,6 +180,10 @@
                                 Add 
                             @elseif (Request::segment(2) == 'edit')
                                 Update
+                            @elseif (Request::segment(2) == 'show')
+                                Show
+                            @elseif (Request::segment(2) == 'approved')
+                                Approve
                             @endif
                         </span>
 

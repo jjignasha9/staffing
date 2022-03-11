@@ -160,7 +160,7 @@ class TimesheetsController extends Controller
     public function edit(Timesheet $timesheet)
     {
 
-        $workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
+        /*$workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
 
         $weekend = $timesheet->day_weekend;
 
@@ -205,7 +205,7 @@ class TimesheetsController extends Controller
 
         $shifts = Shift::all();
 
-        return view('timesheets.edit', compact(['timesheet', 'weekdays', 'shifts', 'weekend']));
+        return view('timesheets.edit', compact(['timesheet', 'weekdays', 'shifts', 'weekend']));*/
     }
 
 
