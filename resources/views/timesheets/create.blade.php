@@ -273,7 +273,7 @@
                                 <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
                                     <option value="0">00:00</option>
                                     <option value="0.5">00:30 hour</option>
-                                    <option value="1" selected>01:00 hour</option>
+                                    <option value="1">01:00 hour</option>
                                     <option value="1.5">01:30 hour</option>
                                     <option value="2">02:00 hour</option>
                                     <option value="2.5">02:30 hour</option>
