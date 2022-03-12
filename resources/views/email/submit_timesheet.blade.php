@@ -31,12 +31,13 @@
 
      	<tr>
      		<td><b>Weekending date:</b></td>
-     		<td>{{ $timesheet->day_weekend }}</td>
+     		<td>Week Ending {{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d') }}</td>
+
      	</tr>
      </table>
 
    
-     <a href="{{ route('timesheets') }}">View and approve</a>
+     <a href="{{ route('timesheets.show', $timesheet->id) }}">View and approve</a>
 
     </center>
 </body>

@@ -165,7 +165,7 @@
                                 <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
                                     <option value="00:00">00:00</option>
                                     <option value="00:30:00">00:30 AM</option>
-                                    <option value="01:00:00" selected>01:00 AM</option>
+                                    <option value="01:00:00">01:00 AM</option>
                                     <option value="01:30:00">01:30 AM</option>
                                     <option value="02:00:00">02:00 AM</option>
                                     <option value="02:30:00">02:30 AM</option>
@@ -233,7 +233,7 @@
                                     <option value="06:30:00">06:30 AM</option>
                                     <option value="07:00:00">07:00 AM</option>
                                     <option value="07:30:00">07:30 AM</option>
-                                    <option value="08:00:00" selected>08:00 AM</option>
+                                    <option value="08:00:00">08:00 AM</option>
                                     <option value="08:30:00">08:30 AM</option>
                                     <option value="09:00:00">09:00 AM</option>
                                     <option value="09:30:00">09:30 AM</option>
@@ -366,7 +366,7 @@
                     <div id="mailsend" class="text-center mt-4">
                        
                         <div class="flex items-center justify-center">
-                            <select name="supervisor_ids[]" class="w-48 p-1 border border-gray-400 outline-none rounded-lg">
+                            <select name="supervisor_id" class="w-48 p-1 border border-gray-400 outline-none rounded-lg">
                                 @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
                                 <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
                                 @endforeach
@@ -375,7 +375,7 @@
                         
                     </div>
                     <div class="flex justify-center">
-                        <a href="{{ route('timesheets.edit', $timesheet->id) }}" id="sendemail" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</a> 
+                        <button id="sendemail" type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
                     </div>
                 </form>
 
@@ -424,9 +424,9 @@ $(document).ready(function() {
         } else {
             $('#comment').val('');
             $('#update_shift').val('');
-            $('#update_in_time').val('00:00');
-            $('#update_out_time').val('00:00');
-            $('#update_break').val('0');
+            $('#update_in_time').val('09:00:00');
+            $('#update_out_time').val('18:00:00');
+            $('#update_break').val('1');
             $('#total_hours').text('0 hrs');
 
             $('#workday_form').attr('action', "{{ route('workdays.store') }}");
@@ -509,6 +509,10 @@ $(document).ready(function() {
 
     });
 
+     /* $('#sendemail')
+      let msg = "{{ session()->get('message') }}";
+        swal('Success', msg, 'success');
+     */
 });
 </script>
 
