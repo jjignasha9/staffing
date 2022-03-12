@@ -170,7 +170,7 @@ class TimesheetsController extends Controller
 
         $timesheet_submit = Timesheet::where('id', $timesheet->id)->update($submit_status);
 
-        return redirect()->route('timesheets.create');
+        return redirect()->route('timesheets');
 
         /*$workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
 
