@@ -7,11 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SubmitTimesheetEmail extends Mailable
+class RejectTimesheetEmail extends Mailable
 {
     use Queueable, SerializesModels;
      public $timesheet;
-
     /**
      * Create a new message instance.
      *
@@ -27,14 +26,13 @@ class SubmitTimesheetEmail extends Mailable
      *
      * @return $this
      */
-
-    
     public function build()
     {
-        return $this->markdown('email.submit_timesheet')
-        ->subject('You have new timesheet for approval')
+        return $this->markdown('email.reject_timesheet')
+        ->subject('Your timesheet has been rejected')
         ->with([
-            'timesheet'=> $this->timesheet,
-        ])->attach($this->timesheet['file']);
+            'timesheet' => $this->timesheet
+        ]);
+        
     }
 }

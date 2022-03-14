@@ -284,8 +284,7 @@
                             <div class="flex my-3">
                                 <label>Shift</label>
                                 <select name="shift_id" class="w-48 ml-14 p-1 border border-gray-400 outline-none rounded-lg" id="update_shift">
-                                    <option value="">Select</option>
-
+                    
                                     @foreach($shifts as $shift)
                                         <option value="{{ $shift->id }}">{{ $shift->name }}</option>
                                     @endforeach
@@ -425,11 +424,11 @@ $(document).ready(function() {
 
         } else {
             $('#comment').val('');
-            $('#update_shift').val('');
+            $('#update_shift').val(2);
             $('#update_in_time').val('09:00:00');
             $('#update_out_time').val('18:00:00');
             $('#update_break').val('1');
-            $('#total_hours').text('0 hrs');
+            $('#total_hours').text('8 hrs');
 
             $('#workday_form').attr('action', "{{ route('workdays.store') }}");
         }

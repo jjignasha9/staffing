@@ -110,8 +110,8 @@ Route::get('/timesheets/create/{weekend?}', [TimesheetsController::class, 'creat
 Route::post('/timesheets/store', [TimesheetsController::class, 'store'])->name('timesheets.store')->middleware('role:2');
 Route::get('/timesheets/edit/{timesheet}', [TimesheetsController::class, 'edit'])->name('timesheets.edit')->middleware('role:2|4');
 Route::get('/timesheets/update/{timesheet}', [TimesheetsController::class, 'update'])->name('timesheets.update')->middleware('role:2|4');
-//Route::delete('/timesheets/destroy/{timesheet}', [TimesheetsController::class, 'destroy'])->name('timesheets.destroy');
 Route::get('/timesheets/approved/{timesheet}', [TimesheetsController::class, 'approved'])->name('timesheets.approved')->middleware('role:4');
+Route::get('/timesheets/reject/{timesheet}', [TimesheetsController::class, 'reject'])->name('timesheets.reject')->middleware('role:4');
 Route::get('/timesheets/pdf/{timesheet}', [TimesheetsController::class, 'createPdf'])->name('timesheets.create-pdf')->middleware('role:2');
 Route::post('/timesheets/submit/{timesheet}', [TimesheetsController::class, 'submit'])->name('timesheets.submit')->middleware('role:2');
 Route::get('/timesheets/show/{timesheet}', [TimesheetsController::class, 'show'])->name('timesheets.show')->middleware('role:4|1');

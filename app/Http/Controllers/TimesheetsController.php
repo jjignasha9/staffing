@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RejectTimesheetEmail;
 use App\Mail\SubmitTimesheetEmail;
 use App\Models\Shift;
 use App\Models\Timesheet;
@@ -10,12 +11,12 @@ use App\Models\User;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpFoundation\Response;
-use Storage;
 use Dompdf\Dompdf;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 
 
@@ -265,6 +266,7 @@ class TimesheetsController extends Controller
 
     }
 
+
     public function show(Timesheet $timesheet)
     {
         $workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
@@ -314,4 +316,59 @@ class TimesheetsController extends Controller
 
         return view('timesheets.show',compact(['timesheet', 'weekdays', 'shifts', 'weekend']));
     }
+
+
+    public function edit(Timesheet $timesheet)
+    {
+        //
+    }
+
+
+    public function createPdf(Timesheet $timesheet)
+    {
+
+        $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
+
+        $pdf = $pdf->setPaper('a4', 'landscape');
+
+        $save = Storage::put('public/timesheets/timesheet_'.$timesheet->id.'.pdf', $pdf->output());
+
+
+        return view('timesheets.pdf', compact(['timesheet']));
+
+    }
+
+    public function submit(Request $request, Timesheet $timesheet)
+    {   
+
+        $supervisor = User::find($request->supervisor_id);
+
+        $timesheet->update([
+            'supervisor_id' => $request->supervisor_id,
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status_id' => getStatusId('pending'),
+        ]);
+
+        $this->createPdf($timesheet);
+
+        $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
+
+        $timesheet['file'] = $file;
+
+        Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($timesheet));
+   
+        return redirect()->route('timesheets.create')->with('message', 'Timesheet submitted successfully!');
+
+    }
+
+    public function reject(Timesheet $timesheet)
+    {
+        $employee_email = $timesheet->employee->email;   
+
+        Mail::to($employee_email)->send(new RejectTimesheetEmail($timesheet));
+
+        return redirect()->route('timesheets')->with('message', 'Timesheet rejected successfully!');
+    }
+
+    
 }
