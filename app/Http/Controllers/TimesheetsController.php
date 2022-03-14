@@ -203,7 +203,7 @@ class TimesheetsController extends Controller
   
         Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($mailData, $timesheet));
    
-        return redirect()->route('timesheets.create')->with('message', 'Mail send successfully!');
+        return redirect()->route('timesheets.create')->with('message', 'Timesheet  submited successfully!');
 
         //return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
 
