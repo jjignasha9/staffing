@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RejectTimesheetEmail;
 use App\Mail\SubmitTimesheetEmail;
 use App\Models\Shift;
 use App\Models\Timesheet;
@@ -10,12 +11,12 @@ use App\Models\User;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpFoundation\Response;
-use Storage;
 use Dompdf\Dompdf;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 
 
@@ -72,6 +73,25 @@ class TimesheetsController extends Controller
         $weekend = $day_weekend;
 
         return view('timesheets.approved', compact(['timesheets', 'weekend']));
+    }
+
+    public function reject(Timesheet $timesheet)
+    {
+        $employee_email = $timesheet->employee->email;   
+
+         $mailData = [
+            'title' => 'Demo Email',
+            'url' => 'https://www.positronx.io'
+        ];
+  
+       
+        Mail::to($employee_email)->send(new RejectTimesheetEmail($mailData, $timesheet));
+
+        return redirect()->route('timesheets')->with('message', 'Timesheet rejected successfully!');
+   
+        return response()->json([
+            'message' => 'Email has been sent.'
+        ], Response::HTTP_OK);
     }
 
     public function create($weekend = 0)
@@ -192,6 +212,8 @@ class TimesheetsController extends Controller
         ]);
 
         $this->createPdf($timesheet);
+
+        $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
    
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 
@@ -200,7 +222,19 @@ class TimesheetsController extends Controller
             'url' => 'https://www.positronx.io',
             'file' => $file,
         ];
-  
+
+        
+   
+        return response()->json([
+            'message' => 'Email has been sent.'
+        ], Response::HTTP_OK);
+*/
+           $mailData = [
+            'title' => 'Demo Email',
+            'url' => 'https://www.positronx.io'
+        ];
+        
+
         Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($mailData, $timesheet));
    
         return redirect()->route('timesheets.create')->with('message', 'Timesheet  submited successfully!');
