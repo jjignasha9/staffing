@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('supervisor_id');
+            $table->unsignedBigInteger('supervisor_id')->nullable();
             $table->date('day_weekend');
             $table->dateTime('submitted_at')->nullable();
             $table->dateTime('approved_at')->nullable();
-            $table->unsignedBigInteger('approved_by');
+            $table->unsignedBigInteger('approved_by')->nullable();
             $table->unsignedBigInteger('status_id')->default(1);
             $table->boolean('is_paid')->default(false);
             $table->boolean('is_invoiced')->default(false);

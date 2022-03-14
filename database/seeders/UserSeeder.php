@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\ClientEmployee;
+use App\Models\ClientSupervisor;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -47,6 +49,16 @@ class UserSeeder extends Seeder
         ];
 
         User::insert($users);
+
+        ClientEmployee::insert([
+            'employee_id' => 2,
+            'client_id' => 3
+        ]);
+
+        ClientSupervisor::insert([
+            'client_id' => 3,
+            'supervisor_id' => 4
+        ]);
 
 
     }

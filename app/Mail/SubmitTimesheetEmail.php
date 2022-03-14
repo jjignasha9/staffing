@@ -10,7 +10,6 @@ use Illuminate\Queue\SerializesModels;
 class SubmitTimesheetEmail extends Mailable
 {
     use Queueable, SerializesModels;
-     public $mailData;
      public $timesheet;
 
     /**
@@ -18,9 +17,8 @@ class SubmitTimesheetEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($mailData, $timesheet)
+    public function __construct($timesheet)
     {
-        $this->mailData = $mailData;
         $this->timesheet = $timesheet;
     }
 
@@ -34,9 +32,9 @@ class SubmitTimesheetEmail extends Mailable
     public function build()
     {
         return $this->markdown('email.submit_timesheet')
+        ->subject('You have new timesheet for approval')
         ->with([
-            'mailData'=> $this->mailData,
             'timesheet'=> $this->timesheet,
-        ])->attach($this->mailData['file']);
+        ])->attach($this->timesheet['file']);
     }
 }

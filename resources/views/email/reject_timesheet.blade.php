@@ -8,24 +8,40 @@
 <body>
 	<center>
      <header>Timesheet</header>
+     <p >Your timesheet has been rejected, please update and resubmit it.</p>
      <table>
      	<tr>
-     		<td>Client name:</td>
+     		<td><b>Client name:</b></td>
      		<td>{{ $timesheet->client->name }}</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Employee name:</b></td>
+     		<td>{{ $timesheet->employee->name }}</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Supervisor name:</b></td>
+     		<td>{{ $timesheet->supervisor->name }}</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Total hours:</b></td>
+     		<td>{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Weekending date:</b></td>
+     		<td>Week Ending {{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d') }}</td>
+
      	</tr>
      </table>
 
-     <div>Your Timesheet Has Been rejected</div>
+     <a href="{{ route('timesheets.show', $timesheet->id) }}">View and approve</a>
 
     </center>
 </body>
 </html>
- <!--  <div class="list">Client name: {{ $timesheet->client->name }}</div>
-     <div class="expenses">Employee name: {{ $timesheet->employee->name }} - {{ $timesheet->workdays->sum('total_hours') }} hrs</div>
-     <div class="list">Supervisor name: {{ $timesheet->supervisor->name }}</div>
-     <div class="list"> Weekending date: {{ $timesheet->day_weekend }}</div> -->
-
-
 
 <style type="text/css">
 
@@ -38,17 +54,31 @@
 		width: 50%;
 	}
 
-	div {
-		background-color:red;
-		color: white;
-		font-size: 20px;
-		text-align: center;
-		padding:20px;
-		width: 50%;
+	a:link, a:visited {
+	  background-color: rgb(0, 163, 108);
+	  color: white;
+	  padding: 15px 25px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 14px 2px;
 	}
 
-	body {
-		background-color: rgb(231 229 228);;
+	table {
+	  width: 30%;
+	  margin-top: 15px;
+	  color: black;
 	}
+
+	td {
+	  font-size: 17px;
+
+	}
+
+	p {
+		text-align: center;
+	}
+
   }
 </style>
