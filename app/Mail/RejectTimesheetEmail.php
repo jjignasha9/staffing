@@ -10,16 +10,14 @@ use Illuminate\Queue\SerializesModels;
 class RejectTimesheetEmail extends Mailable
 {
     use Queueable, SerializesModels;
-     public $mailData;
      public $timesheet;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($mailData, $timesheet)
+    public function __construct($timesheet)
     {
-        $this->mailData = $mailData;
         $this->timesheet = $timesheet;
     }
 
@@ -31,7 +29,10 @@ class RejectTimesheetEmail extends Mailable
     public function build()
     {
         return $this->markdown('email.reject_timesheet')
-        ->with('mailData', $this->mailData);
+        ->subject('Your timesheet has been rejected')
+        ->with([
+            'timesheet' => $this->timesheet
+        ]);
         
     }
 }

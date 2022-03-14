@@ -424,7 +424,7 @@ $(document).ready(function() {
 
         } else {
             $('#comment').val('');
-            $('#update_shift').val('1st shift');
+            $('#update_shift').val(2);
             $('#update_in_time').val('09:00:00');
             $('#update_out_time').val('18:00:00');
             $('#update_break').val('1');

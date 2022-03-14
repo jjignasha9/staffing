@@ -75,25 +75,6 @@ class TimesheetsController extends Controller
         return view('timesheets.approved', compact(['timesheets', 'weekend']));
     }
 
-    public function reject(Timesheet $timesheet)
-    {
-        $employee_email = $timesheet->employee->email;   
-
-         $mailData = [
-            'title' => 'Demo Email',
-            'url' => 'https://www.positronx.io'
-        ];
-  
-       
-        Mail::to($employee_email)->send(new RejectTimesheetEmail($mailData, $timesheet));
-
-        return redirect()->route('timesheets')->with('message', 'Timesheet rejected successfully!');
-   
-        return response()->json([
-            'message' => 'Email has been sent.'
-        ], Response::HTTP_OK);
-    }
-
     public function create($weekend = 0)
     {   
         $temp_weekend = $weekend;
@@ -179,70 +160,6 @@ class TimesheetsController extends Controller
     }
 
 
-    public function edit(Timesheet $timesheet)
-    {
-        
-    }
-
-
-
-    public function createPdf(Timesheet $timesheet)
-    {
-
-        $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
-
-        $pdf = $pdf->setPaper('a4', 'landscape');
-
-        $save = Storage::put('public/timesheets/timesheet_'.$timesheet->id.'.pdf', $pdf->output());
-
-
-        return view('timesheets.pdf', compact(['timesheet']));
-
-    }
-
-    public function submit(Request $request, Timesheet $timesheet)
-    {   
-
-        $supervisor = User::find($request->supervisor_id);
-
-        $timesheet->update([
-            'supervisor_id' => $request->supervisor_id,
-            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'status_id' => getStatusId('pending'),
-        ]);
-
-        $this->createPdf($timesheet);
-
-        $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
-   
-        $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
-
-        $mailData = [
-            'title' => 'Demo Email',
-            'url' => 'https://www.positronx.io',
-            'file' => $file,
-        ];
-
-        
-   
-        return response()->json([
-            'message' => 'Email has been sent.'
-        ], Response::HTTP_OK);
-*/
-           $mailData = [
-            'title' => 'Demo Email',
-            'url' => 'https://www.positronx.io'
-        ];
-        
-
-        Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($mailData, $timesheet));
-   
-        return redirect()->route('timesheets.create')->with('message', 'Mail send successfully!');
-
-        //return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
-
-    }
-
     public function show(Timesheet $timesheet)
     {
         $workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
@@ -292,4 +209,59 @@ class TimesheetsController extends Controller
 
         return view('timesheets.show',compact(['timesheet', 'weekdays', 'shifts', 'weekend']));
     }
+
+
+    public function edit(Timesheet $timesheet)
+    {
+        //
+    }
+
+
+    public function createPdf(Timesheet $timesheet)
+    {
+
+        $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
+
+        $pdf = $pdf->setPaper('a4', 'landscape');
+
+        $save = Storage::put('public/timesheets/timesheet_'.$timesheet->id.'.pdf', $pdf->output());
+
+
+        return view('timesheets.pdf', compact(['timesheet']));
+
+    }
+
+    public function submit(Request $request, Timesheet $timesheet)
+    {   
+
+        $supervisor = User::find($request->supervisor_id);
+
+        $timesheet->update([
+            'supervisor_id' => $request->supervisor_id,
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status_id' => getStatusId('pending'),
+        ]);
+
+        $this->createPdf($timesheet);
+
+        $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
+
+        $timesheet['file'] = $file;
+
+        Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($timesheet));
+   
+        return redirect()->route('timesheets.create')->with('message', 'Timesheet submitted successfully!');
+
+    }
+
+    public function reject(Timesheet $timesheet)
+    {
+        $employee_email = $timesheet->employee->email;   
+
+        Mail::to($employee_email)->send(new RejectTimesheetEmail($timesheet));
+
+        return redirect()->route('timesheets')->with('message', 'Timesheet rejected successfully!');
+    }
+
+    
 }
