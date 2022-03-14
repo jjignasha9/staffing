@@ -15,7 +15,7 @@
      	</tr>
      </table>
 
-     <h1>Your Timesheet Has Been rejected</h1>
+     <div>Your Timesheet Has Been rejected</div>
 
     </center>
 </body>
@@ -38,38 +38,13 @@
 		width: 50%;
 	}
 
-	h1 {
-		background-color: rgb(52, 152, 219);
+	div {
+		background-color:red;
 		color: white;
-		font-size: 30px;
+		font-size: 20px;
 		text-align: center;
 		padding:20px;
-		width: 20%;
-	}
-
-	.expenses{
-		font-size:30px;
-		margin-top:30px;
-		color: black;
-	}
-
-	.list{
-		font-size:20px;
-		margin-top:5px;
-		font-size:20px;
-		color: black;
-
-	}
-
-	a:link, a:visited {
-	  background-color: rgb(0, 163, 108);
-	  color: white;
-	  padding: 15px 25px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 16px;
-	  margin: 14px 2px;
+		width: 50%;
 	}
 
 	body {

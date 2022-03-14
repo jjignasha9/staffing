@@ -94,7 +94,7 @@
                          <a href="{{ route('timesheets.update', $timesheet->id) }}" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Approve</a>
                    </div>
                    <div class="flex justify-center">
-                        <a href="{{ route('timesheets.reject', $timesheet->id) }}" class="bg-red-500 hover:bg-red-600 p-2 rounded-full my-3 text-white px-4">Reject</a>
+                        <a href="{{ route('timesheets.reject', $timesheet->id) }}" class="bg-red-500 hover:bg-red-600 p-2 rounded-full my-3 text-white px-4" id="reject_timesheet">Reject</a>
                     </div>  
                 @else
                     <div class="flex justify-center">
@@ -385,6 +385,7 @@ $(document).ready(function() {
         $("#disabled").attr('disabled','disabled');
     }); 
 
+   
 });
 
 
