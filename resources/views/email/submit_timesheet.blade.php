@@ -10,23 +10,37 @@
      <header>Timesheet</header>
      <table>
      	<tr>
-     		<td>Client name:</td>
+     		<td><b>Client name:</b></td>
      		<td>{{ $timesheet->client->name }}</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Employee name:</b></td>
+     		<td>{{ $timesheet->employee->name }}</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Supervisor name:</b></td>
+     		<td>{{ $timesheet->supervisor->name }}</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Total hours:</b></td>
+     		<td>{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
+     	</tr>
+
+     	<tr>
+     		<td><b>Weekending date:</b></td>
+     		<td>Week Ending {{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d') }}</td>
+
      	</tr>
      </table>
 
-   
-     <a href="{{ route('timesheets') }}">View and approve</a>
+     <a href="{{ route('timesheets.show', $timesheet->id) }}">View and approve</a>
 
     </center>
 </body>
 </html>
- <!--  <div class="list">Client name: {{ $timesheet->client->name }}</div>
-     <div class="expenses">Employee name: {{ $timesheet->employee->name }} - {{ $timesheet->workdays->sum('total_hours') }} hrs</div>
-     <div class="list">Supervisor name: {{ $timesheet->supervisor->name }}</div>
-     <div class="list"> Weekending date: {{ $timesheet->day_weekend }}</div> -->
-
-
 
 <style type="text/css">
 
@@ -37,20 +51,6 @@
 		text-align: center;
 		padding:20px;
 		width: 50%;
-	}
-
-	.expenses{
-		font-size:30px;
-		margin-top:30px;
-		color: black;
-	}
-
-	.list{
-		font-size:20px;
-		margin-top:5px;
-		font-size:20px;
-		color: black;
-
 	}
 
 	a:link, a:visited {
@@ -64,8 +64,16 @@
 	  margin: 14px 2px;
 	}
 
-	body {
-		background-color: rgb(231 229 228);;
+	table {
+	  width: 30%;
+	  margin-top: 15px;
+	  color: black;
 	}
+
+	td {
+	  font-size: 17px;
+
+	}
+
   }
 </style>

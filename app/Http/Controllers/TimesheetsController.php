@@ -30,17 +30,17 @@ class TimesheetsController extends Controller
     public function index()
     {   
         
-        $status_pending = getStatusId('pending');
+        $status_pending = TimesheetStatuses::where('name','pending')->first();
 
-        $status_approved = getStatusId('approved');
+        $status_approved = TimesheetStatuses::where('name','approved')->first();
 
-        $timesheets = Timesheet::where('status_id', $status_pending)->get();
+        $timesheets = Timesheet::where('status_id', $status_pending->id)->get();
 
         $approved_timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
         ->select('timesheets.day_weekend')
         ->addSelect(DB::raw('COUNT(DISTINCT(timesheets.id)) as total_timesheets'))
         ->addSelect(DB::raw('SUM(workdays.total_hours) as total_hours'))
-        ->where('timesheets.status_id', $status_approved)
+        ->where('timesheets.status_id', $status_approved->id)
         ->groupBy('timesheets.day_weekend')
         ->get();
 
@@ -50,6 +50,7 @@ class TimesheetsController extends Controller
 
     public function update(Timesheet $timesheet)
     {   
+
         $status_approved = TimesheetStatuses::where('name','approved')->first();
 
         $update_status = [
@@ -60,7 +61,7 @@ class TimesheetsController extends Controller
 
         $timesheet = Timesheet::where('id', $timesheet->id)->update($update_status);
 
-        return redirect()->route('timesheets')->with('message', 'Timesheet approved successfully!');
+       return redirect()->route('timesheets')->with('message', 'Timesheet approved successfully!');
     }
 
     public function approved($day_weekend)
@@ -171,6 +172,7 @@ class TimesheetsController extends Controller
 
        
         
+
         $shifts = Shift::all();
 
         return view('timesheets.create', compact(['weekend', 'temp_weekend', 'weekdays', 'shifts', 'timesheet']));
@@ -179,53 +181,7 @@ class TimesheetsController extends Controller
 
     public function edit(Timesheet $timesheet)
     {
-
-        /*$workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
-
-        $weekend = $timesheet->day_weekend;
-
-        $weekdays = [
-            [   
-                'name' => 'Mon',
-                'date' => Carbon::parse($weekend)->subDays(6)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(6)->format('Y-m-d'))->first() : [],
-            ], [
-              
-                'name' => 'Tue',
-                'date' => Carbon::parse($weekend)->subDays(5)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(5)->format('Y-m-d'))->first() : [],
-            ], [
-               
-                'name' => 'Wed',
-                'date' => Carbon::parse($weekend)->subDays(4)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(4)->format('Y-m-d'))->first() : [],
-            ], [
-              
-                'name' => 'Thu',
-                'date' => Carbon::parse($weekend)->subDays(3)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(3)->format('Y-m-d'))->first() : [],
-            ], [
-               
-                'name' => 'Fri',
-                'date' => Carbon::parse($weekend)->subDays(2)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(2)->format('Y-m-d'))->first() : [],
-            ], [
-                 
-                'name' => 'Sat',
-                'date' => Carbon::parse($weekend)->subDays(1)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(1)->format('Y-m-d'))->first() : [],
-            ], [
-                
-                'name' => 'Sun',
-                'date' => Carbon::parse($weekend)->format('m/d'),
-                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->format('Y-m-d'))->first() : [],
-            ], 
-        ];
-
-
-        $shifts = Shift::all();
-
-        return view('timesheets.edit', compact(['timesheet', 'weekdays', 'shifts', 'weekend']));*/
+        
     }
 
 
@@ -246,18 +202,27 @@ class TimesheetsController extends Controller
 
     public function submit(Request $request, Timesheet $timesheet)
     {   
+
+        $supervisor = User::find($request->supervisor_id);
+
+        $timesheet->update([
+            'supervisor_id' => $request->supervisor_id,
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status_id' => getStatusId('pending'),
+        ]);
+
         $this->createPdf($timesheet);
 
         $supervisor_emails = User::whereIn('id' , $request->supervisor_ids)->get()->pluck('email');
    
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 
-        /*$mailData = [
+        $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io',
             'file' => $file,
         ];
-  
+
         
    
         return response()->json([
@@ -269,9 +234,12 @@ class TimesheetsController extends Controller
             'url' => 'https://www.positronx.io'
         ];
         
-        Mail::to($supervisor_emails)->send(new SubmitTimesheetEmail($mailData, $timesheet));
 
-        return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
+        Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($mailData, $timesheet));
+   
+        return redirect()->route('timesheets.create')->with('message', 'Mail send successfully!');
+
+        //return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
 
     }
 

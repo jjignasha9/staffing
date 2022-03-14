@@ -163,7 +163,7 @@
                             <div class="flex my-3">
                                 <label>In time</label>
                                 <select name="in_time" class="w-48 ml-10 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_in_time">
-                                    <option value="00:00" selected>00:00</option>
+                                    <option value="00:00">00:00</option>
                                     <option value="00:30:00">00:30 AM</option>
                                     <option value="01:00:00">01:00 AM</option>
                                     <option value="01:30:00">01:30 AM</option>
@@ -217,7 +217,7 @@
                             <div class="flex my-3">
                                 <label>Out time</label>
                                 <select name="out_time" class="w-48 ml-7 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_out_time">
-                                    <option value="00:00" selected>00:00</option>
+                                    <option value="00:00">00:00</option>
                                     <option value="00:30:00">00:30 AM</option>
                                     <option value="01:00:00">01:00 AM</option>
                                     <option value="01:30:00">01:30 AM</option>
@@ -271,7 +271,7 @@
                             <div class="flex my-3">
                                 <label>Break time</label>
                                 <select name="break" class="w-48 ml-4 p-1 border border-gray-400 outline-none rounded-lg calc-total-hours" id="update_break" >
-                                    <option value="0" selected>00:00</option>
+                                    <option value="0">00:00</option>
                                     <option value="0.5">00:30 hour</option>
                                     <option value="1">01:00 hour</option>
                                     <option value="1.5">01:30 hour</option>
@@ -284,8 +284,7 @@
                             <div class="flex my-3">
                                 <label>Shift</label>
                                 <select name="shift_id" class="w-48 ml-14 p-1 border border-gray-400 outline-none rounded-lg" id="update_shift">
-                                    <option value="">Select</option>
-
+                    
                                     @foreach($shifts as $shift)
                                         <option value="{{ $shift->id }}">{{ $shift->name }}</option>
                                     @endforeach
@@ -364,14 +363,20 @@
                     @csrf
 
                     <div id="mailsend" class="text-center mt-4">
-                        @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
+                       
                         <div class="flex items-center justify-center">
-                            <input type="checkbox" name="supervisor_ids[]" value="{{ $row->supervisor->id }}" class="my-2 mx-2"> {{ $row->supervisor->name }}
+                            <select name="supervisor_id" class="w-48 p-1 border border-gray-400 outline-none rounded-lg">
+                                @foreach(Auth::user()->client_by_employee->client->supervisors as $row)
+                                <option value="{{ $row->supervisor->id }}">{{ $row->supervisor->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        @endforeach
+                        
                     </div>
                     <div class="flex justify-center">
+
                         <button id="sendemail" type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
+
                     </div>
                 </form>
 
@@ -419,11 +424,11 @@ $(document).ready(function() {
 
         } else {
             $('#comment').val('');
-            $('#update_shift').val('');
-            $('#update_in_time').val('00:00');
-            $('#update_out_time').val('00:00');
-            $('#update_break').val('0');
-            $('#total_hours').text('0 hrs');
+            $('#update_shift').val('1st shift');
+            $('#update_in_time').val('09:00:00');
+            $('#update_out_time').val('18:00:00');
+            $('#update_break').val('1');
+            $('#total_hours').text('8 hrs');
 
             $('#workday_form').attr('action', "{{ route('workdays.store') }}");
         }
@@ -505,6 +510,10 @@ $(document).ready(function() {
 
     });
 
+     /* $('#sendemail')
+      let msg = "{{ session()->get('message') }}";
+        swal('Success', msg, 'success');
+     */
 });
 </script>
 

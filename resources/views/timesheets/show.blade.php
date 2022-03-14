@@ -342,7 +342,7 @@ $(document).ready(function() {
         } else {
             $('#comment').val('');
             $('#update_shift').val('');
-            $('#update_in_time').val('');
+            $('#update_in_time').val('01:00:00');
             $('#update_out_time').val('');
             $('#update_break').val('');
 

@@ -34,10 +34,9 @@ class SubmitTimesheetEmail extends Mailable
     public function build()
     {
         return $this->markdown('email.submit_timesheet')
-        ->with('mailData', $this->mailData)->attach($this->mailData['file']);
-        with([
+        ->with([
             'mailData'=> $this->mailData,
             'timesheet'=> $this->timesheet,
-        ]);
+        ])->attach($this->mailData['file']);
     }
 }
