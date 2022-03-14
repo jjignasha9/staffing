@@ -197,7 +197,7 @@
                                      <option value="">Select</option>
                                     <option value="00:00:00">00:00</option>
                                     <option value="00:30:00">00:30</option>
-                                    <option value="01:00:00" selected>01:00</option>
+                                    <option value="01:00:00">01:00</option>
                                     <option value="01:30:00">01:30</option>
                                     <option value="02:00:00">02:00</option>
                                     <option value="02:30:00">02:30</option>
@@ -252,7 +252,7 @@
                                      <option value="">Select</option>
                                     <option value="0">00:00</option>
                                     <option value="0.5">00:30</option>
-                                    <option value="1" selected>01:00</option>
+                                    <option value="1">01:00</option>
                                     <option value="1.5">01:30</option>
                                     <option value="2">02:00</option>
                                     <option value="2.5">02:30</option>
