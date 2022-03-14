@@ -238,6 +238,13 @@ class TimesheetsController extends Controller
 
     public function submit(Request $request, Timesheet $timesheet)
     {   
+
+        $timesheet->update([
+            'supervisor_id' => $request->supervisor_id,
+            'status_id' => getStatusId('pending'),
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        
         $this->createPdf($timesheet);
 
         $supervisor = User::find($request->supervisor_id);
