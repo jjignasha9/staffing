@@ -92,7 +92,7 @@ Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destro
 
 
 /* Payrolls */
-Route::get('/payrolls', [PayrollsController::class, 'index'])->name('payrolls');
+Route::get('/payrolls/{day_weekend?}', [PayrollsController::class, 'index'])->name('payrolls');
 Route::get('/payrolls/create', [PayrollsController::class, 'create'])->name('payrolls.create');
 Route::post('/payrolls/store', [PayrollsController::class, 'store'])->name('payrolls.store');
 Route::get('/payrolls/edit/{payroll}', [PayrollsController::class, 'edit'])->name('payrolls.edit');
@@ -101,7 +101,6 @@ Route::post('/payrolls/update/{payroll}', [PayrollsController::class, 'update'])
 Route::delete('/payrolls/destroy/{payroll}', [PayrollsController::class, 'destroy'])->name('payrolls.destroy');
 
 });
-
 
 
 /* Timesheet */
