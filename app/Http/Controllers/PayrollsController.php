@@ -13,6 +13,7 @@ class PayrollsController extends Controller
      */
     public function index()
     {
+        $approved_data = 
         return view('payrolls.index');
     }
 
