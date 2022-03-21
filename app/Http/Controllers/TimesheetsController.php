@@ -43,6 +43,7 @@ class TimesheetsController extends Controller
         ->where('timesheets.status_id', $status_approved->id)
         ->groupBy('timesheets.day_weekend')
         ->get();
+        
 
 
         return view('timesheets.index', compact(['timesheets','approved_timesheets']));
@@ -269,6 +270,7 @@ class TimesheetsController extends Controller
 
     public function show(Timesheet $timesheet)
     {
+       
         $workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
 
         $weekend = $timesheet->day_weekend;

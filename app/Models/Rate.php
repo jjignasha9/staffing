@@ -23,4 +23,6 @@ class Rate extends Model
             return $this->hasOne(shift::class, 'id', 'shift_id');
       }
 
+     
+
 }
