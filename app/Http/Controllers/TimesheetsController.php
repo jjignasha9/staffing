@@ -258,6 +258,10 @@ class TimesheetsController extends Controller
 
     public function reject(Timesheet $timesheet)
     {
+         $timesheet->update([
+            'status_id' => getStatusId('draft'),
+         ]);
+      
         $employee_email = $timesheet->employee->email;   
 
         Mail::to($employee_email)->send(new RejectTimesheetEmail($timesheet));

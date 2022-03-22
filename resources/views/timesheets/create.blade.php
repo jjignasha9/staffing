@@ -118,8 +118,8 @@
 
 
         @if($timesheet)
-        <div class="flex justify-center">
-             <button class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
+        <div class="flex justify-center mt-5">
+             <button name="submit" class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
         </div>
         @endif
 </div>
@@ -359,7 +359,7 @@
                 </div>
 
 
-                <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST">
+                <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST"  onsubmit="return checkForm(this);">
                     @csrf
 
                     <div id="mailsend" class="text-center mt-4">
@@ -510,10 +510,6 @@ $(document).ready(function() {
 
     });
 
-     /* $('#sendemail')
-      let msg = "{{ session()->get('message') }}";
-        swal('Success', msg, 'success');
-     */
 });
 </script>
 
