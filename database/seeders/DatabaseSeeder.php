@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ShiftSeeder::class,
             TimesheetStatusesSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

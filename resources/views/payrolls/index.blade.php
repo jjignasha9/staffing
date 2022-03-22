@@ -27,6 +27,7 @@
 
 				</div>
 			</div>
+			<div class="bg-white mt-5 rounded-xl p-5">
 			<?php 
 				$total_hours = 0;
 				$total_amount = 0;
@@ -88,7 +89,58 @@
 			 
 			 ?>  
 			@endforeach
-
+	        <div class="mt-5">
+	        	<a href="" class="flex items-center justify-center">
+	        		<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 p-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Add Employee</span>
+	        	</a>
+	        </div>
+	        <div class="bg-white p-6 rounded-xl mt-5">	
+            	<div class="grid grid-cols-12">
+            		<div class="col-span-2 text-center">
+            			<div class="text-lg font-semibold">3</div>
+            			<div class="text-sm">EMPLOYEES</div>
+            		</div>
+            		
+            		<div class="col-span-3 text-center">
+            			<div class="text-lg font-semibold">111 hrs</div>
+            			<div class="text-sm">REGULAR</div>
+            		</div>
+            		<div class="col-span-2 text-center">
+            			<div class="text-lg font-semibold">7.5 hrs</div> 
+            			<div class="text-sm">OT</div>
+            		</div>
+            		<div class="col-span-3 text-center">
+            			<div class="text-lg font-semibold">118.5</div> 
+            			<div class="text-sm">TOTAL HOURS</div>
+            		</div>
+            		<div class="col-span-2 px-5 text-center">
+            			<div class="text-lg font-semibold">$ 2,288.73</div> 
+            			<div class="text-sm">TOTAL</div>
+            		</div>
+            	</div>
+            	<div class="flex items-center justify-between">
+            		<div class="flex items-center mt-10">
+		            	<div>
+		            		<div>
+			            		<span class="m-3">Pay day</span>
+			            	    <div class="bg-slate-100 rounded-full py-1 px-5 text-sm w-40 mt-2">2/27/2022</div>
+				            </div>
+			           </div>
+			            <div class="ml-20">
+		            		<div>
+			            		<span class="m-3">Pay period</span>
+			            	    <div class="bg-slate-100 rounded-full py-1 px-5 text-sm w-40 mt-2">2/27/2022</div>
+				            </div>
+			            </div>
+		            </div>
+		            <div>
+		            	<button class="bg-blue-700 text-white py-1 px-4 rounded-full">Preview payroll</button>
+		            </div>
+	            </div>
+            </div>
 
 			<div class="bg-white p-6 rounded-xl mt-10">	
 				<div class="grid grid-cols-12">

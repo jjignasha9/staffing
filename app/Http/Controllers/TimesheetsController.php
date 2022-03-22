@@ -161,6 +161,113 @@ class TimesheetsController extends Controller
     }
 
 
+    public function edit(Timesheet $timesheet)
+    {
+        $status_pending = TimesheetStatuses::where('name','pending')->first();
+
+        $submit_status = [
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'status_id' => $status_pending->id,
+        ];
+
+        $timesheet_submit = Timesheet::where('id', $timesheet->id)->update($submit_status);
+
+        return redirect()->route('timesheets');
+
+        /*$workdays = isset($timesheet->workdays) ? $timesheet->workdays : collect([]);
+
+        $weekend = $timesheet->day_weekend;
+
+        $weekdays = [
+            [   
+                'name' => 'Mon',
+                'date' => Carbon::parse($weekend)->subDays(6)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(6)->format('Y-m-d'))->first() : [],
+            ], [
+              
+                'name' => 'Tue',
+                'date' => Carbon::parse($weekend)->subDays(5)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(5)->format('Y-m-d'))->first() : [],
+            ], [
+               
+                'name' => 'Wed',
+                'date' => Carbon::parse($weekend)->subDays(4)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(4)->format('Y-m-d'))->first() : [],
+            ], [
+              
+                'name' => 'Thu',
+                'date' => Carbon::parse($weekend)->subDays(3)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(3)->format('Y-m-d'))->first() : [],
+            ], [
+               
+                'name' => 'Fri',
+                'date' => Carbon::parse($weekend)->subDays(2)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(2)->format('Y-m-d'))->first() : [],
+            ], [
+                 
+                'name' => 'Sat',
+                'date' => Carbon::parse($weekend)->subDays(1)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->subDays(1)->format('Y-m-d'))->first() : [],
+            ], [
+                
+                'name' => 'Sun',
+                'date' => Carbon::parse($weekend)->format('m/d'),
+                'workday' => isset($workdays) ? $workdays->where('date', Carbon::parse($weekend)->format('Y-m-d'))->first() : [],
+            ], 
+        ];
+
+
+        $shifts = Shift::all();
+
+        return view('timesheets.edit', compact(['timesheet', 'weekdays', 'shifts', 'weekend']));*/
+    }
+
+
+
+    public function createPdf(Timesheet $timesheet)
+    {
+
+        $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
+
+        $pdf = $pdf->setPaper('a4', 'landscape');
+
+        $save = Storage::put('public/timesheets/timesheet_'.$timesheet->id.'.pdf', $pdf->output());
+
+
+        return view('timesheets.pdf', compact(['timesheet']));
+
+    }
+
+    public function submit(Request $request, Timesheet $timesheet)
+    {   
+
+        $timesheet->update([
+            'supervisor_id' => $request->supervisor_id,
+            'status_id' => getStatusId('pending'),
+            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        
+        $this->createPdf($timesheet);
+
+        $supervisor = User::find($request->supervisor_id);
+   
+        $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
+
+        $mailData = [
+            'title' => 'Demo Email',
+            'url' => 'https://www.positronx.io',
+            'file' => $file,
+        ];
+  
+        Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($mailData, $timesheet));
+   
+        return redirect()->route('timesheets.create')->with('message', 'Mail send successfully!');
+
+        //return view('email.submit_timesheet', compact(['timesheet' , 'mailData']));
+
+    }
+
+
     public function show(Timesheet $timesheet)
     {
        
@@ -213,48 +320,6 @@ class TimesheetsController extends Controller
     }
 
 
-    public function edit(Timesheet $timesheet)
-    {
-        //
-    }
-
-
-    public function createPdf(Timesheet $timesheet)
-    {
-
-        $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
-
-        $pdf = $pdf->setPaper('a4', 'landscape');
-
-        $save = Storage::put('public/timesheets/timesheet_'.$timesheet->id.'.pdf', $pdf->output());
-
-
-        return view('timesheets.pdf', compact(['timesheet']));
-
-    }
-
-    public function submit(Request $request, Timesheet $timesheet)
-    {   
-
-        $supervisor = User::find($request->supervisor_id);
-
-        $timesheet->update([
-            'supervisor_id' => $request->supervisor_id,
-            'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'status_id' => getStatusId('pending'),
-        ]);
-
-        $this->createPdf($timesheet);
-
-        $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
-
-        $timesheet['file'] = $file;
-
-        Mail::to($supervisor->email)->send(new SubmitTimesheetEmail($timesheet));
-   
-        return redirect()->route('timesheets.create')->with('message', 'Timesheet submitted successfully!');
-
-    }
 
     public function reject(Timesheet $timesheet)
     {

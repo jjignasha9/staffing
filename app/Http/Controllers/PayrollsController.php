@@ -15,6 +15,7 @@ class PayrollsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index($active_day_weekend = null)
     {     
 
@@ -47,13 +48,11 @@ class PayrollsController extends Controller
         ->get()
         ->groupBy('timesheet_id');
 
-       
-
-
         //return response($day_weekends);
 
-        return view('payrolls.index', compact(['timesheets', 'day_weekends','active_day_weekend']));
-    }
+        return view('payrolls.index', compact(['timesheets', 'day_weekends','active_day_weekend']));   
+
+         }
 
     /**
      * Show the form for creating a new resource.
