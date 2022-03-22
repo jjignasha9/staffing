@@ -5,12 +5,12 @@
 	<div class="grid grid-cols-12">
 		<div class="col-span-2">
 			<div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-3">
-				<a href="">
+				<a href="{{ route('payrolls') }}">
 					RUN PAYROLL
 				</a>
 			</div>
 			<div class="text-gray-500 hover:text-slate-900 hover:font-semibold mt-5 text-sm">
-				<a href="">
+				<a href="{{ route('payrolls.create') }}">
 					PAID PAYROLL
 				</a>
 			</div>

@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('chat', function (Blueprint $table) {
+        Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
-            $table->integer('sender_id');
-            $table->integer('receiver_id');
-            $table->string('message');
-            $table->dateTime('created_date_time');
+            $table->unsignedBigInteger('timesheet_id');
+            $table->integer('total_amount');
+            $table->unsignedBigInteger('payroll_status_id');
+            $table->foreign('timesheet_id')->references('id')->on('timesheets');
+            $table->foreign('payroll_status_id')->references('id')->on('payroll_statuses');
             $table->timestamps();
         });
     }
@@ -30,7 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chat');
+        Schema::dropIfExists('payrolls');
     }
 };
-

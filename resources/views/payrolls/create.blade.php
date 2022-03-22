@@ -7,7 +7,7 @@
 	<div class="grid grid-cols-12">
 
 		<div class="col-span-2">
-			hi
+			hisfnkm
 		</div>
 
 		<div class="col-span-10">
