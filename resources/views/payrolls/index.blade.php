@@ -21,7 +21,7 @@
 					<span class="text-slate-900 text-sm mr-5">UNPAID TIMESHEETS</span>
 					@foreach($day_weekends as $day_weekend)
 					<a href="{{ route('payrolls',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-blue-700 text-white' : '' }}">
-							{{ Carbon\carbon::parse($day_weekend)->format('m/d') }}	
+							{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 					</a>
 					@endforeach
 
@@ -90,8 +90,6 @@
 			 ?>  
 			@endforeach
 	       </div>
-	       
-
 			<div class="bg-white p-6 rounded-xl mt-10">	
 				<div class="grid grid-cols-12">
 					<div class="col-span-4 text-center">
