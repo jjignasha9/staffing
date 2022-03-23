@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto  h-screen mt-3">
-    <div class="bg-stone-200">
+    <div>
         <div class="relative">
             <div class=" align-middle inline-block min-w-full">
                 <div class="flex justify-between items-center mt-4">
@@ -91,14 +91,14 @@
             @if(Auth::user()->user_role->name == 'supervisor')
                 @if($timesheet->status_id == '2')
                     <div class="flex justify-center">
-                         <a href="{{ route('timesheets.update', $timesheet->id) }}" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Approve</a>
+                         <a href="{{ route('timesheets.update', $timesheet->id) }}" class="bg-teal-600 hover:bg-teal-700 p-2 rounded-full my-3 text-white px-4">Approve</a>
                    </div>
                    <div class="flex justify-center">
                         <a href="{{ route('timesheets.reject', $timesheet->id) }}" class="bg-red-500 hover:bg-red-600 p-2 rounded-full my-3 text-white px-4" id="reject_timesheet">Reject</a>
                     </div>  
                 @else
                     <div class="flex justify-center">
-                         <a href="{{ route('timesheets.update', $timesheet->id) }}" class="invisible bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Approve</a>
+                         <a href="{{ route('timesheets.update', $timesheet->id) }}" class="invisible bg-teal-600 hover:bg-teal-700 p-2 rounded-full my-3 text-white px-4">Approve</a>
                    </div>
                 @endif
 
@@ -107,7 +107,6 @@
         </div>
         
 </div>
-
 
 
 <div class="fixed z-10 inset-0 overflow-y-auto workday hidden invisible" aria-labelledby="modal-title" role="dialog" aria-modal="true" >
@@ -289,7 +288,7 @@
                             </div>
 
                             <div class="flex justify-center"> 
-                                <button type="submit" class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Save</button>
+                                <button type="submit" class="mt-5 bg-teal-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-teal-600">Save</button>
                             </div>
                         </div>
                     </div>

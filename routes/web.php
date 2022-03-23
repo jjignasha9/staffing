@@ -83,8 +83,8 @@ Route::delete('/rates/destroy/{rate}', [RatesController::class, 'destroy'])->nam
 
 
 /* Invoices */
-Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices');
 Route::get('/invoices/create/', [InvoicesController::class, 'create'])->name('invoices.create');
+Route::get('/invoices/{day_weekend?}', [InvoicesController::class, 'index'])->name('invoices');
 Route::post('/invoices/store', [InvoicesController::class, 'store'])->name('invoices.store');
 Route::get('/invoices/edit', [InvoicesController::class, 'edit'])->name('invoices.edit');
 Route::post('/invoices/update/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
@@ -92,9 +92,10 @@ Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destro
 
 
 /* Payrolls */
+Route::get('/payrolls/create', [PayrollsController::class, 'create'])->name('payrolls.create');
+Route::get('/payrolls/paidpayroll', [PayrollsController::class, 'paidpayroll'])->name('payrolls.paidpayroll');
 Route::get('/payrolls/{day_weekend?}', [PayrollsController::class, 'index'])->name('payrolls');
-Route::post('/payrolls/create', [PayrollsController::class, 'create'])->name('payrolls.create');
-Route::post('/payrolls/store/{timesheets}', [PayrollsController::class, 'store'])->name('payrolls.store');
+Route::post('/payrolls/store', [PayrollsController::class, 'store'])->name('payrolls.store');
 Route::get('/payrolls/edit/{payroll}', [PayrollsController::class, 'edit'])->name('payrolls.edit');
 Route::get('/payrolls/show/{payroll}', [PayrollsController::class, 'show'])->name('payrolls.show');
 Route::post('/payrolls/update/{payroll}', [PayrollsController::class, 'update'])->name('payrolls.update');

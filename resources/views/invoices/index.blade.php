@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="h-screen mt-6">
-   <div class="grid grid-cols-12">
+    <div class="grid grid-cols-12">
         <div class="col-span-2">
         	<div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-2">
             	<a href="">RUN INVOICES</a>
@@ -19,98 +19,118 @@
 	    </div>    
 
 	    <div class="col-span-10">
+	    
 	    	<div class="flex justify-between items-center">
 	    		<div class="flex">
-		    		<div class="bg-white p-1 rounded-full w-32 text-center mr-10 shadow">
-		    			<span class="text-sm">3/6/2022(1)</span>
+		    		<div class="p-1 rounded-full w-auto text-center mr-10">
+		    			<span class="text-sm">NO INVOICED TIMESHEETS</span>		
+		    				@foreach($day_weekends as $day_weekend)
+							<a href="{{ route('invoices',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-blue-700 text-white' : '' }}">
+									{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
+							</a>
+					        @endforeach
+					    </span>
 		    		</div>
-		    		<div class=" p-1 rounded-full w-28 text-center">
-		    			<span class="text-sm">3/6/2022(2)</span>
-		    		</div>
 	    		</div>
-    			<div class="p-1 rounded-full text-center">
-	    			<button class="p-1 border-2 border-black rounded-full text-sm hover:text-white hover:bg-black w-32">OTHER W/D</button>
-	    		</div>
-	    	</div>    
-
-    		<div class="flex items-center grid grid-cols-12 my-5">
-    			<div class="col-span-6">
-	    			<select name="" class="p-2 rounded-full border-2 border-black w-full">
-	    				<option value="" class="text-slate-500">Select</option>
-	    				<option value="">1</option>
-	    				<option value="">2</option>
-	    				<option value="">3</option>
-	    				<option value="">4</option>
-	    			</select>
-        		</div>
-    			<div class="flex justify-end col-span-6">
-	    			<div class="rounded-full border border-black p-2 hover:bg-white cursor-pointer">
-		    			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-						  <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
-						</svg>
-	    			</div>
-    			</div>
-    		</div>
-
-	    	<div class="bg-white mt-3 rounded-full px-5 py-1.5">
-	    		<div class="grid grid-cols-12">
-	    			<div class="text-sm text-slate-500 col-span-5">CLIENT</div>
-	    			<div class="text-sm text-slate-500 col-span-3">BILL DATE</div>
-	    			<div class="text-sm text-slate-500 col-span-2">AMOUNT</div>
-	    			<div class="text-sm text-slate-500 col-span-2">STATUS</div>
-	    		</div>
-	    	</div>  
-
+	    	</div>
+	    	<?php 
+				  $total_hours = 0;
+				  $total_amount = 0;
+			?>
+	    	@foreach($timesheets as $workdays)
 	    	<div class="bg-white rounded-lg mt-3 p-5">
+	    		
+	    		
+    			<div class="flex items-center gap-7">
+    				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+					  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+					</svg>
+					<div class="text-black font-semibold mx-5 text-xl">{{ $workdays[0]->client_name }}</div>	
+    			</div>	
+				
+  
 	    		<div class="grid grid-cols-12">
-	    			<div class="text-sm text-slate-500 col-span-5">
-	    				<div class="text-black font-semibold">Kuhic-Jaskolski</div>
-	    				<div class="text-sm">#9222</div>
-	    				<div class="text-sm">Alivia Yundt</div>
+	    			<div class="flex col-span-6 ml-14">
+		    		
+		    			<div class="text-slate-500">
+		    				
+		    				<div class="flex items-center mx-5 mt-4 gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>
+								<span class="text-blue-500">Timesheet</span>
+								<span>(pending)</span>
+							</div>
+							<div class="mx-12">A waiting for apporval sagar</div>
+							<div class="text-sm text-gray-500 mx-12 mt-1">Fri 3/04 1:30 AM</div>
+		    			</div>
 	    			</div>
 
-	    			<div class="text-sm text-slate-500 col-span-3">
-	    				<span>3/6/2022</span>
-	    			</div>
+	    			<div class="col-span-6 mt-4">
+	    				
+	    				<div class="grid grid-cols-12">
+	    					@foreach($workdays as $workday)
+	    					<div class="text-slate-500 col-span-4">	
+		    				     <div>{{ $workday->shift_name }}</div>
+		    			    </div>
 
-	    			<div class="text-sm text-slate-500 col-span-2">
-	    				<span>$ 480</span>
-	    			</div>
+			    			<div class="text-slate-500 col-span-2">
+			    				<span>$ {{ $workday->bill_rate }}</span>
+			    			</div>
 
-	    			<div class="text-sm text-slate-500 col-span-2 hover:text-green-500">
-	    				<button class="flex border border-gray-300 w-32 rounded-full font-bold p-2">
-	    					<div><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-							  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-							</svg></div>
-		    				<div class="ml-2">Send</div>
-						</button>
-	    			</div>
+			    			<div class="text-slate-500 col-span-3">
+			    				<span>{{ $workday->total_hours }} hrs</span>
+			    			</div>
+
+			    			<div class="text-slate-500 col-span-3">
+			    				<span>$ {{ $workday->total_amount }}</span>	
+		    				</div>
+	    				    @endforeach
+	    				   
+                    	</div>
+                    	<div class="grid grid-cols-8 mt-5">
+                    	    <div class="text-sm font-bold col-start-5 col-span-2 ml-10">{{ $total = $workdays->sum('total_hours') }} hrs</div>
+                    	    <div class="text-sm font-bold col-start-7 col-span-2 ml-8">$ {{ $amount = $workdays->sum('total_amount') }}</div>
+                    	</div>
+                    </div>		
 	    		</div>
 	    	</div>
-
-	    	<div class="bg-white rounded-lg mt-3 p-5 text-center">
-	    		<div class="flex grid grid-cols-12 items-center">
-	    			<div class="text-sm text-slate-500 col-span-4">
-	    				<div class="text-2xl text-black font-semibold">1</div>
-	    				<div>INVOIVES</div>
-	    			</div>
-
-	    			<div class="text-sm text-slate-500 col-span-4">
-	    				<div class="text-2xl text-black font-semibold">$ 480.00</div>
-	    				<div>TOTAL</div>
-	    			</div>
-
-	    			<div class="text-sm text-slate-500 col-span-4">
-	    				<button class="bg-blue-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-blue-700">Resend invoices</button>
-	    			</div>
-	    		</div>
-	    	</div>
+	    	<?php 
+			
+			 $total_hours = $total_hours + $total;
+			 $total_amount = $total_amount + $amount;
+			 
+			 ?>  
+	    	@endforeach
 
 
+	    	<div class="bg-white p-6 rounded-xl mt-3">	
+            	<div class="grid grid-cols-12">
+            		<div class="col-span-4 text-center">
+            			<div class="text-3xl font-lg">{{ count($timesheets) }}</div>
+            			<div class="text-md mt-2">INVOICES</div>
+            		</div>
+            		<div class="col-span-4 text-center">
+            			<div class="text-3xl font-lg">{{ $total_hours }}</div> 
+            			<div class="text-md mt-2">TOTAL HRS</div>
+            		</div>
+            		<div class="col-span-4 px-5 text-center">
+            			<div class="text-3xl font-lg">$ {{ $total_amount }}</div> 
+            			<div class="text-md mt-2">TOTAL</div>
+            		</div>
+            	</div>
 
+            	<div class="flex justify-center mt-12">
+	            	<button class="text-center bg-blue-600 hover:bg-blue-700 rounded-full text-white px-12 py-2 text-lg">
+			         	Preview invoice
+			         </button>
+		         </div>
+
+            </div>
+
+        
 	    </div>
 
-   </div>   
+   </div>    
 
 
 </div>

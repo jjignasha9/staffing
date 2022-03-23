@@ -45,6 +45,7 @@ class PayrollsController extends Controller
         ->addSelect(DB::raw('(pay_rate * total_hours) as total_amount'))
         ->where('timesheets.status_id',  getStatusId('approved'))
         ->where('timesheets.day_weekend', $active_day_weekend)
+        ->whereRaw('timesheets.employee_id = rates.employee_id')
         ->where('timesheets.is_paid', false)
         ->get()
         ->groupBy('timesheet_id');
@@ -59,9 +60,9 @@ class PayrollsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function paidpayroll()
     {
-        return view('payrolls.create');
+        return view('payrolls.paid_payroll');
     }
 
     /**

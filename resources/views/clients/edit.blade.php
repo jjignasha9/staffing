@@ -6,7 +6,7 @@
 		@csrf  
 	  	<div class="font-bold">
 	    	<label class="ml-5 text-gray-600">Name</label>
-	    	<input type="text" name="name" placeholder="Name" value="{{ $client->name }}" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 rounded-full pl-5">
+	    	<input type="text" name="name" placeholder="Name" value="{{ $client->name }}" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-teal-500 block w-full rounded-md sm:text-sm focus:ring-1 rounded-full pl-5">
 	    	@error('name')
 	    	   <div class="text-red-700 mb-1 font-medium">{{ $message }}</div>
 	    	@enderror
@@ -14,7 +14,7 @@
 
 	    <div class="mt-5 font-bold">
 	    	<label class="ml-5 text-gray-600">Email</label>
-	    	<input type="text" name="email" placeholder="Email" value="{{ $client->email }}" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 rounded-full pl-5">
+	    	<input type="text" name="email" placeholder="Email" value="{{ $client->email }}" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-teal-500 block w-full rounded-md sm:text-sm focus:ring-1 rounded-full pl-5">
 	    	@error('email')
 	    	   <div class="text-red-700 ml-5 mb-1 font-medium">{{ $message }}</div>
 	    	@enderror
@@ -22,7 +22,7 @@
 
 	   <div class="mt-5 font-bold">
     		<label class="ml-5 text-gray-600">Address</label>
-	    	<input type="text" name="address" placeholder="Address" value="{{ $client->address }}" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 rounded-full pl-5">
+	    	<input type="text" name="address" placeholder="Address" value="{{ $client->address }}" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-teal-500 block w-full rounded-md sm:text-sm focus:ring-1 rounded-full pl-5">
 	    	@error('address')
 	    	   <div class="text-red-700 ml-5 mb-1 font-medium">{{ $message }}</div>
 	    	@enderror
@@ -31,14 +31,14 @@
     	<div class="mt-5">
 			<a href="{{ route('clients') }}" class="bg-white border-2 border-black py-2 px-8 text-black font-semibold font-medium rounded-full hover:bg-black hover:text-white mr-5">Cancel</a> 
 
-			<button class="bg-blue-400 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-600">Update</button> 
+			<button class="bg-teal-600 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-teal-700">Update</button> 
     	</div>
     </form>
 </div>
 
 <div class="mt-5">
     <div class="flex items-center justify-end mb-5">
-        <a href="{{ route('supervisors.create', $client->id) }}" class="bg-blue-400 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-600">Add Supervisor</a>
+        <a href="{{ route('supervisors.create', $client->id) }}" class="bg-teal-600 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-teal-700">Add Supervisor</a>
     </div>
 
     <div class="flex flex-col">
@@ -80,7 +80,7 @@
                      <td class="p-5 flex justify-center gap-2 items-center">
                       <div class="flex gap-2">
                         <div>
-                          <a href="{{ route('supervisors.edit',$supervisor->id) }}" class="bg-blue-400 hover:bg-blue-600 px-4 py-2 text-white font-semibold font-medium gap-1 rounded-full flex items-center">
+                          <a href="{{ route('supervisors.edit',$supervisor->id) }}" class="bg-teal-600 hover:bg-teal-700 px-4 py-2 text-white font-semibold font-medium gap-1 rounded-full flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>Edit
