@@ -359,7 +359,7 @@
                 </div>
 
 
-                <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST">
+                <form action="{{ route('timesheets.submit', $timesheet->id) }}" method="POST"  onsubmit="return checkForm(this);">
                     @csrf
 
                     <div id="mailsend" class="text-center mt-4">
@@ -510,10 +510,6 @@ $(document).ready(function() {
 
     });
 
-     /* $('#sendemail')
-      let msg = "{{ session()->get('message') }}";
-        swal('Success', msg, 'success');
-     */
 });
 </script>
 

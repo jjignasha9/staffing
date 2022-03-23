@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payrolls', function (Blueprint $table) {
+        Schema::create('payroll_statuses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('timesheet_id');
-            $table->integer('total_amount');
-            $table->foreign('timesheet_id')->references('id')->on('timesheets');
+            $table->string('name')->default('pending');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payrolls');
+        Schema::dropIfExists('payroll_statuses');
     }
 };

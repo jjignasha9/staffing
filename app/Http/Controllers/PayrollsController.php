@@ -15,6 +15,7 @@ class PayrollsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index($active_day_weekend = null)
     {     
 
@@ -22,7 +23,7 @@ class PayrollsController extends Controller
         ->where('is_paid', false)->orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')->unique();
 
         $active_day_weekend = $active_day_weekend ? $active_day_weekend : $day_weekends[0];
-
+    
         $timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
         ->leftJoin('rates', 'workdays.shift_id', '=', 'rates.shift_id')
         ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
@@ -41,19 +42,16 @@ class PayrollsController extends Controller
             'shifts.name as shift_name',
         ])
         ->addSelect(DB::raw('(pay_rate * total_hours) as total_amount'))
-        ->where('timesheets.status_id', getStatusId('approved'))
+        ->where('timesheets.status_id',  getStatusId('approved'))
         ->where('timesheets.day_weekend', $active_day_weekend)
         ->whereRaw('timesheets.employee_id = rates.employee_id')
         ->where('timesheets.is_paid', false)
         ->get()
         ->groupBy('timesheet_id');
 
-       
+       // return response($timesheets);
 
-
-        //return response($day_weekends);
-
-        return view('payrolls.index', compact(['timesheets', 'day_weekends','active_day_weekend']));
+        return view('payrolls.index', compact(['timesheets', 'day_weekends','active_day_weekend']));  
     }
 
     /**

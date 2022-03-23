@@ -8,7 +8,7 @@
 <body>
 	<center>
      <header>Timesheet</header>
-     <p >Your timesheet has been rejected, please update and resubmit it.</p>
+     <p class="message">Your timesheet has been rejected, please update and resubmit it.</p>
      <table>
      	<tr>
      		<td><b>Client name:</b></td>
@@ -78,6 +78,17 @@
 
 	p {
 		text-align: center;
+	}
+
+	.message{
+		text-align: center;
+		background-color: rgba(255, 99, 71, 0.5);
+		border: red;
+		padding: 2px;
+		display: inline-block;
+		margin: 5px;
+		color: black;
+
 	}
 
   }

@@ -83,8 +83,8 @@ Route::delete('/rates/destroy/{rate}', [RatesController::class, 'destroy'])->nam
 
 
 /* Invoices */
-Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices');
 Route::get('/invoices/create/', [InvoicesController::class, 'create'])->name('invoices.create');
+Route::get('/invoices/{day_weekend?}', [InvoicesController::class, 'index'])->name('invoices');
 Route::post('/invoices/store', [InvoicesController::class, 'store'])->name('invoices.store');
 Route::get('/invoices/edit', [InvoicesController::class, 'edit'])->name('invoices.edit');
 Route::post('/invoices/update/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
