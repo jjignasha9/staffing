@@ -6,7 +6,7 @@
 	<div class="bg-zinc-50 h-auto shadow-md rounded-lg">
 		<div class="py-5 px-10">
 			<div class="flex justify-between items-center">
-				<div class="text-blue-500 font-semibold text-xl flex justify-center">
+				<div class="text-teal-600 font-semibold text-xl flex justify-center">
 					<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
 					</svg>
 					Invoices
@@ -24,7 +24,7 @@
 
 			<div class="col-span-3">
 				<div class="px-3">
-					<button type="submit" class="text-white mb-5 bg-blue-500 rounded-full px-16 text-sm mx-5 py-1 hover:bg-blue-600">Resend invoice</button>	
+					<button type="submit" class="text-white mb-5 bg-teal-600 rounded-full px-16 text-sm mx-5 py-1 hover:bg-teal-700">Resend invoice</button>	
 					<hr class="border-2 rounded-full">
 					<div class="py-5 flex items-center">
 						<span class="font-semibold text-sm">Status</span>
@@ -60,7 +60,7 @@
 					</div>
 					<hr>
 					<div class="flex items-center gap-2 mt-5">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 						</svg>
 						<div class="text-gray-500">Integrated Quickbooks</div>

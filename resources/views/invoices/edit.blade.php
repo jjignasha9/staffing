@@ -53,7 +53,7 @@
 		    				<div class="flex items-center mx-5 mt-4 gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 								  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
 								</svg>
-								<span class="text-blue-500">Timesheet</span>
+								<span class="text-teal-600">Timesheet</span>
 								<span>(pending)</span>
 							</div>
 							<div class="mx-12">A waiting for apporval sagar</div>
@@ -89,31 +89,22 @@
 
 	    	<div class="bg-white p-6 rounded-xl mt-3">	
             	<div class="grid grid-cols-12">
-            		<div class="col-span-2 text-center">
+            		<div class="col-span-4 text-center">
             			<div class="text-3xl font-lg">1</div>
             			<div class="text-md mt-2">INVOICES</div>
             		</div>
-            		
-            		<div class="col-span-2 text-center">
-            			<div class="text-3xl font-lg">32 hrs</div>
-            			<div class="text-md mt-2">REGULAR</div>
-            		</div>
-            		<div class="col-span-2 text-center">
-            			<div class="text-3xl font-lg">0 hrs</div> 
-            			<div class="text-md mt-2">OT</div>
-            		</div>
-            		<div class="col-span-3 text-center">
+            		<div class="col-span-4 text-center">
             			<div class="text-3xl font-lg">32 hrs</div> 
             			<div class="text-md mt-2">TOTAL HRS</div>
             		</div>
-            		<div class="col-span-3 px-5 text-center">
+            		<div class="col-span-4 px-5 text-center">
             			<div class="text-3xl font-lg">$ 1,792.00</div> 
-            			<div class="text-md mt-2">TOTAL</div>
+            			<div class="text-md mt-2">TOTAL AMOUNT</div>
             		</div>
             	</div>
 
             	<div class="flex justify-center mt-12">
-	            	<button class="text-center bg-blue-600 hover:bg-blue-700 rounded-full text-white px-12 py-2 text-lg">
+	            	<button class="text-center bg-teal-600 hover:bg-teal-700 rounded-full text-white px-12 py-2 text-lg">
 			         	Preview invoice
 			         </button>
 		         </div>

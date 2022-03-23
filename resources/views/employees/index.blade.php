@@ -5,7 +5,7 @@
 <div class="h-screen mt-5">
 
     <div class="flex items-center justify-end mb-5">
-        <a href="{{ route('employees.create') }}" class="bg-blue-400 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-600">Add Employee</a>
+        <a href="{{ route('employees.create') }}" class="bg-teal-600 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-teal-700">Add Employee</a>
     </div>
 
     <div class="flex flex-col">
@@ -47,7 +47,7 @@
                     <td class="p-5 flex justify-center gap-2 items-center">
                       <div class="flex gap-2">
                         <div>
-                          <a href="{{ route('employees.edit',$employee->id) }}" class="bg-blue-400 hover:bg-blue-600 px-4 py-2 text-white font-semibold font-medium gap-1 rounded-full flex items-center">
+                          <a href="{{ route('employees.edit',$employee->id) }}" class="bg-teal-600 hover:bg-teal-700 px-4 py-2 text-white font-semibold font-medium gap-1 rounded-full flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>Edit

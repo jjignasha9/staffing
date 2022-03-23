@@ -3,9 +3,9 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto  h-screen mt-3">
-    <div class="bg-stone-200">
+    <div>
         <div class="relative">
-            <div class=" align-middle inline-block min-w-full">
+            <div class="inline-block min-w-full">
                 <div class="flex justify-between items-center mt-4">
                     <div class="w-1/5 rounded-lg bg-white p-3 border border-gray-300">
                        Client Name: {{ Auth::user()->client_by_employee->client->name }}
@@ -13,25 +13,25 @@
                     <div class="flex border border-gray-300 rounded-lg shadow-sm">
                         <nav class="inline-flex rounded-lg shadow-sm -space-x-px" aria-label="Pagination">
                             
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend < -1 ? 'bg-blue-500 text-white' : '' }}" week="minus">
+                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-teal-700 hover:text-white {{ $temp_weekend < -1 ? 'bg-teal-600 text-white' : '' }}" week="minus">
                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                 </svg>
                             </button>
 
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == -1 ? 'bg-blue-500 text-white' : '' }}" week="previous">
+                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-teal-700 hover:text-white {{ $temp_weekend == -1 ? 'bg-teal-600 text-white' : '' }}" week="previous">
                                 Last week
                             </button>
 
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == 0 ? 'bg-blue-500 text-white' : '' }}" week="current"> 
+                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-teal-700 hover:text-white {{ $temp_weekend == 0 ? 'bg-teal-600 text-white' : '' }}" week="current"> 
                                 This week 
                             </button>
 
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend == 1 ? 'bg-blue-500 text-white' : '' }}" week="next"> 
+                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-teal-700 hover:text-white {{ $temp_weekend == 1 ? 'bg-teal-600 text-white' : '' }}" week="next"> 
                                 Next week 
                             </button>
 
-                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-blue-500 hover:text-white {{ $temp_weekend > 1 ? 'bg-blue-500 text-white' : '' }}" week="plus">
+                            <button type="button" class="bg-white cursor-pointer change-week text-gray-500 relative inline-flex items-center px-4 py-3 border text-md font-medium hover:bg-teal-700 hover:text-white {{ $temp_weekend > 1 ? 'bg-teal-600 text-white' : '' }}" week="plus">
                                 <span class="sr-only">Next</span>
                                 
                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -119,7 +119,7 @@
 
         @if($timesheet)
         <div class="flex justify-center">
-             <button class="emailbox bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
+             <button class="emailbox bg-teal-600 hover:bg-teal-700 p-2 rounded-full my-3 text-white px-4 ">Submit</button>
         </div>
         @endif
 </div>
@@ -313,7 +313,7 @@
                             </div>
 
                             <div class="flex justify-center redirect"> 
-                                <button type="submit" class="mt-5 bg-blue-700 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-blue-500">Save</button>
+                                <button type="submit" class="mt-5 bg-teal-600 py-2 px-8 text-white font-semibold font-medium rounded-full hover:bg-teal-700">Save</button>
                             </div>
                         </div>
                     </div>
@@ -375,7 +375,7 @@
                     </div>
                     <div class="flex justify-center">
 
-                        <button id="sendemail" type="submit" name="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-full my-3 text-white px-4">Submit</button> 
+                        <button id="sendemail" type="submit" name="submit" class="bg-teal-600 hover:bg-teal-700 p-2 rounded-full my-3 text-white px-4">Submit</button> 
 
                     </div>
                 </form>
