@@ -27,7 +27,7 @@
 
 				</div>
 			</div>
-			<div class="bg-white mt-5 rounded-xl p-5">
+			<div class=" mt-5 rounded-xl p-5">
 			<?php 
 				$total_hours = 0;
 				$total_amount = 0;
@@ -41,8 +41,7 @@
 						<div class="col-span-2">Hours</div>
 						<div class="col-span-3 text-center">Amount</div>
 					</div>
-				</div>
-					
+				</div>	
 			</div>	
 			@foreach($timesheets as $workdays)
 			<div class="bg-white mt-3 rounded-xl p-5">
@@ -128,10 +127,10 @@
 
 	        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
 	            <div class="px-10 py-5 bg-white rounded-lg shadow-2xl">
-	            	<form action="{{ route('payrolls',$active_day_weekend) }}" method="POST">
+	            	<form action="{{ route('payrolls.store',$total_amount) }}" method="POST">
                       @csrf
                       <input type="hidden" name="day_weekend" value="{{ $active_day_weekend }}">
-                    </form>
+                    
 	                <div class="flex justify-end">
 	                    <button type="button" class="close-payroll">
 	                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,9 +164,10 @@
 				        <span>you want to create payroll?</span>
 				    </div>
 				    <div class="flex items-center mt-7 justify-center">
-				    	<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none">Create</button>
+				    	<button type="submit" amount="{{ $total_amount }}" class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none">Create</button>
 				    	<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none mx-3 close-payroll">Cancel</button>
-				    </div>				    
+				    </div>	
+				    </form>			    
 	            </div>
 	        </div>
 	    </div>
