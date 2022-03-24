@@ -43,7 +43,7 @@ class InvoicesController extends Controller
         ->addSelect(DB::raw('(bill_rate * total_hours) as total_amount'))
         ->where('timesheets.status_id', getStatusId('approved'))
         ->where('timesheets.day_weekend', $active_day_weekend)
-        ->whereRaw('timesheets.client_id=rates.client_id')
+        ->whereRaw('timesheets.client_id = rates.client_id')
         ->where('timesheets.is_paid', false)
         ->get()
         ->groupBy('timesheet_id');

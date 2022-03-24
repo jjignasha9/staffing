@@ -71,17 +71,31 @@ class PayrollsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $total_amount)
+    public function store(Request $request)
     {
+
         $day_weekend = $request->day_weekend;
         $payroll = Timesheet::where('day_weekend',$day_weekend)->get()->pluck('id');
-        //dd($payroll);
 
-        $payrolls = new payroll;
-        $payrolls->timesheet_id = $payroll[0];
-        $payrolls->total_amount = $total_amount; 
-        $payrolls->save();
-
+        $timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
+        ->leftJoin('rates', 'workdays.shift_id', '=', 'rates.shift_id')
+        ->select([
+            'timesheets.id as timesheet_id',
+        ])
+        ->addSelect(DB::raw('(pay_rate * total_hours) as total_amount'))
+        ->where('timesheets.day_weekend', $day_weekend)
+        ->whereRaw('timesheets.employee_id = rates.employee_id')
+        ->get()
+        ->groupBy('timesheets.id');
+        $payrolls = new Payroll;
+        dd($timesheets);
+        foreach($timesheets as $workdays){
+            foreach($workdays as $workday){
+                $payrolls->timesheet_id = $workday->timesheet_id;
+                $payrolls->total_amount = $workday->total_amount; 
+                $payrolls->save();
+            }
+        }
         return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
        
     }

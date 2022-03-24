@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('timesheet_id');
             $table->integer('total_amount');
-            $table->unsignedBigInteger('payroll_status_id');
+            $table->unsignedBigInteger('payroll_status_id')->default(1) ;
             $table->foreign('timesheet_id')->references('id')->on('timesheets');
             $table->foreign('payroll_status_id')->references('id')->on('payroll_statuses');
             $table->timestamps();
