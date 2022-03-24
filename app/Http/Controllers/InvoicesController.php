@@ -56,9 +56,9 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function draftinvoice()
     {
-        return view('invoices.create');
+        return view('invoices.draftinvoice');
     }
 
     /**
@@ -89,10 +89,10 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function sentinvoice()
     {   
 
-        return view('invoices.edit');
+        return view('invoices.sentinvoice');
     }
 
     /**

@@ -4,18 +4,22 @@
 
 <div class="h-screen mt-6">
     <div class="grid grid-cols-12">
-        <div class="col-span-2">
-        	<div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-2">
-            	<a href="">RUN INVOICES</a>
-        	</div>
-
-	        <div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-7">
-	        	<a href="">DRAFT INVOICES</a>
-	        </div>
-
-	        <div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-7">
-	        	<a href="">SENT INVOICES</a>
-	        </div>
+        <div class="col-span-2 text-gray-500 font-semibold">
+        	<div class="text-sm mt-5">
+				<a href="{{ route('invoices') }}" class="active {{ (request()->segment(2) == 'invoices') ? 'active' : '' }}">
+					RUN INVOICES
+				</a>
+			</div>
+			<div class="text-sm mt-5">
+				<a href="{{ route('invoices.draftinvoice') }}">
+					DRAFT INVOICES
+				</a>
+			</div>
+			<div class="text-sm mt-5">
+				<a href="{{ route('invoices.sentinvoice') }}">
+					SENT INVOICES
+				</a>
+			</div>
 	    </div>    
 
 	    <div class="col-span-10">
@@ -25,7 +29,7 @@
 		    		<div class="p-1 rounded-full w-auto text-center mr-10">
 		    			<span class="text-sm">NO INVOICED TIMESHEETS</span>		
 		    				@foreach($day_weekends as $day_weekend)
-							<a href="{{ route('invoices',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-blue-700 text-white' : '' }}">
+							<a href="{{ route('invoices',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 									{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 							</a>
 					        @endforeach
@@ -120,7 +124,7 @@
             	</div>
 
             	<div class="flex justify-center mt-12">
-	            	<button class="text-center bg-blue-600 hover:bg-blue-700 rounded-full text-white px-12 py-2 text-lg">
+	            	<button class="text-center bg-teal-600 hover:bg-teal-700 rounded-full text-white px-12 py-2 text-lg">
 			         	Preview invoice
 			         </button>
 		         </div>
@@ -136,3 +140,11 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<style type="text/css">
+	.active {
+		color: teal;
+	}
+</style>
+@endpush

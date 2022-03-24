@@ -5,19 +5,23 @@
 <div class="h-screen mt-6">
     
  <div class="grid grid-cols-12">
-        <div class="col-span-2">
-        	<div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-2">
-            	<a href="">RUN INVOICES</a>
-        	</div>
-
-	        <div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-7">
-	        	<a href="">DRAFT INVOICES</a>
-	        </div>
-
-	        <div class="text-gray-500 hover:text-slate-900 hover:font-semibold text-sm mt-7">
-	        	<a href="">SENT INVOICES</a>
-	        </div>
-	    </div>    
+         <div class="col-span-2 text-gray-500 font-semibold">
+        	<div class="text-sm mt-5">
+				<a href="{{ route('invoices') }}">
+					RUN INVOICES
+				</a>
+			</div>
+			<div class="text-sm mt-5">
+				<a href="{{ route('invoices.draftinvoice') }}">
+					DRAFT INVOICES
+				</a>
+			</div>
+			<div class="text-sm mt-5">
+				<a href="{{ route('invoices.sentinvoice') }}" class="active {{ (request()->segment(2) == 'invoices') ? 'active' : '' }}">
+					SENT INVOICES
+				</a>
+			</div>
+	    </div>      
 
 	    <div class="col-span-10">
 	    	<div class="flex justify-between items-center">
@@ -74,8 +78,8 @@
 	    				<span>$ 480</span>
 	    			</div>
 
-	    			<div class="text-sm text-slate-500 col-span-2 hover:text-green-500">
-	    				<button class="flex border border-gray-300 w-32 rounded-full font-bold p-2">
+	    			<div class="text-sm text-slate-400 col-span-2 hover:text-teal-600">
+	    				<button class="flex border border-teal-600 w-32 rounded-full font-bold p-2">
 	    					<div><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
 							  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
 							</svg></div>
@@ -98,7 +102,7 @@
 	    			</div>
 
 	    			<div class="text-sm text-slate-500 col-span-4">
-	    				<button class="bg-blue-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-blue-700">Resend invoices</button>
+	    				<button class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Resend invoices</button>
 	    			</div>
 	    		</div>
 	    	</div>
@@ -109,3 +113,12 @@
 </div>
 
 @endsection
+
+
+@push('scripts')
+<style type="text/css">
+	.active {
+		color: teal;
+	}
+</style>
+@endpush

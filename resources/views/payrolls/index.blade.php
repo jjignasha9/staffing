@@ -3,9 +3,9 @@
 @section('content')
 <div class="h-screen mt-5">
 	<div class="grid grid-cols-12">
-		<div class="col-span-2">
+		<div class="col-span-2 text-gray-500 font-semibold">
 			<div class="text-sm mt-3">
-				<a href="{{ route('payrolls') }}">
+				<a href="{{ route('payrolls') }}" class="active {{ (request()->segment(2) == 'payrolls') ? 'active' : '' }}">
 					RUN PAYROLL
 				</a>
 			</div>
@@ -22,7 +22,7 @@
 					<span class="text-slate-900 text-sm mr-5">UNPAID TIMESHEETS</span>
 					@foreach($day_weekends as $day_weekend)
 
-					<a href="{{ route('payrolls',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-blue-700 text-white' : '' }}">
+					<a href="{{ route('payrolls',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 						{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 					</a>
 					@endforeach       
@@ -107,7 +107,7 @@
 					<div class="flex items-center mt-10">
 						<div class="ml-28">
 							<span class="m-3">Pay day</span>
-							<div class="bg-teal-50 rounded-full py-1 px-5 text-sm w-40 mt-2">{{ Carbon\carbon::now()->format('m/d') }}</div>
+							<div class="bg-teal-50 rounded-full py-1 px-5 text-sm w-40 mt-2">{{ Carbon\carbon::now()->format('m/d/y') }}</div>
 						</div>
 					</div>
 					<div class="mr-24 mt-14">
@@ -192,6 +192,14 @@
 		});
 	});
 
+
 </script>
+<style type="text/css">
+	.active {
+		color: teal;
+	}
+</style>
+ 
+
 
 @endpush
