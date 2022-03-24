@@ -10,3 +10,11 @@ if (! function_exists('getStatusId')) {
         return $status_pending->id;
     }
 }
+if (! function_exists('payrollStatusId')) {
+    function payrollStatusId($status) {
+        
+        $status_payroll = TimesheetStatuses::where('name', $status)->first();
+
+        return $status_payroll->id;
+    }
+}

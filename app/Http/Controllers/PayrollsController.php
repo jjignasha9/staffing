@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Payroll;
+use App\Models\PayrollItems;
 use App\Models\Rate;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
@@ -75,28 +76,60 @@ class PayrollsController extends Controller
     {
 
         $day_weekend = $request->day_weekend;
-        $payroll = Timesheet::where('day_weekend',$day_weekend)->get()->pluck('id');
+
 
         $timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
         ->leftJoin('rates', 'workdays.shift_id', '=', 'rates.shift_id')
+        ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
+        ->leftJoin('shifts', 'workdays.shift_id', '=', 'shifts.id')
         ->select([
             'timesheets.id as timesheet_id',
+            'timesheets.employee_id as employee_id',
+            'timesheets.day_weekend as day_weekend',
+            'timesheets.status_id as status_id',
+            'timesheets.is_paid as is_paid',
+            'workdays.id as workday_id',
+            'workdays.total_hours as total_hours',
+            'workdays.shift_id as shift_id',
+            'rates.pay_rate as pay_rate',
+            'employees.name as employee_name',
+            'shifts.name as shift_name',
         ])
         ->addSelect(DB::raw('(pay_rate * total_hours) as total_amount'))
+        ->where('timesheets.status_id',  getStatusId('approved'))
         ->where('timesheets.day_weekend', $day_weekend)
         ->whereRaw('timesheets.employee_id = rates.employee_id')
+        ->where('timesheets.is_paid', false)
         ->get()
-        ->groupBy('timesheets.id');
-        $payrolls = new Payroll;
-        dd($timesheets);
-        foreach($timesheets as $workdays){
+        ->groupBy('timesheet_id');
+
+
+
+        foreach($timesheets as $timesheet_id => $workdays){
+            $total_amount = $workdays->sum('total_amount');
+            $status_id = 1;
+            
+            
+            $payroll = new Payroll;
+            $payroll->timesheet_id = $timesheet_id;
+            $payroll->total_amount = $total_amount; 
+            $payroll->status_id = $status_id; 
+            $payroll->save();
+            
             foreach($workdays as $workday){
-                $payrolls->timesheet_id = $workday->timesheet_id;
+                $payrolls = new PayrollItems;
+                $payrolls->payroll_id = $payroll->id;
+                $payrolls->shift_id = $workday->shift_id; 
+                $payrolls->pay_rate = $workday->pay_rate; 
+                $payrolls->hours = $workday->total_hours; 
                 $payrolls->total_amount = $workday->total_amount; 
                 $payrolls->save();
             }
+
+
+
         }
-        return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
+        //return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
        
     }
 
