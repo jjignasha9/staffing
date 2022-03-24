@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="grid grid-cols-12 mt-5">
-	<div class="col-span-2">
+	<div class="col-span-2 text-gray-500 font-semibold">
 		<div class="text-sm mt-3">
-			<a href="{{ route('payrolls') }}" class="run">
+			<a href="{{ route('payrolls') }}">
 				RUN PAYROLL
 			</a>
 		</div>
 		<div class="mt-5 text-sm">
-			<a href="{{ route('payrolls.paidpayroll') }}">
+			<a href="{{ route('payrolls.paidpayroll') }}"class="active {{ (request()->segment(2) == 'paidpayroll') ? 'active' : '' }}">
 				PAID PAYROLL
 			</a>
 		</div>
@@ -105,4 +105,12 @@
 	</div>
 </div>
 @endsection
+
+@push('script')
+
+<style type="text/css">
+	.active {
+		color: teal;
+	}
+</style>
  

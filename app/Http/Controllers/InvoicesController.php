@@ -19,7 +19,7 @@ class InvoicesController extends Controller
     public function index($active_day_weekend = null)
     {
          $day_weekends = Timesheet::where('status_id', getStatusId('approved'))
-        ->where('is_paid', false)->orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')->unique();
+        ->where('is_invoiced', false)->orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')->unique();
 
         $active_day_weekend = $active_day_weekend ? $active_day_weekend : $day_weekends[0];
 
@@ -43,8 +43,9 @@ class InvoicesController extends Controller
         ->addSelect(DB::raw('(bill_rate * total_hours) as total_amount'))
         ->where('timesheets.status_id', getStatusId('approved'))
         ->where('timesheets.day_weekend', $active_day_weekend)
-        ->whereRaw('timesheets.client_id = rates.client_id')
-        ->where('timesheets.is_paid', false)
+        ->whereRaw('timesheets.client_id=rates.client_id')
+        ->whereRaw('timesheets.employee_id = rates.employee_id')
+        ->where('timesheets.is_invoiced', false)
         ->get()
         ->groupBy('timesheet_id');
 
@@ -56,9 +57,9 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function draftinvoice()
     {
-        return view('invoices.create');
+        return view('invoices.draftinvoice');
     }
 
     /**
@@ -89,10 +90,10 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function sentinvoice()
     {   
 
-        return view('invoices.edit');
+        return view('invoices.sentinvoice');
     }
 
     /**

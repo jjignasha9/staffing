@@ -29,6 +29,7 @@
 					<div class="py-5 flex items-center">
 						<span class="font-semibold text-sm">Status</span>
 
+					
 						<select class="px-5 py-1 rounded-full w-full py-1 ml-6">
 							<option>sent</option>
 							<option>1</option>

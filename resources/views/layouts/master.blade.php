@@ -186,6 +186,10 @@
                                 Approve
                             @elseif (Request::segment(2) == 'paidpayroll')
                                 Paid payroll
+                                @elseif (Request::segment(2) == 'draftinvoice')
+                                Draft invoice
+                                @elseif (Request::segment(2) == 'sentinvoice')
+                                Sent invoice
                             @endif
                         </span>
 
