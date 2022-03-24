@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Payroll;
 use App\Models\Rate;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
 use App\Models\Workday;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PayrollsController extends Controller
 {
@@ -49,7 +50,7 @@ class PayrollsController extends Controller
         ->get()
         ->groupBy('timesheet_id');
 
-       // return response($timesheets);
+        //return response($timesheets);
 
         return view('payrolls.index', compact(['timesheets', 'day_weekends','active_day_weekend']));  
     }
@@ -70,9 +71,19 @@ class PayrollsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $total_amount)
     {
-        //
+        $day_weekend = $request->day_weekend;
+        $payroll = Timesheet::where('day_weekend',$day_weekend)->get()->pluck('id');
+        //dd($payroll);
+
+        $payrolls = new payroll;
+        $payrolls->timesheet_id = $payroll[0];
+        $payrolls->total_amount = $total_amount; 
+        $payrolls->save();
+
+        return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
+       
     }
 
     /**
