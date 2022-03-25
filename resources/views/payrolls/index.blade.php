@@ -10,7 +10,7 @@
 				</a>
 			</div>
 			<div class="mt-5 text-sm">
-				<a href="{{ route('payrolls.paidpayroll') }}" class="paid">
+				<a href="{{ route('payrolls.paid-payroll') }}" class="paid">
 					PAID PAYROLL
 				</a>
 			</div>

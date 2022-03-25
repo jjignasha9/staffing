@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PayrollStatuses;
 use App\Models\TimesheetStatuses;
 
 if (! function_exists('getStatusId')) {
@@ -13,7 +14,7 @@ if (! function_exists('getStatusId')) {
 if (! function_exists('payrollStatusId')) {
     function payrollStatusId($status) {
         
-        $status_payroll = TimesheetStatuses::where('name', $status)->first();
+        $status_payroll = PayrollStatuses::where('name', $status)->first();
 
         return $status_payroll->id;
     }
