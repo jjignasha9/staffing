@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('timesheet_id');
+            $table->date('day_weekend');
             $table->integer('total_amount');
             $table->unsignedBigInteger('status_id')->default(1) ;
             $table->timestamps();

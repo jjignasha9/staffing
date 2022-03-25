@@ -67,7 +67,7 @@ class WorkdaysController extends Controller
 
     
     public function show(Workday $workday)
-    {
+    { 
         return response($workday, 200);
     }
 
