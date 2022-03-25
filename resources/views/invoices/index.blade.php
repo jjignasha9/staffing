@@ -138,10 +138,10 @@
 
 			<div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
 				<div class="py-5 bg-white rounded-lg shadow-2xl">
-					<form action="{{ route('payrolls',$active_day_weekend) }}" method="POST">
+					<form action="{{ route('invoices.store') }}" method="POST">
 						@csrf
 						<input type="hidden" name="day_weekend" value="{{ $active_day_weekend }}">
-					</form>
+					
 					<div class="pr-6 flex justify-end">
 						<button type="button" class="close_invoice">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -177,7 +177,8 @@
 					<div class="flex items-center mt-7 justify-center">
 						<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none">Create</button>
 						<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none mx-3 close_invoice">Cancel</button>
-					</div>				    
+					</div>		
+					</form>		    
 				</div>
 			</div>
 		</div>

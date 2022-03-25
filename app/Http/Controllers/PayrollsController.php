@@ -104,17 +104,14 @@ class PayrollsController extends Controller
         ->groupBy('timesheet_id');
 
 
-
         foreach($timesheets as $timesheet_id => $workdays){
             $total_amount = $workdays->sum('total_amount');
             $status_id = 1;
-            
-            
             $payroll = new Payroll;
             $payroll->timesheet_id = $timesheet_id;
             $payroll->total_amount = $total_amount; 
             $payroll->status_id = $status_id; 
-            $payroll->save();
+            $payroll->save();   
             
             foreach($workdays as $workday){
                 $payrolls = new PayrollItems;
@@ -129,7 +126,7 @@ class PayrollsController extends Controller
 
 
         }
-        //return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
+        return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
        
     }
 

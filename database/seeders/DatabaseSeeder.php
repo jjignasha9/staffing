@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Database\Seeders\PayrollStatusesSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\ShiftSeeder;
+use Database\Seeders\TermSeeder;
 use Database\Seeders\TimesheetStatusesSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,6 +29,8 @@ class DatabaseSeeder extends Seeder
             PayrollStatusesSeeder::class,
             TimesheetStatusesSeeder::class,
             UserSeeder::class,
+            TermSeeder::class,
+            InvoiceStatusesSeeder::class,
         ]);
     }
 }
