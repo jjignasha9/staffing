@@ -221,7 +221,6 @@ class TimesheetsController extends Controller
 
     public function createPdf(Timesheet $timesheet)
     {
-
         $pdf = PDF::loadView('timesheets.pdf', compact('timesheet'));
 
         $pdf = $pdf->setPaper('a4', 'landscape');
@@ -244,7 +243,7 @@ class TimesheetsController extends Controller
             'status_id' => getStatusId('pending'),
         ]);
 
-        $this->createPdf($timesheet);
+        $this->createPdf($timesheet);   
 
         $file = public_path('storage/timesheets/timesheet_'.$timesheet->id.'.pdf');
 

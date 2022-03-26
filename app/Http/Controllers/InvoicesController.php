@@ -10,8 +10,11 @@ use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
 use App\Models\Workday;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class InvoicesController extends Controller
 {
@@ -121,7 +124,8 @@ class InvoicesController extends Controller
 
         foreach($timesheets as $timesheet_id => $workdays){
             $total_amount = $workdays->sum('total_amount');
-            $status_id = invoiceStatusId('pending');;
+            $status_id = invoiceStatusId('pending');
+
             $invoice = new Invoice;
             $invoice->timesheet_id = $timesheet_id;
             $invoice->status_id = $status_id; 
@@ -141,7 +145,10 @@ class InvoicesController extends Controller
                 $invoices->total_amount = $workday->total_amount; 
                 $invoices->save();
             }
+
             Timesheet::where('id', $timesheet_id)->update(['is_invoiced' => true]);
+
+          $this->createPdf($invoice->id);
 
         }
         return redirect()->route('invoices')->with('message', 'Invoice created successfully!');    
@@ -149,12 +156,26 @@ class InvoicesController extends Controller
        
     }   
 
+    public function createPdf(Invoice $invoice)
+    {
+        $pdf = PDF::loadView('invoices.invoice-create');
+
+        $pdf = $pdf->setPaper('a4', 'landscape');
+
+        $save = Storage::put('public/invoices/invoices_'.$invoice->id.'.pdf', $pdf->output());
+
+        return view('invoices.invoice-create', compact('invoice'));
+        return $pdf->download('invoice.pdf');
+    }
+
+
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     
     public function show()
     {
          return view('invoices.invoice_details');

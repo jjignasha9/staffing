@@ -184,11 +184,11 @@
                                 Show
                             @elseif (Request::segment(2) == 'approved')
                                 Approve
-                            @elseif (Request::segment(2) == 'paidpayroll')
+                            @elseif (Request::segment(2) == 'paid-payroll')
                                 Paid payroll
-                                @elseif (Request::segment(2) == 'draftinvoice')
+                                @elseif (Request::segment(2) == 'draft-invoice')
                                 Draft invoice
-                                @elseif (Request::segment(2) == 'sentinvoice')
+                                @elseif (Request::segment(2) == 'sent-invoice')
                                 Sent invoice
                             @endif
                         </span>
@@ -359,6 +359,11 @@
             var user = $("#user");
             if (!user.has(event.target).length) {
                 $('#user_box').hide(); 
+            }
+
+            var chat = $("#chat");
+            if (!chat.has(event.target).length) {
+                $('#chatbox').hide(); 
             }
         });
 
