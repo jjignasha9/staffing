@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\InvoiceItems;
+use App\Models\Payroll;
 use App\Models\Rate;
 use App\Models\Timesheet;
-use Carbon\Carbon;
 use App\Models\TimesheetStatuses;
 use App\Models\Workday;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,7 @@ class InvoicesController extends Controller
          $day_weekends = Timesheet::where('status_id', getStatusId('approved'))
         ->where('is_invoiced', false)->orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')->unique();
 
-        $active_day_weekend = $active_day_weekend ? $active_day_weekend : $day_weekends[0];
+        $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null);
 
         $timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
         ->leftJoin('rates', 'workdays.shift_id', '=', 'rates.shift_id')
@@ -51,7 +52,6 @@ class InvoicesController extends Controller
         ->where('timesheets.is_invoiced', false)
         ->get()
         ->groupBy('timesheet_id');
-
          return view('invoices.index',compact(['day_weekends','timesheets','active_day_weekend']));
     }
 
@@ -60,9 +60,28 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function draftinvoice()
+    public function draftinvoice($active_day_weekend = null)
     {
-        return view('invoices.draftinvoice');
+        $day_weekends = Payroll::orderBy('day_weekend', 'DESC')->pluck('day_weekend')->unique();
+        $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null);
+
+        $invoice_data = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
+        ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
+        ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
+        ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
+        ->select([
+            'invoices.id as invoice_id',
+            'clients.name as client_name',
+            'employees.name as employee_name',
+            'invoices.bill_date as bill_date',    
+            'invoices.total_amount as total_amount',    
+            'invoice_statuses.name as status_name',    
+        ])
+        ->whereRaw('timesheets.employee_id = employees.id')
+        ->where('timesheets.day_weekend', $active_day_weekend)
+        ->get();
+       //return response($invoice_data);
+        return view('invoices.draftinvoice',compact(['day_weekends','active_day_weekend','invoice_data']));
     }
 
     /**
@@ -102,7 +121,7 @@ class InvoicesController extends Controller
 
         foreach($timesheets as $timesheet_id => $workdays){
             $total_amount = $workdays->sum('total_amount');
-            $status_id = 1;
+            $status_id = invoiceStatusId('pending');;
             $invoice = new Invoice;
             $invoice->timesheet_id = $timesheet_id;
             $invoice->status_id = $status_id; 
@@ -122,6 +141,7 @@ class InvoicesController extends Controller
                 $invoices->total_amount = $workday->total_amount; 
                 $invoices->save();
             }
+            Timesheet::where('id', $timesheet_id)->update(['is_invoiced' => true]);
 
         }
         return redirect()->route('invoices')->with('message', 'Invoice created successfully!');    
@@ -135,9 +155,9 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+         return view('invoices.invoice_details');
     }
 
     /**

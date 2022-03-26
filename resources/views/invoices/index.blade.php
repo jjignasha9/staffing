@@ -11,12 +11,12 @@
 				</a>
 			</div>
 			<div class="text-sm mt-5">
-				<a href="{{ route('invoices.draftinvoice') }}">
+				<a href="{{ route('invoices.draft-invoice') }}">
 					DRAFT INVOICES
 				</a>
 			</div>
 			<div class="text-sm mt-5">
-				<a href="{{ route('invoices.sentinvoice') }}">
+				<a href="{{ route('invoices.sent-invoice') }}">
 					SENT INVOICES
 				</a>
 			</div>

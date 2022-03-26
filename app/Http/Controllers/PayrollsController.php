@@ -7,7 +7,7 @@ use App\Models\Rate;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
 use App\Models\Workday;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;    
 use Illuminate\Support\Facades\DB;
 
 class PayrollsController extends Controller
@@ -72,7 +72,7 @@ class PayrollsController extends Controller
 
         $payrolls = Payroll::orderby('id','asc')->get()->groupBy('day_weekend');
 
-         
+
         return view('payrolls.paid_payroll',compact('payrolls'));
     }
 

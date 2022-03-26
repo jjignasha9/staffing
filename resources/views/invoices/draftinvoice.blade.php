@@ -3,190 +3,122 @@
 @section('content')
 
 <div class="h-screen mt-6">
-	<div class="bg-zinc-50 h-auto shadow-md rounded-lg">
-		<div class="py-5 px-10">
-			<div class="flex justify-between items-center">
-				<div class="text-teal-600 font-semibold text-xl flex justify-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-					</svg>
-					Invoices
-				</div>
-
-				<div class="text-blue-500 font-semibold text-xl cursor-pointer">
-					<svg class="h-8 w-8 text-gray-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-					</svg>
-				</div>
+    
+ <div class="grid grid-cols-12">
+	 <div class="col-span-2 text-gray-500 font-semibold">
+		<div class="text-sm mt-5">
+				<a href="{{ route('invoices') }}">
+					RUN INVOICES
+				</a>
 			</div>
-
-		</div>
-		<div class="grid grid-cols-12 px-7 py-3">
-
-			<div class="col-span-3">
-				<div class="px-3">
-					<button type="submit" class="text-white mb-5 bg-teal-600 rounded-full px-16 text-sm mx-5 py-1 hover:bg-teal-700">Resend invoice</button>	
-					<hr class="border-2 rounded-full">
-					<div class="py-5 flex items-center">
-						<span class="font-semibold text-sm">Status</span>
-
+			<div class="text-sm mt-5">
+				<a href="{{ route('invoices.draft-invoice') }}" class="{{ (request()->segment(2) == 'draft-invoice') ? 'active' : '' }}">
+					DRAFT INVOICES
 					
-						<select class="px-5 py-1 rounded-full w-full py-1 ml-6">
-							<option>sent</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-						</select>
-					</div>
-					<hr class="border-2 rounded-full">
-
-					<div class="mt-5 text-sm">
-						<div class="flex justify-between my-2">
-							<div class="font-semibold">Total</div>
-							<div class="text-gray-500">$ 480.00</div>
-						</div>
-						<div class="flex justify-between my-2">
-							<div class="font-semibold">Created at</div>
-							<div class="text-gray-500">3/2/2022</div>
-						</div>
-						<div class="flex justify-between my-2">
-							<div class="font-semibold">Sent at</div>
-							<div class="text-gray-500">3/2/2022</div>
-						</div>
-						<div class="flex justify-between my-2">
-							<div class="font-semibold">Last updated at</div>
-							<div class="text-gray-500">15 hours ago</div>
-						</div>
-
-					</div>
-					<hr>
-					<div class="flex items-center gap-2 mt-5">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-						</svg>
-						<div class="text-gray-500">Integrated Quickbooks</div>
-					</div>
-				</div>
+				</a>
 			</div>
+			<div class="text-sm mt-5">
+				<a href="{{ route('invoices.sent-invoice') }}">
+					SENT INVOICES
+				</a>
+			</div>
+	    </div>      
 
-			<div class="col-span-9 bg-stone-100 px-6">
-				<div class="flex justify-center">
-					<button class="bg-white rounded-full -m-5 p-4 shadow-md">
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-						</svg>
-					</button>
-				</div>
-				<div class="text-center mt-7 font-semibold text-lg">
-					<span>Invoice #</span><span class="text-slate-400">2292</span>
-				</div>
+	    <div class="col-span-10">
+			@foreach($day_weekends as $day_weekend)
 
-				<div class="grid grid-cols-12 mt-5 text-sm">
-					<div class="col-span-6 pr-6">
-						<span class="font-semibold"> Bill from</span>
-						<div class="mt-3">
-							<span class="font-semibold">Avenue A Staffing, Inc.</span>
-						</div>
-						<div class="mt-2 text-gray-600">
-							<span>30 3rd Street, floor 1</span><br>
-							<span>Troy, NY 12180 US</span><br>
-							<span>(212) 796-6930</span><br>
-							<span>Mario@AvenueAstaffing.com</span><br>
-							<span>www.AvenueAstaffing.com</span>
-						</div>
-						<div class="text-gray-500 font-semibold mt-7">
-							<span class="ml-3">Bill date</span>
-							<div class="bg-white rounded-full w-full px-3 py-2 my-2">
-								3/6/2022
-							</div>
-						</div>
-						<div class="text-gray-500 font-semibold mt-9">
-							Terms<br>
-							<span>Net 30</span>
-						</div>
-					</div>
+			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
+				{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
+			</a>
+			@endforeach       
 
-					<div class="col-span-6">
-						<div class="text-gray-500 font-semibold">
-							<span class="ml-3">Bill to</span>
-							<div class="bg-white rounded-full w-full px-3 py-2 my-2">
-								ray80@example.org
-							</div>
-							<div>
-								<span class="ml-3">Address</span>
-								<textarea type="text" name="Address" placeholder="you can comment here" class="outline-none font-semibold mt-2 w-full px-3 py-1 border border-gray-400 rounded-lg" id="comment"></textarea>
-							</div>
-							<div class="mt-8">
-								<span class="ml-3">Due date</span>
-								<div class="bg-white rounded-full w-full px-3 py-2 my-2">
-									4/5/2022
-								</div>
-							</div>
-							<div class="mt-8">
-								<span class="ml-3">Weekending date</span>
-								<div class="bg-white rounded-full w-full px-3 py-2 my-2">
-									3/6/2022
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div>
-					<table class="min-w-full divide-y divide-gray-200 shadow-md mt-6">
-						<thead class="bg-gray-50">
-							<tr>
-								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">EMPLOYEE</th>
-								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
-								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RATE</th>
-								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL</th>
-							</tr>
-						</thead>
-						<tbody class="bg-white divide-y divide-gray-200">
-
-							<tr>
-								<td class="px-6 py-4 whitespace-nowrap">
-									<div class="text-sm font-medium text-gray-900">Alivia Yundt</div>
-									<div class="text-sm font-medium text-gray-900">1 Shift</div>
-								</td>
-								<td class="px-6 py-4 whitespace-nowrap">
-									<div class="text-sm text-gray-900">24</div>
-								</td>
-								<td class="px-6 py-4 whitespace-nowrap">
-									<div class="text-sm text-gray-900">$ 20.00</div>
-								</td>
-								<td class="px-6 py-4 whitespace-nowrap">
-									<div class="text-sm text-gray-900">$ 480.00</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-
+		<div class="bg-white mt-5 rounded-full px-5 py-1.5">
+			<div class="grid grid-cols-12">
+				<div class="text-sm text-slate-500 col-span-5">CLIENT</div>
+				<div class="text-sm text-slate-500 col-span-3">BILL DATE</div>
+				<div class="text-sm text-slate-500 col-span-2">AMOUNT</div>
+				<div class="text-sm text-slate-500 col-span-2">STATUS</div>
+			</div>
+		</div>  
+		<?php 
+			$total_amount = 0;
+			$count = 0;
+		?>
+		@foreach($invoice_data as $invoice)
+		<div class="bg-white rounded-lg mt-3 p-5 cursor-pointer" id="invoice_details">
+			<div class="grid grid-cols-12">
+				<div class="text-sm text-slate-500 col-span-5">
+					<div class="text-black font-semibold">{{ $invoice->client_name }}</div>
+					<div class="text-sm">{{ $invoice->invoice_id }}</div>
+					<div class="text-sm">{{ $invoice->employee_name }}</div>
 				</div>
 
-				<div class="grid grid-cols-12 mb-12">
-					<div class="col-span-6 pt-7">
+				<div class="text-sm text-slate-500 col-span-3">
+					<span>{{ Carbon\carbon::parse($invoice->bill_date)->format('m/d/Y') }}</span>
+				</div>
+
+				<div class="text-sm text-slate-500 col-span-2">
+					<span>$ {{ $amount = $invoice->total_amount }}</span>
+				</div>
+
+				<div class="text-sm text-slate-400 col-span-2 hover:text-teal-600">
+					<button class="flex border border-teal-600 w-32 rounded-full font-bold p-2">
 						<div>
-							<span class="ml-3 text-gray-500 text-sm font-semibold">Remittence</span>
-							<textarea type="text" name="Remittence" placeholder="Remittence" class="outline-none font-semibold mt-2 w-full px-3 py-1 border border-gray-400 rounded-lg" id="comment"></textarea>
-						</div>
-					</div>
-					<div class="col-span-6">
-						<div class="flex justify-between pt-14 ml-3 font-semibold">
-							<div class="text-sm">
-								Total
-							</div>
-							<div>
-								$ 480
-							</div>
-						</div>
-					</div>
-					
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+							  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+							</svg></div>
+						<div class="ml-2">{{ $invoice->status_name }}</div>
+						</button>
+				</div>
+			</div>
+		</div>
+
+		<?php
+
+			$total_amount = $total_amount + $amount;
+	    ?>
+
+		@endforeach
+
+		<div class="bg-white rounded-lg mt-3 p-5 text-center">
+			<div class="flex grid grid-cols-12 items-center">
+				<div class="text-sm text-slate-500 col-span-4">
+					<div class="text-2xl text-black font-semibold">{{ count($invoice_data) }}</div>
+					<div>INVOICES</div>
 				</div>
 
-			</div>
+				<div class="text-sm text-slate-500 col-span-4">
+					<div class="text-2xl text-black font-semibold">$ {{ $total_amount }}</div>
+					<div>TOTAL</div>
+				</div>
 
+				<div class="text-sm text-slate-500 col-span-4">
+					<button class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Resend invoices</button>
+				</div>
+			</div>
 		</div>
-	</div>
+	    </div>
+
+   </div> 
+
 </div>
 
 @endsection
+<style type="text/css">
+	.active {
+		color: teal;
+	}
+</style>
+
+
+@push('scripts')
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#invoice_details').click(function() {
+
+			let url = "{{ route('invoices.show') }}";
+			window.location.href = url;
+		});
+	});
+</script>
+@endpush
