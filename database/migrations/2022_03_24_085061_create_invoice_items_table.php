@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payroll_items', function (Blueprint $table) {
+        Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('payroll_id');
+            $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('shift_id');
-            $table->float('pay_rate');
+            $table->float('bill_rate');
             $table->float('hours');
             $table->float('total_amount');
-            $table->foreign('payroll_id')->references('id')->on('payrolls');
-            $table->foreign('shift_id')->references('id')->on('shifts');
             $table->timestamps();
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('shift_id')->references('id')->on('shifts');
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payroll_items');
+        Schema::dropIfExists('invoice_items');
     }
 };

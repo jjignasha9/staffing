@@ -7,7 +7,7 @@ use App\Models\Rate;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
 use App\Models\Workday;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;    
 use Illuminate\Support\Facades\DB;
 
 class PayrollsController extends Controller
@@ -72,7 +72,7 @@ class PayrollsController extends Controller
 
         $payrolls = Payroll::orderby('id','asc')->get()->groupBy('day_weekend');
 
-         
+
         return view('payrolls.paid_payroll',compact('payrolls'));
     }
 
@@ -114,18 +114,16 @@ class PayrollsController extends Controller
         ->groupBy('timesheet_id');
 
 
-
         foreach($timesheets as $timesheet_id => $workdays){
             $total_amount = $workdays->sum('total_amount');
             $status_id = payrollStatusId('pending');
-            
             
             $payroll = new Payroll;
             $payroll->timesheet_id = $timesheet_id;
             $payroll->day_weekend = $day_weekend;
             $payroll->total_amount = $total_amount; 
             $payroll->status_id = $status_id; 
-            $payroll->save();
+            $payroll->save();   
             
             foreach($workdays as $workday){
                 $payrolls = new PayrollItems;
@@ -142,9 +140,6 @@ class PayrollsController extends Controller
          Timesheet::where('id', $timesheet_id)->update(['is_paid' => true]); 
         }
 
-        
-
-       
         return redirect()->route('payrolls')->with('message', 'Payroll created successfully!');
        
     }

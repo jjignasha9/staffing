@@ -19,3 +19,11 @@ if (! function_exists('payrollStatusId')) {
         return $status_payroll->id;
     }
 }
+if (! function_exists('invoiceStatusId')) {
+    function invoiceStatusId($status) {
+        
+        $status_invoice = PayrollStatuses::where('name', $status)->first();
+
+        return $status_invoice->id;
+    }
+}
