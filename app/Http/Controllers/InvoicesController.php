@@ -36,7 +36,7 @@ class InvoicesController extends Controller
             'timesheets.client_id as client_id',
             'timesheets.day_weekend as day_weekend',
             'timesheets.status_id as status_id',
-            'timesheets.is_paid as is_paid',
+            'timesheets.is_invoiced as is_invoiced',
             'workdays.id as workday_id',
             'workdays.total_hours as total_hours',
             'workdays.shift_id as shift_id',
@@ -70,7 +70,7 @@ class InvoicesController extends Controller
         ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
         ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
         ->select([
-            'invoices.id as invoice_id',
+            'invoices.id as id',
             'clients.name as client_name',
             'employees.name as employee_name',
             'invoices.bill_date as bill_date',    
@@ -80,7 +80,7 @@ class InvoicesController extends Controller
         ->whereRaw('timesheets.employee_id = employees.id')
         ->where('timesheets.day_weekend', $active_day_weekend)
         ->get();
-       //return response($invoice_data);
+
         return view('invoices.draftinvoice',compact(['day_weekends','active_day_weekend','invoice_data']));
     }
 
@@ -155,9 +155,45 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($invoice)
     {
-         return view('invoices.invoice_details');
+        $invoice_detail = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
+        ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
+        ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
+        ->leftJoin('terms', 'terms.id', '=', 'invoices.terms_id')
+        ->select([
+            'invoices.id as id',
+            'clients.name as client_name',
+            'terms.name as term_name',
+            'clients.email as client_email',
+            'clients.address as client_address',
+            'invoices.bill_date as bill_date',    
+            'invoices.due_date as due_date',
+            'invoice_statuses.name as status_name',    
+            'invoices.total_amount as total_amount',
+            'timesheets.day_weekend as day_weekend'             
+        ])
+        ->where('invoices.id', $invoice)
+        ->get();
+
+        $invoice_items = Invoice::leftJoin('invoice_items','invoices.id', '=', 'invoice_items.invoice_id')
+        ->leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
+        ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
+        ->leftJoin('shifts', 'shifts.id', '=', 'invoice_items.shift_id')
+        ->select([
+            'invoices.id as id',
+            'employees.name as employee_name',           
+            'shifts.name as shift_name',              
+            'invoice_items.bill_rate as bill_rate',              
+            'invoice_items.hours as hours',              
+            'invoice_items.total_amount as amount',             
+        ])
+        ->where('invoices.id', $invoice)
+        ->get()
+        ->groupBy('employee_name');
+       
+        return view('invoices.invoice_details',compact(['invoice','invoice_detail','invoice_items']));
+
     }
 
     /**
