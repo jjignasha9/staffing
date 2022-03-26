@@ -45,11 +45,11 @@
 			$count = 0;
 		?>
 		@foreach($invoice_data as $invoice)
-		<div class="bg-white rounded-lg mt-3 p-5 cursor-pointer" id="invoice_details">
+		<div class="bg-white rounded-lg mt-3 p-5 cursor-pointer invoice_details" id="{{ $invoice->id }}">
 			<div class="grid grid-cols-12">
 				<div class="text-sm text-slate-500 col-span-5">
 					<div class="text-black font-semibold">{{ $invoice->client_name }}</div>
-					<div class="text-sm">{{ $invoice->invoice_id }}</div>
+					<div class="text-sm">#  {{ $invoice->id }}</div>
 					<div class="text-sm">{{ $invoice->employee_name }}</div>
 				</div>
 
@@ -93,7 +93,7 @@
 				</div>
 
 				<div class="text-sm text-slate-500 col-span-4">
-					<button class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Resend invoices</button>
+					<button class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</button>
 				</div>
 			</div>
 		</div>
@@ -114,9 +114,9 @@
 @push('scripts')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#invoice_details').click(function() {
-
-			let url = "{{ route('invoices.show') }}";
+		$('.invoice_details').click(function() {
+			let id = $(this).attr('id');
+			let url = "{{ route('invoices.show') }}" + '/' + id;
 			window.location.href = url;
 		});
 	});

@@ -120,8 +120,6 @@
 			$('.showmodel').hide();
 		});
 
-		
-
 		$('.clickpayroll').click(function(){
 			var day_weekend = $(this).attr('day_weekend');
 			var url = "/payrolls/show/" + day_weekend; 
@@ -182,8 +180,6 @@
 	               
             }); 
 		});
-		  
-
 		
 	});
 
