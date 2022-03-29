@@ -41,11 +41,11 @@
 						</div>
 						<div class="flex justify-between my-2">
 							<div class="font-semibold">Created at</div>
-							<div class="text-gray-500">{{ Carbon\carbon::parse($invoice->day_weekend)->format('m/d/Y') }}</div>
+							<div class="text-gray-500">{{ Carbon\carbon::parse($invoice->created_at)->format('m/d/Y') }}</div>
 						</div>
 						<div class="flex justify-between my-2">
 							<div class="font-semibold">Sent at</div>
-							<div class="text-gray-500">{{ Carbon\carbon::parse($invoice->bill_date)->format('m/d/Y') }}</div>
+							<div class="text-gray-500"></div>
 						</div>
 						<div class="flex justify-between my-2">
 							<div class="font-semibold">Last updated at</div>
@@ -99,7 +99,7 @@
 							</div>
 							<div>
 								<span class="ml-3">Address</span>
-								<textarea type="text" name="Address" placeholder="you can comment here" class="outline-none font-semibold mt-2 w-full px-3 py-1 border border-gray-400 rounded-lg" id="comment">{{ $invoice->client_address}}</textarea>
+								<textarea type="text" name="Address" placeholder="you can comment here" class="outline-none font-semibold mt-2 w-full px-3 py-1 rounded-lg" id="comment">{{ $invoice->client_address}}</textarea>
 							</div>
 							<div class="mt-8">
 								<span class="ml-3">Due date</span>
@@ -142,8 +142,8 @@
 							<div class="flex items-center justify-between">
 								<div class="w-1/4 text-left">{{ $invoice_item->shift_name }}</div>
 			            		<div class="w-1/4 text-right">{{ $invoice_item->bill_rate }}</div>
-			            		<div class="w-1/4 text-right">{{ $invoice_item->hours }}</div>
-			            		<div class="w-1/4 text-right">{{ $invoice_item->amount }}</div>	
+			            		<div class="w-1/4 text-right">{{ $invoice_item->hours }} hrs</div>
+			            		<div class="w-1/4 text-right">$ {{ $invoice_item->amount }}</div>	
 		            		</div>
 		            		@endforeach
 						</div>
@@ -154,8 +154,8 @@
 				
     			
 				<div class="mb-12">
-					<div class="pt-14 ml-3 font-bold flex items-center">
-						<div class="text-sm mr-28 ">
+					<div class="pt-14 ml-3 font-bold flex items-center justify-end">
+						<div class="text-sm mr-28">
 							Total
 						</div>
 						<div>

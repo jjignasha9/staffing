@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
@@ -131,7 +132,9 @@ Route::get('/workdays/show/{workday}', [WorkdaysController::class, 'show'])->nam
 Route::post('/workdays/update/{workday}', [WorkdaysController::class, 'update'])->name('workdays.update');
 Route::delete('/workdays/destroy/{workday}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
 
-
-
-
 });
+
+/* chats */
+Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
+Route::post('/chats/store', [ChatsController::class, 'store'])->name('chats.store');
+Route::get('/chats/show', [ChatsController::class, 'show'])->name('chats.show');
