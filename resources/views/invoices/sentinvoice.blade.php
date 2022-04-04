@@ -25,7 +25,7 @@
 	    </div>      
 
 	    <div class="col-span-10">
-
+				@foreach($day_weekends as $day_weekend)
 				<a href="{{ route('invoices.sent-invoice',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}
 				</a>
 				@endforeach
