@@ -27,10 +27,15 @@
 	    <div class="col-span-10">
 			@foreach($day_weekends as $day_weekend)
 
-			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
+			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="weekend bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 				{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 			</a>
-			@endforeach       
+			@endforeach     
+
+			<form>
+				@csrf
+				 <input type="hidden" name="day_weekend" value="{{ $day_weekends }}">
+			</form>  
 
 		<div class="bg-white mt-5 rounded-full px-5 py-1.5">
 			<div class="grid grid-cols-12">
@@ -42,7 +47,6 @@
 		</div>  
 		<?php 
 			$total_amount = 0;
-			$count = 0;
 		?>
 		@foreach($invoice_data as $invoice)
 		<div class="bg-white rounded-lg mt-3 p-5 cursor-pointer invoice_details" id="{{ $invoice->id }}">
@@ -91,10 +95,11 @@
 					<div class="text-2xl text-black font-semibold">$ {{ $total_amount }}</div>
 					<div>TOTAL</div>
 				</div>
-
-				<div class="text-sm text-slate-500 col-span-4">
-					<button class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</button>
-				</div>
+                
+                
+					<div class="text-sm text-slate-500 col-span-4">
+						<a href="{{ route('invoices.sent-invoice',$active_day_weekend) }}" class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</a>
+				    </div>
 			</div>
 		</div>
 	    </div>

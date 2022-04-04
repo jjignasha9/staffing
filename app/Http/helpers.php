@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\InvoiceStatuses;
 use App\Models\PayrollStatuses;
 use App\Models\TimesheetStatuses;
 
@@ -22,7 +23,7 @@ if (! function_exists('payrollStatusId')) {
 if (! function_exists('invoiceStatusId')) {
     function invoiceStatusId($status) {
         
-        $status_invoice = PayrollStatuses::where('name', $status)->first();
+        $status_invoice = InvoiceStatuses::where('name', $status)->first();
 
         return $status_invoice->id;
     }

@@ -3,86 +3,132 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>pdf</title>
+	<title>invoice pdf</title>
 </head>
 <body>
+	<div style="page-break-after: always;">
+			<span class="text-bold">Timesheet, Inc.</span>
+			<p>30 3rd Street, Floor 1</p>
+			<p>Troy, NY 12180 US</p>
+			<p>(212) 796-6930</p>
+			<span class="text-bold">WEEK ENDING</span>
+			<p>{{ $invoice->timesheet->day_weekend }}</p>
+			<span class="heading text-bold">Invoice</span>
 
-	<span class="text-bold">Avenue A Staffing, Inc.</span>
-	<p>30 3rd Street, Floor 1</p>
-	<p>Troy, NY 12180 US</p>
-	<p>(212) 796-6930</p>
-	<p>Mario@AvenueAstaffing.com</p>
-	<p>www.avenueastaffing.com</p>
-
-	<div class="row">
-		<div class="column">
-			<span class="text-bold">BILL TO</span>
-			<p>Kuhic-Jaskolski</p>
-			<p>69609 Raynor Plain</p>
-			<p>South Ariel, MT 15465</p>
-		</div> 
+		<div class="row">
+			<div class="column">
+				<span class="text-bold">BILL TO</span>
+				<p>{{ $invoice->timesheet->client->name }}</p>
+				<p>{{ $invoice->timesheet->client->address }}</p>
+			</div> 
 
 
-		<table id="invoice" class="column">
-			<tr>
-				<td class="text-bold">INVOICE #</td>
-				<td>2479</td>
-			</tr>
-			<tr>
-				<td class="text-bold">DATE</td>
-				<td>05/15/2022</td>
-			</tr>
-			<tr>
-				<td class="text-bold">DUE DATE</td>
-				<td>06/15/2022</td>
-			</tr>
-			<tr>
-				<td class="text-bold">TERMS Net</td>
-				<td>30</td>
-			</tr>
-		</table>
+			<table id="invoice" class="column">
+				<tr>
+					<td class="text-bold free ls">INVOICE #</td>
+					<td class="free are">{{ $invoice->id }}</td>
+				</tr>
+				<tr>
+					<td class="text-bold free ls">DATE</td>
+					<td class="free are">{{ $invoice->bill_date }}</td>
+				</tr>
+				<tr>
+					<td class="text-bold free ls">DUE DATE</td>
+					<td class="free are">{{ $invoice->due_date }}</td>
+				</tr>
+				<tr>
+					<td class="text-bold free ls">TERMS Net</td>
+					<td class="free are">{{ $invoice->term->name }}</td>
+				</tr>
+			</table>
+		</div>
+
+		<center>
+			<table style="width:98%" id="invoice-table">
+				<thead>
+					<tr>
+						<th>ACTIVITY</th>
+						<th>HOURS</th>
+						<th>RATE</th>
+						<th>AMOUNT</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ $invoice->timesheet->employee->name }}</td>
+						<td>{{ $invoice->invoices->sum('hours') }}</td>
+						<td>$ {{ $invoice->invoices->sum('bill_rate') }}</td>
+						<td>$ {{ $invoice->invoices->sum('total_amount') }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<hr>
+
+			<table id="invoicetotal">
+				<tr>
+					<td class="free">BALANCE DUE</td>
+					<td class="text-bold free">$ {{ $invoice->invoices->sum('total_amount') }}</td>
+				</tr>
+			</table>
+		</center>
+
 	</div>
-	<h1 class="heading">INVOICE</h1>
+
+	<span class="heading text-bold">Timesheet</span>
+	<p >WEEK ENDING SUNDAY <span class="text-bold">{{ $timesheet->day_weekend }}</span></p>
+	<p >EMPLOYEE'S NAME <span class="text-bold">{{ $timesheet->employee->name }}</span></p>
+	<p >CLIENT NAME <span class="text-bold">{{ $timesheet->client->name }}</span></p>
+	<p >SUPERVISOR NAME <span class="text-bold">{{ $timesheet->supervisor->name }}</span></p>
 
 
+	<table style="width:100%">
+		<tr>
+			<th>DATE</th>
+			<th>TIME IN</th>
+			<th>TIME OUT</th>
+			<th>BREAK</th>
+			<th>TOTAL</th>
+		</tr>
+		@foreach($timesheet->workdays as $workday)
+		<tr>
+			<td>{{ Carbon\carbon::parse($workday->date)->format('D m/d') }}</td>
+			<td>{{ Carbon\carbon::parse($workday->in_time)->format('H:i A') }}</td>
+			<td>{{ Carbon\carbon::parse($workday->out_time)->format('H:i A') }}</td>
+			<td>{{ $workday->break }}</td>
+			<td>{{ $workday->total_hours }} hrs</td>
+		</tr>
+		@endforeach
 
-	<center>
-		<table style="width:98%" id="invoice-table">
-			<thead>
-				<tr>
-					<th>ACTIVITY</th>
-					<th>HOURS</th>
-					<th>RATE</th>
-					<th>AMOUNT</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Alivia Yundt</td>
-					<td>40</td>
-					<td>42.57</td>
-					<td>1,702.80</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<hr>
-
-		<table id="invoicetotal">
-			<tr>
-				<td>BALANCE DUE</td>
-				<td class="text-bold">$1,702.80</td>
-			</tr>
-		</table>
-	</center>
+		<tr>
+			<td colspan="4" class="text-bold">TOTAL HOURS WORKED</td>
+			<td class="text-bold">{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
+		</tr>
+	</table>
 
 </body>
 </html>
 
-
-
-
 <style type="text/css">
+	table, th, td {
+		border:1px solid black;
+		border-collapse: collapse;
+		padding: 7px;
+		text-align: center;
+	}
+
+	div {
+		margin-top:15px;
+	}
+
+	.text-bold {
+		font-weight: bold;
+	}   
+
+	.free {
+		border : 1px solid white;
+	}
+
 	p {
 		font-size:small;
 		font-family: sans-serif;
@@ -91,52 +137,71 @@
 
 	#invoice {
 		width: 20%;
-		margin-left: 20px;
+		margin-left: 120px;
 	}
 
 	span {	
 		margin-left: 20px;
+		font-family: sans-serif;
+		height:50px;
 	}	
 
 	.text-bold {
 		font-weight: bold;
 	}   
 
-	.heading {
+	h1 {
 		font-weight: bold;
 		color: teal;
 		text-align: center;
-	}
-
-	h1 {
-		margin-left: 20px;
+		font-family: sans-serif;
 	}
 
 	#invoice-table {
 		padding: 7px;
-		text-align: center;
+		text-align: left;
+		padding-top: 200px;
+	}
+
+	.heading {
+		text-align: left;
+		color: teal;
+		font-size: 30px;
+		font-weight: bold;
 	}
 
 	th {
 		background-color:#2dd4bf;
+		font-family: sans-serif;
 	}
 
 	#invoicetotal {
 		padding: 7px;
-		width: 88%;
+		width: 85%;
 		text-align: right;
-
+		margin-left: 120px;
 	}
 
 	.row {
 		margin-left:-5px;
 		margin-right:-5px;
+		margin-top: 20px;
 	}
 
 	.column {
 		float: left;
-		width: 70%;
+		width: 66%;
 		padding: 5px;
+	}
+
+	.ls { 
+		text-align: right;
+
+	}
+
+	.are { 
+		text-align: left;
+
 	}
 
 </style>
