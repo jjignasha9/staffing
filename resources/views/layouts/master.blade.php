@@ -257,7 +257,18 @@
             </div>
 
             
-            <div class="px-4 py-2 overflow-y-auto" style="height: 288px;" id="messages"></div>
+            <div class="px-4 py-2 overflow-y-auto" style="height: 288px;" id="messages">
+                <!-- <div class="w-56 float-right">
+                    <div class="border border-teal-600 bg-teal-100 flex justify-between items-center px-2 rounded-full text-sm">
+                        <div>hello</div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
                       
             <div class="flex items-center">
                 <div class="px-2">
@@ -436,13 +447,26 @@
 
                 data.forEach(item => {
 
-                        if(!temp.includes(item.date)){
-                            temp.push(item.date);
-                            message_html += '<div class="w-full px-1 rounded-full text-center text-sm">'+ item.date +'</div>';
-                        } 
+                    if(!temp.includes(item.date)){
+                        temp.push(item.date);
+                        message_html += '<div class="w-full px-1 rounded-full text-center text-sm">'+ item.date +'</div>';
+                    } 
 
-                    message_html += '<div class="bg-white my-2 px-2 py-1 w-56 text-left border border-teal-600 rounded-full text-sm'+ item.align +'" message_id="'+ item.id +'">'+ item.message +'</div>';
-                });
+                    message_html += '<div class="w-56 m-1'+ item.align +'">'
+                        message_html += '<div class="border border-teal-600 flex justify-between items-center px-2 rounded-full text-sm">'
+                            message_html += '<div message_id="'+ item.id +'">'+ item.message +'</div>'
+                            if(item.is_read == 1)
+                            { 
+                                message_html += '<div>'
+                                    message_html += '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">'
+                                        message_html += '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />'
+                                    message_html += '</svg>'
+                                message_html += '</div>'
+                            }
+                        message_html += '</div>'
+                    message_html += '</div>'
+                          
+                 });
 
                 $('#messages').html(message_html);
 
@@ -451,6 +475,8 @@
             }); 
             
         });
+
+        
 
         $('#send-message').click(function(){
 
@@ -486,7 +512,6 @@
 
             var url = "/chats/show"; 
 
-
             var messege_id = $("#messages > div:last").attr('message_id');
 
             $.ajax({
@@ -508,14 +533,25 @@
                             temp.push(item.date);
                             message_html += '<div class="w-full px-1 rounded-full text-center text-sm">'+ item.date +'</div>';
                         } 
-
-                        message_html += '<div class="bg-white my-2 px-2 py-1 w-56 text-left border border-teal-600 rounded-full text-sm'+ item.align +'" message_id="'+ item.id +'">'+ item.message +'</div>';
-
-
+                        message_html += '<div class="w-56 m-1 rounded-full'+ item.align +'">'
+                             message_html += '<div class="border border-teal-600 flex justify-between items-center px-2 rounded-full text-sm">'
+                               message_html += '<div message_id="'+ item.id +'">'+ item.message +'</div>'
+                                if(item.is_read == 1)
+                                { 
+                                    message_html += '<div>'
+                                        message_html += '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">'
+                                             message_html += '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />'
+                                        message_html += '</svg>'
+                                    message_html += '</div>'
+                                }
+                                message_html += '</div>'
+                        message_html += '</div>'
+ 
                         $('#messages').append(message_html);
 
                         $('#messages').scrollTop($('#messages')[0].scrollHeight);
                     }
+                     
                    
                 });
                  
