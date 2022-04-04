@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
@@ -131,7 +132,14 @@ Route::get('/workdays/show/{workday}', [WorkdaysController::class, 'show'])->nam
 Route::post('/workdays/update/{workday}', [WorkdaysController::class, 'update'])->name('workdays.update');
 Route::delete('/workdays/destroy/{workday}', [WorkdaysController::class, 'destroy'])->name('workdays.destroy');
 
-
-
-
 });
+
+
+/* Bookings */
+
+Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
+Route::post('/bookings/store', [BookingsController::class, 'store'])->name('bookings.store');
+Route::get('/bookings/show/{id}', [BookingsController::class, 'show'])->name('bookings.show');
+Route::post('/bookings/update/{id}', [BookingsController::class, 'update'])->name('bookings.update');
+Route::get('/bookings/edit/{id}', [BookingsController::class, 'edit'])->name('bookings.edit');
+Route::post('/bookings/destroy/{id}', [BookingsController::class, 'destroy'])->name('bookings.destroy');

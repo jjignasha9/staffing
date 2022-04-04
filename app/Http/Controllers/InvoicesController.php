@@ -148,7 +148,7 @@ class InvoicesController extends Controller
 
             Timesheet::where('id', $timesheet_id)->update(['is_invoiced' => true]);
 
-          $this->createPdf($invoice->id);
+          //$this->createPdf($invoice->id);
 
         }
         return redirect()->route('invoices')->with('message', 'Invoice created successfully!');    
