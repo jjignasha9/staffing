@@ -1,10 +1,11 @@
 <?php
 
+
 use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InvoiceMailController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\PayrollsController;
 use App\Http\Controllers\RatesController;
@@ -86,11 +87,13 @@ Route::delete('/rates/destroy/{rate}', [RatesController::class, 'destroy'])->nam
 /* Invoices */
 Route::post('/invoices/store', [InvoicesController::class, 'store'])->name('invoices.store');
 Route::get('/invoices/show/{invoice?}', [InvoicesController::class, 'show'])->name('invoices.show');
+Route::get('/invoices/show-pdf/{invoice?}', [InvoicesController::class, 'showPdf'])->name('invoices.show-pdf');
 Route::get('/invoices/draft-invoice/{day_weekend?}', [InvoicesController::class, 'draftinvoice'])->name('invoices.draft-invoice');
 Route::get('/invoices/invoice-create/{invoice}', [InvoicesController::class, 'createPdf'])->name('invoice-create');
-Route::get('/invoices/sent-invoice', [InvoicesController::class, 'sentinvoice'])->name('invoices.sent-invoice');
+Route::get('/invoices/sent-invoice/{active_day_weekend?}', [InvoicesController::class, 'sentinvoice'])->name('invoices.sent-invoice');
+/*Route::get('/invoices/send-invoice/{active_day_weekend?}', [InvoicesController::class, 'sendinvoice'])->name('invoices.send-invoice');*/
 Route::get('/invoices/{day_weekend?}', [InvoicesController::class, 'index'])->name('invoices');
-Route::post('/invoices/update/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
+Route::post('/invoices/update', [InvoicesController::class, 'update'])->name('invoices.update');
 Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destroy'])->name('timesheets.destroy');
 
 
@@ -143,3 +146,9 @@ Route::get('/bookings/show/{id}', [BookingsController::class, 'show'])->name('bo
 Route::post('/bookings/update/{id}', [BookingsController::class, 'update'])->name('bookings.update');
 Route::get('/bookings/edit/{id}', [BookingsController::class, 'edit'])->name('bookings.edit');
 Route::post('/bookings/destroy/{id}', [BookingsController::class, 'destroy'])->name('bookings.destroy');
+
+/* chats */
+Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
+Route::post('/chats/store', [ChatsController::class, 'store'])->name('chats.store');
+Route::get('/chats/show', [ChatsController::class, 'show'])->name('chats.show');
+

@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\InvoiceEmail;
 use App\Models\Invoice;
 use App\Models\InvoiceItems;
 use App\Models\Payroll;
 use App\Models\Rate;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
+use App\Models\User;
 use App\Models\Workday;
+use Auth;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
-use Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PDF;
+use Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class InvoicesController extends Controller
 {
@@ -65,7 +70,7 @@ class InvoicesController extends Controller
      */
     public function draftinvoice($active_day_weekend = null)
     {
-        $day_weekends = Payroll::orderBy('day_weekend', 'DESC')->pluck('day_weekend')->unique();
+        $day_weekends = Invoice::orderBy('day_weekend', 'DESC')->pluck('day_weekend')->unique();
         $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null);
 
         $invoice_data = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
@@ -81,6 +86,7 @@ class InvoicesController extends Controller
             'invoice_statuses.name as status_name',    
         ])
         ->whereRaw('timesheets.employee_id = employees.id')
+        ->where('invoices.status_id', invoiceStatusId('pending'))
         ->where('timesheets.day_weekend', $active_day_weekend)
         ->get();
 
@@ -93,7 +99,7 @@ class InvoicesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Invoice $invoice)
     {
         $day_weekend = $request->day_weekend;
         $timesheets = Timesheet::leftJoin('workdays', 'timesheets.id', '=', 'workdays.timesheet_id')
@@ -103,6 +109,7 @@ class InvoicesController extends Controller
         ->select([
             'timesheets.id as timesheet_id',
             'timesheets.client_id as client_id',
+            'timesheets.employee_id as employee_id',
             'timesheets.day_weekend as day_weekend',
             'timesheets.status_id as status_id',
             'timesheets.is_paid as is_paid',
@@ -128,6 +135,9 @@ class InvoicesController extends Controller
 
             $invoice = new Invoice;
             $invoice->timesheet_id = $timesheet_id;
+            $invoice->day_weekend = $workdays[0]->day_weekend;
+            $invoice->client_id = $workdays[0]->client_id;
+            $invoice->employee_id = $workdays[0]->employee_id;
             $invoice->status_id = $status_id; 
             $invoice->terms_id = 2; 
             $invoice->total_amount = $total_amount; 
@@ -145,30 +155,30 @@ class InvoicesController extends Controller
                 $invoices->total_amount = $workday->total_amount; 
                 $invoices->save();
             }
-
+          
             Timesheet::where('id', $timesheet_id)->update(['is_invoiced' => true]);
 
-          //$this->createPdf($invoice->id);
+            $file = $this->createPdf($invoice);
+            $invoice->file = $file;
+            $invoice->save();   
 
         }
+        
         return redirect()->route('invoices')->with('message', 'Invoice created successfully!');    
         
        
     }   
 
     public function createPdf(Invoice $invoice)
-    {
-        $pdf = PDF::loadView('invoices.invoice-create');
+    { 
 
+        $timesheet = Timesheet::where('id', $invoice->timesheet_id)->first();
+
+        $pdf = PDF::loadView('invoices.invoice-create', compact(['invoice', 'timesheet']));
         $pdf = $pdf->setPaper('a4', 'landscape');
-
         $save = Storage::put('public/invoices/invoices_'.$invoice->id.'.pdf', $pdf->output());
-
-        return view('invoices.invoice-create', compact('invoice'));
-        return $pdf->download('invoice.pdf');
+        return storage::url('invoices/invoices_'.$invoice->id.'.pdf');
     }
-
-
 
     /**
      * Display the specified resource.
@@ -176,9 +186,9 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($invoice)
-
+    public function show(Invoice $invoice)
     {
+        $file = Invoice::all();
         $invoice_detail = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
         ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
         ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
@@ -195,7 +205,7 @@ class InvoicesController extends Controller
             'invoices.total_amount as total_amount',
             'timesheets.day_weekend as day_weekend'             
         ])
-        ->where('invoices.id', $invoice)
+        ->where('invoices.id', $invoice->id)
         ->get();
 
         $invoice_items = Invoice::leftJoin('invoice_items','invoices.id', '=', 'invoice_items.invoice_id')
@@ -210,12 +220,25 @@ class InvoicesController extends Controller
             'invoice_items.hours as hours',              
             'invoice_items.total_amount as amount',             
         ])
-        ->where('invoices.id', $invoice)
+        ->where('invoices.id', $invoice->id)
         ->get()
         ->groupBy('employee_name');
        
         return view('invoices.invoice_details',compact(['invoice','invoice_detail','invoice_items']));
 
+    }
+
+
+    public function showPdf(Invoice $invoice)
+    {
+        $file = public_path($invoice->file);
+  
+        $header = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $invoice->file . '"'
+        ];
+
+        return response()->file($file, $header);
     }
 
     /**
@@ -224,11 +247,65 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function sentinvoice()
+    public function sentinvoice($active_day_weekend = null)
     {   
+        $invoices = Invoice::where('day_weekend', $active_day_weekend)
+        ->where('status_id', invoiceStatusId('pending'))
+        ->get();
+        //return response($invoices);
+        foreach ($invoices as $invoice) {
+            Invoice::where('id', $invoice->id)->update(['status_id' =>invoiceStatusId('sent')]);
+         }   
 
-        return view('invoices.sentinvoice');
+        foreach ($invoices as $invoice) {
+          $email = $invoice->client->email; 
+          Mail::to($email)->send(new InvoiceEmail($invoice));
+        }
+         
+
+        $day_weekends = Invoice::orderBy('day_weekend', 'DESC')->pluck('day_weekend')->unique();
+        $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null); 
+         $sentdata_invoices = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
+        ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
+        ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
+        ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
+        ->select([
+            'invoices.id as id',
+            'clients.name as client_name',
+            'employees.name as employee_name',
+            'invoices.bill_date as bill_date',    
+            'invoice_statuses.name as status_name',    
+            'invoices.total_amount as total_amount',       
+        ])
+        ->where('invoices.status_id',invoiceStatusId('sent'))
+        ->where('invoices.day_weekend', $active_day_weekend)
+        ->get();
+      
+        return view('invoices.sentinvoice',compact(['sentdata_invoices', 'active_day_weekend', 'day_weekends']));
     }
+
+    public function sendinvoice()
+    {   
+        /*$invoices = Invoice::where('day_weekend', $active_day_weekend)
+        ->where('status_id', invoiceStatusId('pending'))
+        ->get();
+        //return response($invoices);
+        foreach ($invoices as $invoice) {
+            Invoice::where('id', $invoice->id)->update(['status_id' =>invoiceStatusId('sent')]);
+         }   
+     
+        $invoicesent = Invoice::where('status_id', invoiceStatusId('sent'))->get();
+    
+
+        foreach ($invoices as $invoice) {
+          $email = $invoice->client->email; 
+          Mail::to($email)->send(new InvoiceEmail($invoice));
+        }
+          return redirect()->route('invoices.draft-invoice')->with('message', 'Mail Send successfully!');*/
+    
+    }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -237,9 +314,12 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+       /* $invoices = Invoice::where('status_id', invoiceStatusId(1))
+        ->get();*/
+
+        dd('here');
     }
 
     /**
