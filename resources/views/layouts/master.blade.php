@@ -13,10 +13,6 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
-
-    <!-- <link href="/public/resources/css/sweetalert2.min.css" rel="stylesheet">
-    <script src="/public/resources/js/jquery.min.js"></script>
-    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script> -->
     <title>Dashboard</title>
 </head>
 

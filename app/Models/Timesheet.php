@@ -34,4 +34,5 @@ class Timesheet extends Model
     {
         return $this->hasOne(User::class, 'id', 'supervisor_id');
     }
+    
 }

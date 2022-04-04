@@ -233,10 +233,10 @@ class TimesheetsController extends Controller
     }
 
     public function submit(Request $request, Timesheet $timesheet)
-    {   
+    { 
+      
 
         $supervisor = User::find($request->supervisor_id);
-
         $timesheet->update([
             'supervisor_id' => $request->supervisor_id,
             'submitted_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -257,7 +257,7 @@ class TimesheetsController extends Controller
 
     public function reject(Timesheet $timesheet)
     {
-        $employee_email = $timesheet->employee->email;   
+        $employee_email = $timesheet->employee->email; 
 
         Mail::to($employee_email)->send(new RejectTimesheetEmail($timesheet));
 
