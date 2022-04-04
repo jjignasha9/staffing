@@ -14,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
     <title>Dashboard</title>
+
+    @stack('css')
 </head>
 
 <body class="bg-cover" style="background-image: url('https://cdn.wallpapersafari.com/13/73/AQ4CSR.jpg');">
@@ -29,7 +31,7 @@
                 <div class="flex justify-between text-white">
                     <div class="md:flex py-6"  id="sidebar">
                         @if(Auth::user()->role != '2' &&  Auth::user()->role != '4')
-                            <a href="" class="flex font-medium hover:text-gray-200 mr-9">
+                            <a href="{{ route('bookings') }}" class="flex font-medium hover:text-gray-200 mr-9">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>      

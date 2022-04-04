@@ -54,8 +54,6 @@ class PayrollsController extends Controller
         } else {
             $timesheets = [];
         }
-    
-        
 
         //return response($timesheets);
 

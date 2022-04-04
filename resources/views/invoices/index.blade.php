@@ -132,57 +132,57 @@
 	    </div>
 
 	    <div class="show_invoice hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-		<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-			<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-			<span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+			<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+				<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+				<span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-			<div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
-				<div class="py-5 bg-white rounded-lg shadow-2xl">
-					<form action="{{ route('invoices.store') }}" method="POST">
-						@csrf
-						<input type="hidden" name="day_weekend" value="{{ $active_day_weekend }}">
-					
-					<div class="pr-6 flex justify-end">
-						<button type="button" class="close_invoice">
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-							</svg>
-						</button>
+				<div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-96">
+					<div class="py-5 bg-white rounded-lg shadow-2xl">
+						<form action="{{ route('invoices.store') }}" method="POST">
+							@csrf
+							<input type="hidden" name="day_weekend" value="{{ $active_day_weekend }}">
+						
+						<div class="pr-6 flex justify-end">
+							<button type="button" class="close_invoice">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							</button>
+						</div>
+						<center>
+							<div>
+								<svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"  stroke-width="2">
+	                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+	                            </svg>  
+							</div>
+						</center>
+						<div class="grid grid-cols-12 mt-7">
+							<div class="col-span-4 text-center">
+								<div class="text-lg font-semibold">{{ count($timesheets) }}</div>
+								<div class="text-sm">INVOICES</div>
+							</div>
+							<div class="col-span-4 text-center">
+								<div class="text-lg font-semibold">{{ $total_hours }}</div> 
+								<div class="text-sm">TOTAL HOURS</div>
+							</div>
+							<div class="col-span-4 text-center">
+								<div class="text-lg font-semibold">$ {{ $total_amount }}</div> 
+								<div class="text-sm">TOTAL AMOUNT</div>
+							</div>
+						</div>
+						<div class="mt-7 text-center">
+							<span class="text-xl text-slate-900 font-semibold">Are you sure</span><br>
+							<span>you want to create invoice?</span>
+						</div>
+						<div class="flex items-center mt-7 justify-center">
+							<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none">Create</button>
+							<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none mx-3 close_invoice">Cancel</button>
+						</div>		
+						</form>		    
 					</div>
-					<center>
-						<div>
-							<svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"  stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                            </svg>  
-						</div>
-					</center>
-					<div class="grid grid-cols-12 mt-7">
-						<div class="col-span-4 text-center">
-							<div class="text-lg font-semibold">{{ count($timesheets) }}</div>
-							<div class="text-sm">INVOICES</div>
-						</div>
-						<div class="col-span-4 text-center">
-							<div class="text-lg font-semibold">{{ $total_hours }}</div> 
-							<div class="text-sm">TOTAL HOURS</div>
-						</div>
-						<div class="col-span-4 text-center">
-							<div class="text-lg font-semibold">$ {{ $total_amount }}</div> 
-							<div class="text-sm">TOTAL AMOUNT</div>
-						</div>
-					</div>
-					<div class="mt-7 text-center">
-						<span class="text-xl text-slate-900 font-semibold">Are you sure</span><br>
-						<span>you want to create invoice?</span>
-					</div>
-					<div class="flex items-center mt-7 justify-center">
-						<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none">Create</button>
-						<button class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none mx-3 close_invoice">Cancel</button>
-					</div>		
-					</form>		    
 				</div>
 			</div>
-		</div>
-	</div> 
+		</div> 
 
    </div>    
 

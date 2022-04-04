@@ -27,7 +27,7 @@
 	    <div class="col-span-10">
 			@foreach($day_weekends as $day_weekend)
 
-			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="weekend bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
+			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 				{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 			</a>
 			@endforeach     
@@ -66,9 +66,9 @@
 				</div>
 
 				<div class="text-sm text-slate-400 col-span-2 hover:text-teal-600">
-					<button class="flex border border-teal-600 w-32 rounded-full font-bold p-2">
+					<button class="flex border border-teal-600 w-30 rounded-full font-bold py-1 px-2">
 						<div>
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 							  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
 							</svg></div>
 						<div class="ml-2">{{ $invoice->status_name }}</div>
@@ -98,7 +98,7 @@
                 
                 
 					<div class="text-sm text-slate-500 col-span-4">
-						<a href="{{ route('invoices.sent-invoice',$active_day_weekend) }}" class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</a>
+						<a href="{{ route('invoices.send-invoice',$active_day_weekend) }}" class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</a>
 				    </div>
 			</div>
 		</div>
