@@ -20,7 +20,7 @@ class ClientsController extends Controller
     public function create()
     { 
       $clients = User::orderby('id','asc')->get();
-     
+      
         return view('clients.create', compact('clients'));
     }
 
