@@ -47,7 +47,7 @@ class ChatsController extends Controller
             )
             ->get()
             ->map(function($item) {
-                $item['align'] = $item->sender_id == Auth::user()->id ? ' float-right bg-teal-100' : ' float-left';
+                $item['align'] = $item->sender_id == Auth::user()->id ? ' float-right bg-teal-100 rounded-full' : ' float-left';
                 $item['date'] = Carbon::parse($item->created_at);
                 if($item['date'] <= Carbon::now()->subdays(7)) {
                     $item['date'] = Carbon::parse($item->created_at)->format('m/d/Y');
