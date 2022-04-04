@@ -28,7 +28,7 @@
 		<div class="flex justify-between items-center">
 			<div class="flex">
 				@foreach($day_weekends as $day_weekend)
-				<div class="bg-white p-1 rounded-full w-32 text-center mr-10 shadow {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
+				<div class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 					<span class="text-sm">{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}</span>
 				</div>
 				@endforeach
