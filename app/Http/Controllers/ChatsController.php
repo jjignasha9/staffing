@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Auth;
+use Carbon\Carbon;
 
 class ChatsController extends Controller
 {
@@ -18,13 +19,11 @@ class ChatsController extends Controller
 
     public function store(Request $request)
     {
-
         $chat = Chat::create([
             'sender_id' => Auth::user()->id,
             'receiver_id' => $request->receiver_id,
-            'message' => $request->message
+            'message' => $request->message,
         ]);
-
 
         return response($chat, 200);
     }
@@ -48,10 +47,21 @@ class ChatsController extends Controller
             )
             ->get()
             ->map(function($item) {
-                $item['align'] = $item->sender_id == Auth::user()->id ? 'float-right bg-teal-100' : 'float-left';
+                $item['align'] = $item->sender_id == Auth::user()->id ? ' float-right bg-teal-100' : ' float-left';
+                $item['date'] = Carbon::parse($item->created_at);
+                if($item['date'] <= Carbon::now()->subdays(7)) {
+                    $item['date'] = Carbon::parse($item->created_at)->format('m/d/Y');
+                } else {
+                   $item['date'] = Carbon::parse($item->created_at)->format('l') . '&nbsp;&nbsp;&nbsp;&nbsp;'; 
+                }
+                
+
                 return $item;
             });
-       
-       return response($chats, 200); 
+
+           
+            Chat::where('receiver_id', Auth::user()->id)->where('sender_id', $request->receiver_id)->update(['is_read' => true]);
+           
+            return response($chats, 200); 
     }
 }
