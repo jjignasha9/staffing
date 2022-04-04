@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
@@ -136,7 +138,18 @@ Route::delete('/workdays/destroy/{workday}', [WorkdaysController::class, 'destro
 
 });
 
+
+/* Bookings */
+
+Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
+Route::post('/bookings/store', [BookingsController::class, 'store'])->name('bookings.store');
+Route::get('/bookings/show/{id}', [BookingsController::class, 'show'])->name('bookings.show');
+Route::post('/bookings/update/{id}', [BookingsController::class, 'update'])->name('bookings.update');
+Route::get('/bookings/edit/{id}', [BookingsController::class, 'edit'])->name('bookings.edit');
+Route::post('/bookings/destroy/{id}', [BookingsController::class, 'destroy'])->name('bookings.destroy');
+
 /* chats */
 Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
 Route::post('/chats/store', [ChatsController::class, 'store'])->name('chats.store');
 Route::get('/chats/show', [ChatsController::class, 'show'])->name('chats.show');
+

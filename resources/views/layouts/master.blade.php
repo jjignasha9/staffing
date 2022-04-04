@@ -14,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
     <title>Dashboard</title>
+
+    @stack('css')
 </head>
 
 <body class="bg-cover" style="background-image: url('https://cdn.wallpapersafari.com/13/73/AQ4CSR.jpg');">
@@ -29,7 +31,7 @@
                 <div class="flex justify-between text-white">
                     <div class="md:flex py-6"  id="sidebar">
                         @if(Auth::user()->role != '2' &&  Auth::user()->role != '4')
-                            <a href="" class="flex font-medium hover:text-gray-200 mr-9">
+                            <a href="{{ route('bookings') }}" class="flex font-medium hover:text-gray-200 mr-9">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>      
@@ -241,19 +243,22 @@
         <div id="message" class="offset-0 h-96 hidden fixed right-0 bottom-24 w-80 text-base list-none bg-white rounded-lg shadow dark:bg-gray-700 mr-2">
 
             <div class="flex justify-between items-center px-4 py-2 shadow-lg">
-                <div class="flex items-center">
-                    <button id="back">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <div id="message-user-name"></div>
+                <div class="flex items-center ">
+                    <div id="back" class="flex items-center cursor-pointer">
+                        <button>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <div id="message-user-name"></div>
+                    </div>
                     <input type="hidden" name="user-id" id="message-user-id">
                 </div>
             </div>
 
+            
             <div class="px-4 py-2 overflow-y-auto" style="height: 288px;" id="messages"></div>
-
+                      
             <div class="flex items-center">
                 <div class="px-2">
                      <textarea name="text" placeholder="Type something here...." row="1" class="bg-slate-100 outline-none w-60 rounded-lg px-1 " id="message-text"></textarea>
@@ -427,11 +432,21 @@
 
                 var message_html = '';
 
+                var temp = [];
+
                 data.forEach(item => {
-                    message_html += '<div class="bg-white my-2 px-2 py-1 w-56 text-left border border-teal-600 rounded-full text-sm  '+ item.align +'">'+ item.message +'</div>';
+
+                        if(!temp.includes(item.date)){
+                            temp.push(item.date);
+                            message_html += '<div class="w-full px-1 rounded-full text-center text-sm">'+ item.date +'</div>';
+                        } 
+
+                    message_html += '<div class="bg-white my-2 px-2 py-1 w-56 text-left border border-teal-600 rounded-full text-sm'+ item.align +'" message_id="'+ item.id +'">'+ item.message +'</div>';
                 });
 
                 $('#messages').html(message_html);
+
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
                  
             }); 
             
@@ -450,10 +465,12 @@
                
             }).done(function(data) {
 
+
                 $('#message-text').val('');
 
-                var message_html = '<div class="bg-white my-2 px-2 py-1 w-56 text-left float-right border border-teal-600 rounded-full text-sm">'+ data.message +'</div>';
-                    
+                var message_html = '<div class="bg-white my-2 px-2 py-1 w-56 text-left float-right border border-teal-600 rounded-full text-sm" message_id="'+ item.id +'">'
+                 + data.message +'</div>';
+
                 $('#messages').append(message_html);
                  
             }); 
@@ -469,6 +486,9 @@
 
             var url = "/chats/show"; 
 
+
+            var messege_id = $("#messages > div:last").attr('message_id');
+
             $.ajax({
                 method:"GET",
                 url: url,
@@ -478,14 +498,26 @@
 
                 var message_html = '';
 
+                var temp = [];
+              
                 data.forEach(item => {
-                    message_html += '<div class="bg-white my-2 px-2 py-1 w-56 text-left border border-teal-600 rounded-full text-sm  '+ item.align +'">'+ item.message +'</div>';
+
+                    if(item.id > messege_id){
+
+                        if(!temp.includes(item.date)){
+                            temp.push(item.date);
+                            message_html += '<div class="w-full px-1 rounded-full text-center text-sm">'+ item.date +'</div>';
+                        } 
+
+                        message_html += '<div class="bg-white my-2 px-2 py-1 w-56 text-left border border-teal-600 rounded-full text-sm'+ item.align +'" message_id="'+ item.id +'">'+ item.message +'</div>';
+
+
+                        $('#messages').append(message_html);
+
+                        $('#messages').scrollTop($('#messages')[0].scrollHeight);
+                    }
+                   
                 });
-
-                $('#messages').html(message_html);
-
-                $('#messages').scrollTop($('#messages')[0].scrollHeight);
-
                  
             }); 
         }
