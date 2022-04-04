@@ -123,7 +123,7 @@
             	</div>
 
             	<div class="flex justify-center mt-12">
-	            	<button class="invoicebox text-center bg-teal-600 hover:bg-teal-700 rounded-full text-white px-12 py-2 text-lg">
+	            	<button class="invoicebox bg-teal-600 py-2 text-white rounded-full w-36 hover:bg-teal-700">
 			         	Preview invoice
 			         </button>
 		         </div>

@@ -27,22 +27,20 @@
 	    <div class="col-span-10">
 			@foreach($day_weekends as $day_weekend)
 
-			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
+			<a href="{{ route('invoices.draft-invoice',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ 
+				$day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 				{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 			</a>
 			@endforeach     
 
-			<form>
-				@csrf
-				 <input type="hidden" name="day_weekend" value="{{ $day_weekends }}">
-			</form>  
+			  
 
-		<div class="bg-white mt-5 rounded-full px-5 py-1.5">
+		<div class="bg-white mt-3 p-3 rounded-xl font-bold text-gray-600">
 			<div class="grid grid-cols-12">
-				<div class="text-sm text-slate-500 col-span-5">CLIENT</div>
-				<div class="text-sm text-slate-500 col-span-3">BILL DATE</div>
-				<div class="text-sm text-slate-500 col-span-2">AMOUNT</div>
-				<div class="text-sm text-slate-500 col-span-2">STATUS</div>
+				<div class="ml-16 col-span-5">Client Name</div>
+				<div class="col-span-3">Bill Date</div>
+				<div class="col-span-2">Amount</div>
+				<div class="col-span-2">Status</div>
 			</div>
 		</div>  
 		<?php 
@@ -84,6 +82,11 @@
 
 		@endforeach
 
+		<form>
+			@csrf
+			 <input type="hidden" name="day_weekend" value="{{ $active_day_weekend }}">
+		</form>
+
 		<div class="bg-white rounded-lg mt-3 p-5 text-center">
 			<div class="flex grid grid-cols-12 items-center">
 				<div class="text-sm text-slate-500 col-span-4">
@@ -98,7 +101,7 @@
                 
                 
 					<div class="text-sm text-slate-500 col-span-4">
-						<a href="{{ route('invoices.send-invoice',$active_day_weekend) }}" class="bg-teal-600 p-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</a>
+						<a href="{{ route('invoices.send-invoice',$active_day_weekend) }}" class="bg-teal-600 px-3 py-2 text-white rounded-full w-48 ml-10 hover:bg-teal-700">Send invoices</a>
 				    </div>
 			</div>
 		</div>

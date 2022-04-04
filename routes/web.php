@@ -94,7 +94,6 @@ Route::get('/invoices/sent-invoice/{active_day_weekend?}', [InvoicesController::
 Route::get('/invoices/send-invoice/{active_day_weekend?}', [InvoicesController::class, 'sendinvoice'])->name('invoices.send-invoice');
 Route::get('/invoices/resend-invoice/{active_day_weekend?}', [InvoicesController::class, 'resendinvoice'])->name('invoices.resend-invoice');
 Route::get('/invoices/{day_weekend?}', [InvoicesController::class, 'index'])->name('invoices');
-Route::post('/invoices/update', [InvoicesController::class, 'update'])->name('invoices.update');
 Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destroy'])->name('timesheets.destroy');
 
 
