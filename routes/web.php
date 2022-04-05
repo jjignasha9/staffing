@@ -91,9 +91,9 @@ Route::get('/invoices/show-pdf/{invoice?}', [InvoicesController::class, 'showPdf
 Route::get('/invoices/draft-invoice/{day_weekend?}', [InvoicesController::class, 'draftinvoice'])->name('invoices.draft-invoice');
 Route::get('/invoices/invoice-create/{invoice}', [InvoicesController::class, 'createPdf'])->name('invoice-create');
 Route::get('/invoices/sent-invoice/{active_day_weekend?}', [InvoicesController::class, 'sentinvoice'])->name('invoices.sent-invoice');
-/*Route::get('/invoices/send-invoice/{active_day_weekend?}', [InvoicesController::class, 'sendinvoice'])->name('invoices.send-invoice');*/
+Route::get('/invoices/send-invoice/{active_day_weekend?}', [InvoicesController::class, 'sendinvoice'])->name('invoices.send-invoice');
+Route::get('/invoices/resend-invoice/{active_day_weekend?}', [InvoicesController::class, 'resendinvoice'])->name('invoices.resend-invoice');
 Route::get('/invoices/{day_weekend?}', [InvoicesController::class, 'index'])->name('invoices');
-Route::post('/invoices/update', [InvoicesController::class, 'update'])->name('invoices.update');
 Route::delete('/invoices/destroy/{invoice}', [InvoicesController::class, 'destroy'])->name('timesheets.destroy');
 
 

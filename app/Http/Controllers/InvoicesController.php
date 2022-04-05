@@ -70,27 +70,31 @@ class InvoicesController extends Controller
      */
     public function draftinvoice($active_day_weekend = null)
     {
-        $day_weekends = Invoice::orderBy('day_weekend', 'DESC')->pluck('day_weekend')->unique();
+    $day_weekends = Invoice::where('status_id', invoiceStatusId('pending'))->orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')
+    ->unique();
+        /*$day_weekends = Invoice::orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')->unique();*/
         $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null);
 
-        $invoice_data = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
-        ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
-        ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
-        ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
-        ->select([
-            'invoices.id as id',
-            'clients.name as client_name',
-            'employees.name as employee_name',
-            'invoices.bill_date as bill_date',    
-            'invoices.total_amount as total_amount',    
-            'invoice_statuses.name as status_name',    
-        ])
-        ->whereRaw('timesheets.employee_id = employees.id')
-        ->where('invoices.status_id', invoiceStatusId('pending'))
-        ->where('timesheets.day_weekend', $active_day_weekend)
-        ->get();
+       
+            $invoice_data = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
+            ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
+            ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
+            ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
+            ->select([
+                'invoices.id as id',
+                'clients.name as client_name',
+                'employees.name as employee_name',
+                'invoices.bill_date as bill_date',    
+                'invoices.total_amount as total_amount',    
+                'invoice_statuses.name as status_name',    
+            ])
+            ->whereRaw('timesheets.employee_id = employees.id')
+            ->where('invoices.status_id', invoiceStatusId('pending'))
+            ->where('timesheets.day_weekend', $active_day_weekend)
+            ->get();
 
-        return view('invoices.draftinvoice',compact(['day_weekends','active_day_weekend','invoice_data']));
+    
+          return view('invoices.draftinvoice',compact(['day_weekends','active_day_weekend','invoice_data']));
     }
 
     /**
@@ -164,7 +168,7 @@ class InvoicesController extends Controller
 
         }
         
-        return redirect()->route('invoices')->with('message', 'Invoice created successfully!');    
+        return redirect()->route('invoices.store')->with('message', 'Invoice created successfully!');    
         
        
     }   
@@ -249,23 +253,10 @@ class InvoicesController extends Controller
      */
     public function sentinvoice($active_day_weekend = null)
     {   
-        $invoices = Invoice::where('day_weekend', $active_day_weekend)
-        ->where('status_id', invoiceStatusId('pending'))
-        ->get();
-        //return response($invoices);
-        foreach ($invoices as $invoice) {
-            Invoice::where('id', $invoice->id)->update(['status_id' =>invoiceStatusId('sent')]);
-         }   
-
-        foreach ($invoices as $invoice) {
-          $email = $invoice->client->email; 
-          Mail::to($email)->send(new InvoiceEmail($invoice));
-        }
-         
-
-        $day_weekends = Invoice::orderBy('day_weekend', 'DESC')->pluck('day_weekend')->unique();
-        $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null); 
-         $sentdata_invoices = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
+        $day_weekends = Invoice::where('status_id', invoiceStatusId('sent'))->orderBy('day_weekend', 'DESC')->get()->pluck('day_weekend')->unique();
+        $active_day_weekend = $active_day_weekend ? $active_day_weekend : (isset($day_weekends[0]) ? $day_weekends[0] : null);
+        
+        $sentdata_invoices = Invoice::leftJoin('timesheets','invoices.timesheet_id', '=', 'timesheets.id')
         ->leftJoin('users as clients', 'timesheets.client_id', '=', 'clients.id')
         ->leftJoin('users as employees', 'timesheets.employee_id', '=', 'employees.id')
         ->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
@@ -275,18 +266,22 @@ class InvoicesController extends Controller
             'employees.name as employee_name',
             'invoices.bill_date as bill_date',    
             'invoice_statuses.name as status_name',    
-            'invoices.total_amount as total_amount',       
+            'invoices.total_amount as total_amount', 
+
         ])
         ->where('invoices.status_id',invoiceStatusId('sent'))
         ->where('invoices.day_weekend', $active_day_weekend)
         ->get();
-      
-        return view('invoices.sentinvoice',compact(['sentdata_invoices', 'active_day_weekend', 'day_weekends']));
+       
+
+        return view('invoices.sentinvoice',compact(['sentdata_invoices', 'day_weekends', 'active_day_weekend']));
+
+
     }
 
-    public function sendinvoice()
+    public function sendinvoice($active_day_weekend)
     {   
-        /*$invoices = Invoice::where('day_weekend', $active_day_weekend)
+        $invoices = Invoice::where('day_weekend', $active_day_weekend)
         ->where('status_id', invoiceStatusId('pending'))
         ->get();
         //return response($invoices);
@@ -301,7 +296,28 @@ class InvoicesController extends Controller
           $email = $invoice->client->email; 
           Mail::to($email)->send(new InvoiceEmail($invoice));
         }
-          return redirect()->route('invoices.draft-invoice')->with('message', 'Mail Send successfully!');*/
+          return redirect()->route('invoices.draft-invoice')->with('message', 'Mail Send successfully!');
+    
+    }
+
+    public function resendinvoice($active_day_weekend)
+    {   
+        $invoices = Invoice::where('day_weekend', $active_day_weekend)
+        ->where('status_id', invoiceStatusId('sent'))
+        ->get();
+        //return response($invoices);
+        foreach ($invoices as $invoice) {
+            Invoice::where('id', $invoice->id)->update(['status_id' =>invoiceStatusId('sent')]);
+         }   
+     
+        $invoicesent = Invoice::where('status_id', invoiceStatusId('sent'))->get();
+    
+
+        foreach ($invoices as $invoice) {
+          $email = $invoice->client->email; 
+          Mail::to($email)->send(new InvoiceEmail($invoice));
+        }
+          return redirect()->route('invoices.sent-invoice')->with('message', 'Mail Resend successfully!');
     
     }
 
@@ -316,10 +332,7 @@ class InvoicesController extends Controller
      */
     public function update(Request $request)
     {
-       /* $invoices = Invoice::where('status_id', invoiceStatusId(1))
-        ->get();*/
-
-        dd('here');
+       //
     }
 
     /**
