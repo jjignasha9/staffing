@@ -65,7 +65,7 @@
 			<div class="inline-block align-bottom bg-white rounded-lg text-left text-sm overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-2/3">
 				<div class="bg-cover py-5 rounded-lg shadow-2xl bg-center" style="background-image:url('https://cdn.wallpapersafari.com/13/73/AQ4CSR.jpg');">
 					
-						<input type="hidden" name="day_weekend" value="{{ $day_weekend }}">
+						<input type="hidden" name="day_weekend" value="{{ isset($day_weekend) ? $day_weekend : '' }}">
 
 						<div class="pr-6 flex justify-end">
 							<button type="button" class="closemodel">
