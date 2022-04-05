@@ -32,7 +32,7 @@ class SubmitBookingEmail extends Mailable
     public function build()
     {
         return $this->markdown('email.submit_booking')
-        ->subject('You have a booking notification')
+        ->subject('You have a new booking')
         ->with([
             'booking'=> $this->booking,
         ]);

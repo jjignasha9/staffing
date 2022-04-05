@@ -21,7 +21,7 @@ class BookingsController extends Controller
         $bookings = Booking::all();
         foreach($bookings as $booking){
             $events[] = [
-                'title' => "Employee :" .$booking->employee->name . "\n" ."Client :" . $booking->client->name,
+                'title' => "Employee:  ".$booking->employee->name . "\n" ."Client:  ". $booking->client->name,
                 'start' => $booking->start,
                 'end' => $booking->end,
                 'id' => $booking->id,
@@ -55,17 +55,29 @@ class BookingsController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $request->validate([
+            'employee_id' => 'required',
+            'client_id'   => 'required',                             
+            'start'  => 'required',                    
+            'end'    => 'required',                                                                             
+        ]);
+
         $booking = new Booking;
         $booking->employee_id = $request->employee_id;
         $booking->client_id = $request->client_id;
         $booking->start = $request->start;
-        $booking->end = $request->end;
+        $booking->end = $request->end;  
         $booking->hours = $request->hours;
         $booking->save();
 
-        $employee_email = User::where('id', $request->employee_id)->pluck('email');
-        Mail::to($employee_email)->send(new SubmitBookingEmail($booking));
-        return redirect()->route('bookings')->with('message', 'Employee booked successfully!');
+        if($validator->passes()) {
+            return response()->json(['success'=>'Employee booked successfully.']);
+        }
+
+        return response()->json(['error'=>$validator->errors()->all()]);
+
+        /*$employee_email = User::where('id', $request->employee_id)->pluck('email');
+        Mail::to($employee_email)->send(new SubmitBookingEmail($booking));*/
 
 
     }
@@ -148,7 +160,7 @@ class BookingsController extends Controller
         $booking = Booking::find($id);
 
         $booking->delete();
-
-        return redirect()->route('bookings')->with('message', 'Employee deleted successfully!');
+       
+        return response()->json($booking);
     }
 }
