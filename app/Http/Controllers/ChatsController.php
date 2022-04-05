@@ -12,11 +12,21 @@ class ChatsController extends Controller
 {
     public function index()
     { 
-       $users = User::orderby('id','asc')->where('id', '!=', Auth::user()->id)->get();
-
-       //$indicateUsers = Chat::where('receiver_id', Auth::user()->id)->where('is_read', false)->get()->pluck('sender_id');
+       $users = User::leftJoin('chats', 'users.id', 'chats.sender_id')
+       ->select('users.id', 'users.name', 'chats.id as message_id', 'chats.created_at')    
+       ->where('users.id', '!=', Auth::user()->id)
+       ->orderBy('chats.created_at', 'desc')
+       ->get()
+       ->unique();
        
-       return response($users, 200); 
+       $indicateUsers = Chat::where('receiver_id', Auth::user()->id)->where('is_read', false)->get()->pluck('sender_id');
+
+       $data = [
+            'users' => $users,
+            'indicate_users' => $indicateUsers,
+       ];
+       
+       return response($data, 200); 
     }
 
     public function store(Request $request)

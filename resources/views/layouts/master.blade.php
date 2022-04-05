@@ -231,12 +231,10 @@
             </div>
 
             <div class="p-3">
-                <input type="text" name="search" placeholder="search" class="bg-gray-100 rounded-full py-1 px-4 w-full">
+                <input type="text" name="search" placeholder="search" class="bg-gray-100 rounded-full py-1 px-4 w-full" autocomplete="off">
             </div>
            
-            <div class="px-3 py-2 flex-col items-center h-full chatdetails ">
-              
-            </div>
+            <div class="px-3 py-2 flex-col items-center h-full chatdetails"></div>
           
         </div>
 
@@ -389,15 +387,21 @@
         });
 
         $('#back').click(function(){
+
             $('#message').hide();
             $('#chatbox').show();
             clearInterval(chatInterval); // stop the interval
+
+            var user_id = $('#message-user-id').val();
+            $('.indicator-' + user_id).hide();
+
             $('#message-user-id').val('');
+
         });
 
         $('.chatbutton').click(function() {
 
-             $('#chatbox').show();
+            $('#chatbox').show();
             
             var url = "/chats"; 
 
@@ -409,17 +413,26 @@
 
             
                 let html = '';
+                var users = data.users;
+                var indicateUsers = data.indicate_users;
 
-                Object.keys(data).forEach(key => {
+                Object.keys(users).forEach(key => {
 
-                    html += '<div class="w-full my-2 hover:bg-gray-100 hover:rounded-lg p-1 cursor-pointer select-user" user-name="'+ data[key]['name'] +'" user-id="'+ data[key]['id'] +'">';
-                        html += '<button class="rounded-full p-3 bg-gray-300 outline-none">'
-                            html += '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">'
-                                 html += '<path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />'
-                            html += '</svg>'
-                        html += '</button>'
-                        html += '<span class="mx-2">'+ data[key]['name'] +'</span>'
-                    html += '</div>'
+                    html += '<div class="flex items-center w-full my-2 hover:bg-gray-100 hover:rounded-lg p-1 cursor-pointer select-user" user-name="'+ users[key]['name'] +'" user-id="'+ users[key]['id'] +'">';
+                    html +=     '<button class="rounded-full p-3 bg-gray-300 outline-none">';
+                    html +=         '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">';
+                    html +=             '<path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />';
+                    html +=         '</svg>';
+                    html +=     '</button>';
+                    html +=     '<div class="w-full flex justify-between items-center mx-2">';
+                    html +=         '<span>'+ users[key]['name'] +'</span>';
+
+                    if (indicateUsers.includes(users[key]['id'])) {
+                        html +=         '<span class="h-1 w-1 px-1 py-1 rounded-full bg-teal-600 indicator-'+ users[key]['id'] +'"></span>';    
+                    }
+
+                    html +=     '</div>';
+                    html += '</div>';
                   
                 });
 
