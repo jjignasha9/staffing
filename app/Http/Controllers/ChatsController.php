@@ -13,6 +13,8 @@ class ChatsController extends Controller
     public function index()
     { 
        $users = User::orderby('id','asc')->where('id', '!=', Auth::user()->id)->get();
+
+       //$indicateUsers = Chat::where('receiver_id', Auth::user()->id)->where('is_read', false)->get()->pluck('sender_id');
        
        return response($users, 200); 
     }

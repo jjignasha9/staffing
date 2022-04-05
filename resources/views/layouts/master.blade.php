@@ -300,6 +300,7 @@
 
         var login_user_id = "{{ Auth::user()->id }}";
         var temp = [];
+        var chatInterval = null;
 
 
         $.ajaxSetup({
@@ -318,19 +319,6 @@
 
         $('#settings').click(function(){
             $('#settings_box').toggle();
-        });
-
-        $('.chatbutton').click(function(){
-            $('#chatbox').show();
-        });
-
-         $('#closebox').click(function(){
-            $('#chatbox').hide();
-        });
-
-        $('#back').click(function(){
-            $('#message').hide();
-            $('#chatbox').show();
         });
 
         $(document).click(function(event) {
@@ -392,7 +380,24 @@
               }
             })
         });
+
+
+         $('#closebox').click(function(){
+            $('#chatbox').hide();
+            clearInterval(chatInterval); // stop the interval
+            $('#message-user-id').val('');
+        });
+
+        $('#back').click(function(){
+            $('#message').hide();
+            $('#chatbox').show();
+            clearInterval(chatInterval); // stop the interval
+            $('#message-user-id').val('');
+        });
+
         $('.chatbutton').click(function() {
+
+             $('#chatbox').show();
             
             var url = "/chats"; 
 
@@ -424,7 +429,6 @@
         });
 
 
-
         $(document).on('click', '.select-user', function(){
 
             var user_name = $(this).attr('user-name');
@@ -437,6 +441,8 @@
             $('#message-user-id').val(user_id);
 
             $('#messages').html(''); 
+
+            chatInterval = setInterval(refreshChat, 1000);
             
         });
 
@@ -462,7 +468,7 @@
         });
 
 
-        var tid = setInterval(refreshChat, 1000);
+        
         
         function refreshChat() {
 
