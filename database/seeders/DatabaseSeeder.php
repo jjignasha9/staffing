@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             ShiftSeeder::class,
             PayrollStatusesSeeder::class,
             TimesheetStatusesSeeder::class,
-            UserSeeder::class,
             TermSeeder::class,
             InvoiceStatusesSeeder::class,
         ]);
