@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class BookingsController extends Controller
 {
@@ -55,12 +56,20 @@ class BookingsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'employee_id' => 'required',
             'client_id'   => 'required',                             
             'start'  => 'required',                    
             'end'    => 'required',                                                                             
         ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);    
+        }
 
         $booking = new Booking;
         $booking->employee_id = $request->employee_id;
@@ -70,15 +79,10 @@ class BookingsController extends Controller
         $booking->hours = $request->hours;
         $booking->save();
 
-        if($validator->passes()) {
-            return response()->json(['success'=>'Employee booked successfully.']);
-        }
-
-        return response()->json(['error'=>$validator->errors()->all()]);
-
+        return response()->json([], 200);    
+        
         /*$employee_email = User::where('id', $request->employee_id)->pluck('email');
         Mail::to($employee_email)->send(new SubmitBookingEmail($booking));*/
-
 
     }
 
@@ -128,16 +132,21 @@ class BookingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'employee_id' => 'required',
             'client_id'   => 'required',                             
             'start'  => 'required',                    
-            'end'    => 'required',                                       
+            'end'    => 'required',                                                                             
         ]);
 
-        $booking = Booking::find($id);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);    
+        }
+
+        $booking = Booking::find($id);
         $booking->employee_id = $request->employee_id;
         $booking->client_id = $request->client_id;
         $booking->start = $request->start;
@@ -145,7 +154,7 @@ class BookingsController extends Controller
         $booking->hours = $request->hours;
         $booking->save();
 
-        return redirect()->route('bookings')->with('message', 'Employee updated successfully!');
+        return response()->json([], 200);    
     }
 
     /**
@@ -154,11 +163,8 @@ class BookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Booking $booking)
     {
-
-        $booking = Booking::find($id);
-
         $booking->delete();
        
         return response()->json($booking);

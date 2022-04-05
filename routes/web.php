@@ -145,7 +145,7 @@ Route::post('/bookings/store', [BookingsController::class, 'store'])->name('book
 Route::get('/bookings/show/{id}', [BookingsController::class, 'show'])->name('bookings.show');
 Route::post('/bookings/update/{id}', [BookingsController::class, 'update'])->name('bookings.update');
 Route::get('/bookings/edit/{id}', [BookingsController::class, 'edit'])->name('bookings.edit');
-Route::get('/bookings/destroy/{id}', [BookingsController::class, 'destroy'])->name('bookings.destroy');
+Route::delete('/bookings/destroy/{booking}', [BookingsController::class, 'destroy'])->name('bookings.destroy');
 
 /* chats */
 Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
