@@ -7,61 +7,71 @@
 </head>
 <body>
 	<center>
-     <header>Congratulations {{ $booking->employee->name }}, You are booked</header>
-     <table>
-     	<tr>
-     		<td><b>Client name:</b></td>
-     		<td>{{ $booking->client->name }}</td>
-     	</tr>
+		<div class="box">
+		<header>Congratulations {{ $booking->employee->name }}, You are booked</header>
 
-     	<tr>
-     		<td><b>Start date and time:</b></td>
-     		<td>{{ $booking->start }}</td>
-     	</tr>
+		<div>
+			<p class="name"><b>Client name: </b>{{ $booking->client->name }}</p>
+			<p class="name"><b>Start date and time: </b>{{ Carbon\carbon::parse($booking->start)->format('m/d/Y H:i:s') }}</p>
+			<p class="name"><b>End date and time: </b>{{ Carbon\carbon::parse($booking->end)->format('m/d/Y H:i:s') }}</p>
+			<p class="name"><b>Total hours: </b>{{ $booking->hours }}</p>
+			<h1 class="blue"></p>
+		</div>
 
-     	<tr>
-     		<td><b>End date and time:</b></td>
-     		<td>{{ $booking->end }}</td>
-     	</tr>
-   		
-     </table>
+	
+		</div>
 
-    </center>
+	</center>
+
 </body>
 </html>
 
 <style type="text/css">
 
 	header {
-		background-color: rgb(52, 152, 219);
+		background-color: #5D91B4;
 		color: white;
+		text-align: left;
 		font-size: 30px;
-		text-align: center;
-		padding:20px;
+		padding-left:50px;
+		padding-top: 10px; 
+		padding-bottom: 10px;
 		width: 50%;
 	}
 
-	a:link, a:visited {
-	  background-color: rgb(0, 163, 108);
-	  color: white;
-	  padding: 15px 25px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 16px;
-	  margin: 14px 2px;
+	.invoice {
+		background-color: #D9E8F2;
+		color: black;
+		text-align: left;
+		font-size: 30px;
+		padding-left:50px;
+		padding-top: 20px; 
+		padding-bottom: 20px;
+		width: 50%;
 	}
 
-	table {
-	  width: 30%;
-	  margin-top: 15px;
-	  color: black;
-	}
-
-	td {
-	  font-size: 17px;
+	p {
+		color: #585858;
+		text-align: left;
+	    width: 42%;
 
 	}
 
-  }
+	.name {
+		margin-top: 40px;
+		
+	}
+
+	/*.box {
+		border-radius: 25px;
+	    border: 2px solid #73AD21; 
+	    height: 480px;  
+	}*/
+
+	.blue {
+		border-bottom: 25px solid #123456;
+		width: 50%;		
+	}
+
+
 </style>

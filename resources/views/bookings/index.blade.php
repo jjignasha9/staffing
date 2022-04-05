@@ -23,7 +23,7 @@
 				<div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle w-1/3">
 					<div class="py-5 bg-white rounded-lg shadow-2xl">
 
-						<form action="{{ route('bookings.store') }}" method="POST" id="booking_form">
+						<form action="" method="POST" id="booking_form">
 							@csrf
 
 						<input type="hidden" name="hours" value="" id="pass_hours">	
@@ -56,6 +56,7 @@
 										<option class="text-left" value="{{ $employee->id }}">{{ $employee->name }}</option>
 									@endforeach
 								</select>
+								<p id="error_employee"></p>
 							</div>
 							<div class="mt-5 col-span-6">
 								<label class="p-2 text-gray-600 text-sm">Client Name</label>
@@ -65,17 +66,18 @@
 										<option class="text-left" value="{{ $client->id }}">{{ $client->name }}</option>
 									@endforeach
 								</select>
+								<p id="error_client"></p>
 							</div>
 						</div>
 							
 							<div class="mt-3 mx-5 grid grid-cols-12">
 								<div class="col-span-6 mr-5">
-									<label class="p-2 text-gray-600 text-sm">Start Datetime</label>
+									<label class="p-2 text-gray-600 text-sm">Start Time</label>
 									<input type="text" name="start" class="w-full border border-teal-600 rounded-full p-1 pl-3 outline-none" id="start">
 								</div>
 
 								<div class="col-span-6">
-									<label class="p-2 text-gray-600 text-sm">End Datetime</label>
+									<label class="p-2 text-gray-600 text-sm">End Time</label>
 									<input type="text" name="end" class="w-full border border-teal-600 rounded-full p-1 pl-3 outline-none" id="end">
 								</div>
 							</div>
@@ -87,11 +89,11 @@
 							<hr class="mt-5">
 							<div class="flex items-center justify-center gap-2">
 								<div class="flex items-center mt-7 justify-center">
-									<button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none" >Save</button>
+									<button type="button" class="bg-teal-600 hover:bg-teal-700 text-white py-1 px-4 rounded-full outline-none" id="insert" >Save</button>
 								</div>		
 
 								<div class="flex items-center mt-7 justify-center">
-									<button type="submit" class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-full outline-none" id="delete">Delete</button>
+									<button type="submit" token="{{ csrf_token() }}" class="bg-red-600 hover:bg-red-700 text-white py-1 px-4 rounded-full outline-none show_confirm delete" id="delete">Delete</button>
 								</div>		
 						</form>	
 						</div>
@@ -112,6 +114,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -136,6 +140,8 @@ $(document).ready(function() {
 	        $('#start').val(start);
 	        $('#end').val(end);
 	        $('#hours').val(total_hours/60);
+
+	        
 	    },
 
 	    header:{
@@ -161,16 +167,33 @@ $(document).ready(function() {
             	});
 
 	          
-				if (calEvent.id !== null) {
+				/*if (calEvent.id !== null) {
 					var id = calEvent.id;
 					var url = "/bookings/update/" + id;  
 					$('#booking_form').attr('action', url);
-				}   	
+				}   */	
 		
-				$('#delete').click(function(){
+				$('.delete').click(function(event){
+					event.preventDefault();
+					console.log(calEvent);
+
 					var id = calEvent.id;
 		        	var url = "/bookings/destroy/" + id; 
-		        	$('#booking_form').attr('action', url);
+		        	$.ajax({
+			    		url:url,
+			    		type:"GET",
+			    		dataType:'json',
+			    		data:{ id },
+			    		success:function(response)
+			    		{
+
+			    			location.reload();
+			    		},
+			    		error:function(error)
+			    		{
+			    			console.log(error)
+			    		},
+		    		});
 				});
 
 		    },	
@@ -193,7 +216,6 @@ $(document).ready(function() {
 		    		success:function(response)
 		    		{
 		    			console.log(response)
-		    			alert("event updated");
 		    		},
 		    		error:function(error)
 		    		{
@@ -206,6 +228,38 @@ $(document).ready(function() {
 
 
 	});
+
+	$('#insert').click(function(){
+
+		var url = "{{ route('bookings.store') }}"; 
+
+		var employee_id = $('#employee_id').val();
+		var client_id = $('#client_id').val();
+		var start = $('#start').val();
+		var end = $('#end').val();
+		var hours = $('#hours').val();
+
+		var booking = {
+			employee_id, client_id, start, end, hours,
+		}
+		console.log(booking);
+    	$.ajax({
+           type:'POST',
+           url: url,
+           dataType:'json',
+		   data:booking,
+		   success:function(response)
+    		{	
+			    location.reload();
+    		},
+    		error:function(error)
+    		{
+    			if(error.responseJSON.errors){
+    				$('#error_employee').text(error.responseJSON.errors.error_employee);
+    			}
+    		},
+    	});
+	 });
 
 	$('.show_booking').modal('hide');
 
