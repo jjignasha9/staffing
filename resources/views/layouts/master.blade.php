@@ -95,7 +95,7 @@
                     </div>
 
                     <!-- Dropdown menu -->
-                    <div id="settings_box" class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-zinc-100 shadow dark:bg-gray-700 absolute mt-16 right-0 mr-96 z-10">
+                    <div id="settings_box" class="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-zinc-100 shadow dark:bg-gray-700 absolute mt-16 right-0 mr-28 z-10">
                         <ul class="py-1" aria-labelledby="dropdownLeftButton">
                           <li>
                             <a href="{{ route('employees') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Employees</a>
@@ -114,7 +114,7 @@
                     
 
                     <!-- Dropdown menu -->
-                    <div id="user_box" class="hidden w-44 text-base list-none bg-white rounded divide-gray-100 shadow dark:bg-gray-700 absolute mt-16 right-0 mr-80 z-10">
+                    <div id="user_box" class="hidden w-44 text-base list-none bg-white rounded divide-gray-100 shadow dark:bg-gray-700 absolute mt-16 right-0 mr-16 z-10">
                         <ul class="py-1" aria-labelledby="dropdownLeftButton">
                           <li>
                             <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white capitalize">{{ Auth::user()->name }}</a>
