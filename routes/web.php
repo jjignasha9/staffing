@@ -5,7 +5,9 @@ use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\HolidaysController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\PayrollsController;
 use App\Http\Controllers\RatesController;
@@ -152,3 +154,21 @@ Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
 Route::post('/chats/store', [ChatsController::class, 'store'])->name('chats.store');
 Route::get('/chats/show', [ChatsController::class, 'show'])->name('chats.show');
 
+
+/* invite */
+Route::get('/invites', [InviteController::class, 'index'])->name('invites');
+Route::get('/invites/create', [InviteController::class, 'create'])->name('invites.create');
+Route::post('/invites/store', [InviteController::class, 'store'])->name('invites.store');
+Route::post('/invites/update/{inviteuser}', [InviteController::class, 'update'])->name('invites.update');
+Route::get('/invites/edit/{inviteuser}', [InviteController::class, 'edit'])->name('invites.edit');
+Route::delete('/invites/destroy/{inviteuser}', [InviteController::class, 'destroy'])->name('invites.destroy');
+
+
+
+/* holidays */
+Route::get('/holidays', [HolidaysController::class, 'index'])->name('holidays');
+Route::get('/holidays/create', [HolidaysController::class, 'create'])->name('holidays.create');
+Route::post('/holidays/store', [HolidaysController::class, 'store'])->name('holidays.store');
+Route::post('/holidays/update/{Holidays}', [HolidaysController::class, 'update'])->name('holidays.update');
+Route::get('/holidays/edit/{Holidays}', [HolidaysController::class, 'edit'])->name('holidays.edit');
+Route::delete('/holidays/destroy/{Holidays}', [HolidaysController::class, 'destroy'])->name('holidays.destroy');
