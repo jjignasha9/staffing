@@ -151,4 +151,5 @@ Route::delete('/bookings/destroy/{booking}', [BookingsController::class, 'destro
 Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
 Route::post('/chats/store', [ChatsController::class, 'store'])->name('chats.store');
 Route::get('/chats/show', [ChatsController::class, 'show'])->name('chats.show');
+Route::get('/chats/notification-sound', [ChatsController::class, 'notificationSound'])->name('chats.notification-sound');
 
