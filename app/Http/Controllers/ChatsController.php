@@ -7,6 +7,10 @@ use App\Models\Chat;
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
+
 
 class ChatsController extends Controller
 {
@@ -75,5 +79,22 @@ class ChatsController extends Controller
             Chat::where('receiver_id', Auth::user()->id)->where('sender_id', $request->receiver_id)->update(['is_read' => true]);
            
             return response($chats, 200); 
+    }
+
+    public function notificationSound() 
+    {
+        $path = storage_path('app/audio/notification.mp3');
+
+
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = \Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    
     }
 }

@@ -13,6 +13,8 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
     @stack('css')
 
     <title>Dashboard</title>
@@ -262,16 +264,7 @@
 
             
             <div class="px-4 py-2 overflow-y-auto" style="height: 288px;" id="messages">
-                <!-- <div class="w-56 float-right">
-                    <div class="border border-teal-600 bg-teal-100 flex justify-between items-center px-2 rounded-full text-sm">
-                        <div>hello</div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-right" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                        </div>
-                    </div>
-                </div> -->
+               
             </div>
                       
             <div class="flex items-center">
@@ -290,7 +283,6 @@
     </div>
    
     <!-- content -->
-
 
     
 
@@ -404,6 +396,30 @@
             $('#message-user-id').val('');
 
         });
+        /* var sound = new AudioContext({
+            src: ('public/storage/notification.mp3'),
+            autoplay: true,
+            loop: true
+        });*/
+      
+
+               
+
+        function playAudio() {
+            
+          var x = new Audio("{{ route('chats.notification-sound') }}");
+          
+          var playPromise = x.play();
+
+          if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    x.play();
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+          }
+        }
 
         $('.chatbutton').click(function() {
 
@@ -434,7 +450,8 @@
                     html +=         '<span>'+ users[key]['name'] +'</span>';
 
                     if (indicateUsers.includes(users[key]['id'])) {
-                        html +=         '<span class="h-1 w-1 px-1 py-1 rounded-full bg-teal-600 indicator-'+ users[key]['id'] +'"></span>';    
+                        html +=         '<span  class="h-1 w-1 px-1 py-1 rounded-full bg-teal-600 indicator-'+ users[key]['id'] +'"></span>'; 
+                     
                     }
 
                     html +=     '</div>';
@@ -447,6 +464,8 @@
             }); 
         });
 
+        
+ 
 
         $(document).on('click', '.select-user', function(){
 
@@ -529,11 +548,18 @@
                             message_html +=         '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />'
                             message_html +=     '</svg>'
                             message_html += '</div>'
+
+                        } 
+
+                        if (item.is_read == 0 && item.receiver_id == login_user_id) {
+    
+                            playAudio();
                         }
 
                         message_html +=     '</div>'
                         message_html += '</div>'
-            
+                        
+                         
                     }    
                    
                 });
