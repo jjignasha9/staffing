@@ -81,8 +81,8 @@ class BookingsController extends Controller
 
         return response()->json([], 200);    
         
-        /*$employee_email = User::where('id', $request->employee_id)->pluck('email');
-        Mail::to($employee_email)->send(new SubmitBookingEmail($booking));*/
+        $employee_email = User::where('id', $request->employee_id)->pluck('email');
+        Mail::to($employee_email)->send(new SubmitBookingEmail($booking));
 
     }
 

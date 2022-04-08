@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClientEmployee;
 use App\Models\Employee;
 use App\Models\EmployeeClient;
+use App\Models\InviteUser;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,19 +36,28 @@ class EmployeesController extends Controller
         ]);
 
         $role = Role::where('name', 'employee')->first();
+        $invite_user = InviteUser::all()->pluck('email');
 
-        $employee = new User;
-        $employee->name = $request->name;
-        $employee->email = $request->email;
-        $employee->address = $request->address;
-        $employee->password = Hash::make($request->password);
-        $employee->role = $role->id;
-        $employee->save();
+        if($request->email == $invite_user){
+          
+            $employee = new User;
+            $employee->name = $request->name;
+            $employee->email = $request->email;
+            $employee->address = $request->address;
+            $employee->password = Hash::make($request->password);
+            $employee->role = $role->id;
+            $employee->save();
 
-        $client_employee = new ClientEmployee;
-        $client_employee->client_id = $request->client_id; 
-        $client_employee->employee_id = $employee->id; 
-        $client_employee->save();
+            $client_employee = new ClientEmployee;
+            $client_employee->client_id = $request->client_id; 
+            $client_employee->employee_id = $employee->id; 
+            $client_employee->save();
+        } else {
+            //dd('same'); 
+            InviteUser::where('email', $request->email)->update(['is_registered' => true]);
+
+        }
+        
 
         return redirect()->route('employees')->with('message', 'Employee added successfully!');
     }

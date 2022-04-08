@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\InviteController;
+use App\Mail\InviteEmail;
 use App\Models\InviteUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InviteController extends Controller
 {
@@ -47,8 +49,11 @@ class InviteController extends Controller
         $invite_user->name = $request->name;
         $invite_user->email = $request->email;
         $invite_user->save();
-
+        $email = $invite_user->email;
+        
+        Mail::to($email)->send(new InviteEmail($invite_user));
         return redirect()->route('invites')->with('message', 'User added successfully!');
+
     }
 
     /**
@@ -92,6 +97,9 @@ class InviteController extends Controller
         $invite_user->name = $request->name;
         $invite_user->email = $request->email;
         $invite_user->save();
+        
+        $email = $invite_user->email;
+        Mail::to($email)->send(new InviteEmail($invite_user));
 
         return redirect()->route('invites')->with('message', 'User updated successfully!');
     }

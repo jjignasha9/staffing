@@ -17,6 +17,7 @@
               <thead class="bg-gray-50">
                 <tr>
        
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                 </tr>
@@ -25,7 +26,10 @@
 
                 @foreach($invite_users as $invite_user)
                 
-                  <tr>   
+                  <tr>  
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $invite_user->name}}</div>
+                    </td> 
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="text-sm text-gray-900">{{ $invite_user->email }}</div>
                       <div class="text-sm text-gray-500"></div>
@@ -47,9 +51,9 @@
                                </svg>Delete
                              </button>
                           </div>
-                        </div>
-                      </td>
-                    </tr>
+                      </div>
+                    </td>
+                  </tr>
 
                   @endforeach
               </tbody>

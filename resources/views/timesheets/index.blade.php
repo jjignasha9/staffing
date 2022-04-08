@@ -106,15 +106,21 @@
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white p-3">
                         <div class="flex justify-between items-center">
                             <h1 class="text-left text-md font-medium text-black-500 tracking-wider">Invited users</h1>
+                            <a href="{{ route('employees.create') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 p-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
+                            </a>
                         </div><hr>
+                        @foreach($invite_user as $user)
+                        <div class="flex items-center justify-between">
+                            <div class="py-2">{{ $user->email }}</div>
+                            <div class="flex text-sm text-gray-500 justify-end items-center"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($user->created_at))->diffForHumans() ?>
+                                
+                            </div>
+                        </div>
 
-                        <div class="py-2">test@ave.com</div><hr>
-                        <div class="py-2">test@ave.com</div><hr>
-                        <div class="py-2">test@ave.com</div><hr>
-                        <div class="py-2">test@ave.com</div>
+                       @endforeach
                     </div>
                 </div>
            </div>
