@@ -239,7 +239,7 @@
             </div>
 
             <div class="p-3">
-                <input type="text" name="search" placeholder="search" class="bg-gray-100 rounded-full py-1 px-4 w-full" autocomplete="off">
+                <input type="text" name="search" id="search" placeholder="search" class="bg-gray-100 rounded-full py-1 px-4 w-full" autocomplete="off">
             </div>
            
             <div class="px-3 py-2 flex-col items-center h-full chatdetails"></div>
@@ -424,12 +424,27 @@
         $('.chatbutton').click(function() {
 
             $('#chatbox').show();
+
+            chatlist();
             
+            
+        });
+
+         $('#search').keyup(function(){
+
+            var keyword = $(this).val();
+
+            chatlist(keyword);
+                
+        });
+
+        function chatlist(keyword = '') {
             var url = "/chats"; 
 
            $.ajax({
                 method:"GET",
                 url: url,
+                data: {keyword:keyword}
                
             }).done(function(data) {
 
@@ -462,7 +477,7 @@
                 $('.chatdetails').html(html);
                  
             }); 
-        });
+        }
 
         
  
@@ -576,6 +591,8 @@
                  
             });  
         }
+
+       
 
         
     });

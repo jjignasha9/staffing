@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\File;
 
 class ChatsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     { 
        $users = User::leftJoin('chats', 'users.id', 'chats.sender_id')
        ->select('users.id', 'users.name', 'chats.id as message_id', 'chats.created_at')    
        ->where('users.id', '!=', Auth::user()->id)
+       ->where('name', 'like', '%'.$request->keyword.'%')
        ->orderBy('chats.created_at', 'desc')
        ->get()
        ->unique();
+       
        
        $indicateUsers = Chat::where('receiver_id', Auth::user()->id)->where('is_read', false)->get()->pluck('sender_id');
 
@@ -96,5 +98,12 @@ class ChatsController extends Controller
 
         return $response;
     
+    }
+
+    public function search()
+    {
+       
+
+      
     }
 }
