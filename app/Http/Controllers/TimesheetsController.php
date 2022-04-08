@@ -30,9 +30,8 @@ class TimesheetsController extends Controller
 
     public function index()
     {   
-        $holidays = Holiday::orderby('id', 'asc')->get();
-        //dd($holidays);
-
+        $holidays = Holiday::where('date', '>' ,Carbon::now())->first();
+    
         $status_pending = TimesheetStatuses::where('name','pending')->first();
 
         $status_approved = TimesheetStatuses::where('name','approved')->first();
