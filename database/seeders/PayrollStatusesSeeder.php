@@ -16,7 +16,7 @@ class PayrollStatusesSeeder extends Seeder
      */
     public function run()
     {
-       $statuses = [
+        $statuses = [
             [
                 'name' => 'pending',              
             ], [

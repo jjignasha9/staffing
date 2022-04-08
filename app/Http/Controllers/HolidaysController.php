@@ -1,10 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
-use App\Http\Controllers\HolidaysController;
-
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 
 class HolidaysController extends Controller
@@ -16,7 +13,8 @@ class HolidaysController extends Controller
      */
     public function index()
     {
-        
+        $holidays = Holiday::all();
+        return view('holidays.index',compact('holidays'));
     }
 
     /**
@@ -26,7 +24,7 @@ class HolidaysController extends Controller
      */
     public function create()
     {
-        //
+         return view('holidays.create');
     }
 
     /**
@@ -37,7 +35,18 @@ class HolidaysController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'name' => 'required',           
+            'date' => 'required',           
+                    
+        ]);
+
+        $holiday = new Holiday;
+        $holiday->name = $request->name;
+        $holiday->date = $request->date;
+        $holiday->save();
+
+        return redirect()->route('holidays')->with('message', 'Holiday added successfully!');
     }
 
     /**
@@ -57,9 +66,9 @@ class HolidaysController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Holiday $holiday)
     {
-        //
+        return view('holidays.edit',compact('holiday'));
     }
 
     /**
@@ -71,7 +80,18 @@ class HolidaysController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'name' => 'required',           
+            'date' => 'required',           
+                    
+        ]);
+        $holiday = Holiday::find($id);
+        $holiday->name = $request->name;
+        $holiday->date = $request->date;
+        $holiday->save();
+
+        return redirect()->route('holidays')->with('message', 'Holiday updated successfully!');
     }
 
     /**
@@ -80,9 +100,12 @@ class HolidaysController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Holiday $holiday)
     {
-        //
-
+        $holiday->delete();
+        return response([
+            'status' => 'success',
+            'message' => 'Holiday deleted successfully!'
+        ], 200);
     }
 }

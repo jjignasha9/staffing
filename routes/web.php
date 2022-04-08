@@ -154,6 +154,7 @@ Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
 Route::post('/chats/store', [ChatsController::class, 'store'])->name('chats.store');
 Route::get('/chats/show', [ChatsController::class, 'show'])->name('chats.show');
 Route::get('/chats/notification-sound', [ChatsController::class, 'notificationSound'])->name('chats.notification-sound');
+Route::get('/chats/search', [ChatsController::class, 'search'])->name('chats.search');
 
 
 /* invite */
@@ -170,6 +171,6 @@ Route::delete('/invites/destroy/{inviteuser}', [InviteController::class, 'destro
 Route::get('/holidays', [HolidaysController::class, 'index'])->name('holidays');
 Route::get('/holidays/create', [HolidaysController::class, 'create'])->name('holidays.create');
 Route::post('/holidays/store', [HolidaysController::class, 'store'])->name('holidays.store');
-Route::post('/holidays/update/{Holidays}', [HolidaysController::class, 'update'])->name('holidays.update');
-Route::get('/holidays/edit/{Holidays}', [HolidaysController::class, 'edit'])->name('holidays.edit');
-Route::delete('/holidays/destroy/{Holidays}', [HolidaysController::class, 'destroy'])->name('holidays.destroy');
+Route::post('/holidays/update/{holiday}', [HolidaysController::class, 'update'])->name('holidays.update');
+Route::get('/holidays/edit/{holiday}', [HolidaysController::class, 'edit'])->name('holidays.edit');
+Route::delete('/holidays/destroy/{holiday}', [HolidaysController::class, 'destroy'])->name('holidays.destroy');

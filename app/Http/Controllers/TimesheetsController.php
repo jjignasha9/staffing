@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\RejectTimesheetEmail;
 use App\Mail\SubmitTimesheetEmail;
+use App\Models\Holiday;
 use App\Models\Shift;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
@@ -29,7 +30,9 @@ class TimesheetsController extends Controller
 
     public function index()
     {   
-        
+        $holidays = Holiday::orderby('id', 'asc')->get();
+        //dd($holidays);
+
         $status_pending = TimesheetStatuses::where('name','pending')->first();
 
         $status_approved = TimesheetStatuses::where('name','approved')->first();
@@ -46,7 +49,7 @@ class TimesheetsController extends Controller
         
 
 
-        return view('timesheets.index', compact(['timesheets','approved_timesheets']));
+        return view('timesheets.index', compact(['timesheets','approved_timesheets','holidays']));
     }
 
     public function update(Timesheet $timesheet)
