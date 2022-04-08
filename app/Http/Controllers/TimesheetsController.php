@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\RejectTimesheetEmail;
 use App\Mail\SubmitTimesheetEmail;
 use App\Models\InviteUser;
+use App\Models\Holiday;
 use App\Models\Shift;
 use App\Models\Timesheet;
 use App\Models\TimesheetStatuses;
@@ -33,6 +34,7 @@ class TimesheetsController extends Controller
         
         $invite_user = InviteUser::where('is_registered', false)->get();
 
+        $holidays = Holiday::where('date', '>' ,Carbon::now())->first();
 
         $status_pending = TimesheetStatuses::where('name','pending')->first();
 
@@ -48,9 +50,7 @@ class TimesheetsController extends Controller
         ->groupBy('timesheets.day_weekend')
         ->get();
         
-
-
-        return view('timesheets.index', compact(['timesheets','approved_timesheets','invite_user']));
+        return view('timesheets.index', compact(['timesheets','approved_timesheets','holidays','invite_user']));
     }
 
     public function update(Timesheet $timesheet)

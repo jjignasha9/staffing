@@ -130,8 +130,8 @@
                         <div class="flex mb-4">
                             <h1 class="text-left text-md font-medium text-black-500 tracking-wider">Next holiday</h1>
                         </div>
-
-                       <div>Vaterans day - 04/25/2022</div>
+    
+                            <div>{{ $holidays->name }} - {{ Carbon\carbon::parse($holidays->date)->format('m/d/Y') }}</div>
                     </div>
                 </div>
            </div>
@@ -170,3 +170,8 @@
 </div>
 
 @endsection
+
+@push('scripts')
+
+
+@endpush 

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ShiftSeeder::class,
+            RateSeeder::class,
             PayrollStatusesSeeder::class,
             TimesheetStatusesSeeder::class,
             TermSeeder::class,
