@@ -216,11 +216,13 @@
             </div>
 
         </div>
-         <button class="bg-white fixed right-1 bottom-1 p-4 m-5 rounded-full shadow-lg outline-none chatbutton">
+        <button class="bg-white fixed right-1 bottom-1 p-4 m-5 rounded-full shadow-lg outline-none chatbutton">
+           
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-         </button> 
+            </svg>   
+        </button> 
+        <div class="chatmessege fixed right-4 bottom-14"></div>
         <div id="chatbox" class="hidden fixed right-0 bottom-24 w-80 text-base max-h-screen  list-none bg-white rounded-lg shadow dark:bg-gray-700 mr-2" >
             <div class="flex justify-between items-center">
                 <div class="flex items-center p-3 text-gray-600">
@@ -252,13 +254,20 @@
                 <div class="flex items-center ">
                     <div id="back" class="flex items-center cursor-pointer">
                         <button>
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
                         <div id="message-user-name"></div>
                     </div>
-                    <input type="hidden" name="user-id" id="message-user-id">
+                       <input type="hidden" name="user-id" id="message-user-id">
+                </div>
+                <div>
+                    <button type="button" class="close flex text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -317,6 +326,10 @@
             $('#settings_box').toggle();
         });
 
+        $('.close').click(function() {
+        $('#message').hide();
+    });
+
         $(document).click(function(event) {
             var settings = $("#settings");
             
@@ -327,6 +340,16 @@
             var user = $("#user");
             if (!user.has(event.target).length) {
                 $('#user_box').hide(); 
+            }
+
+            var chatbutton = $(".chatbutton");
+            if (!chatbutton.has(event.target).length) {
+                $('#chatbox').hide();
+            }
+            
+            var chatbox = $("#chatbox");
+            if (!chatbox.has(event.target).length) {
+                $('#message').hide(); 
             }
         });
 
@@ -396,29 +419,63 @@
             $('#message-user-id').val('');
 
         });
-        /* var sound = new AudioContext({
-            src: ('public/storage/notification.mp3'),
-            autoplay: true,
-            loop: true
-        });*/
-      
 
+        if($('chatbox').hide()) {
+
+            var url = "/chats"; 
+            let count = 0;
+
+           $.ajax({
+                method:"GET",
+                url: url,
                
+            }).done(function(data) {
 
+            
+                let html = '';
+               
+                var users = data.users;
+                var indicateUsers = data.indicate_users;
+
+                Object.keys(users).forEach(key => {
+
+                    if (indicateUsers.includes(users[key]['id'])) {
+
+                        count++;  
+                         playAudio();
+                        console.log(count);
+                    }
+
+                });
+
+                if(count != 0) {
+                    html += '<span class="bg-teal-500 rounded-full py-1 px-2 text-white indicator-'+ users['id'] +'">'+ count +'</span>';
+                     
+                }               
+
+                $('.chatmessege').html(html);
+
+                
+            }); 
+
+       
+        }
+    
+      
         function playAudio() {
             
-          var x = new Audio("{{ route('chats.notification-sound') }}");
+            var x = new Audio("{{ route('chats.notification-sound') }}");
           
-          var playPromise = x.play();
+            var playPromise = x.play();
 
-          if (playPromise !== undefined) {
+            if (playPromise !== undefined) {
                 playPromise.then(_ => {
                     x.play();
                 })
                 .catch(error => {
                     console.log(error);
                 });
-          }
+            }
         }
 
         $('.chatbutton').click(function() {
@@ -438,6 +495,7 @@
                 
         });
 
+       
         function chatlist(keyword = '') {
             var url = "/chats"; 
 
@@ -475,9 +533,13 @@
                 });
 
                 $('.chatdetails').html(html);
-                 
+
+                
             }); 
+
         }
+        
+        
 
         
  
@@ -567,7 +629,6 @@
                         } 
 
                         if (item.is_read == 0 && item.receiver_id == login_user_id) {
-    
                             playAudio();
                         }
 
