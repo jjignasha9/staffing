@@ -347,10 +347,10 @@
                 $('#chatbox').hide();
             }
             
-            var chatbox = $("#chatbox");
+            /*var chatbox = $("#chatbox");
             if (!chatbox.has(event.target).length) {
                 $('#message').hide(); 
-            }
+            }*/
         });
 
         // when delete any record
