@@ -344,6 +344,7 @@
             if (!chatbutton.has(event.target).length) {
                 $('#chatbox').hide();
             }
+
         });
 
         // when delete any record
