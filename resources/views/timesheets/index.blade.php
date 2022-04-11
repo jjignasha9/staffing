@@ -135,7 +135,7 @@
                     </div>
                 </div>
            </div>
-           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 pl-4">
+           <!-- <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-4 pl-4">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white p-3">
                         <div class="flex justify-between items-center mb-2">
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-           </div>
+           </div> -->
         </div> 
    </div>   
 </div>
