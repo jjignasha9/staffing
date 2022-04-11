@@ -344,12 +344,6 @@
             if (!chatbutton.has(event.target).length) {
                 $('#chatbox').hide();
             }
-            
-           /* var chatbox = $("#chatbox");
-            console.log(chatbox);
-            if (!chatbox.has(event.target).length) {
-                $('#message').hide(); 
-            }*/
         });
 
         // when delete any record
@@ -418,13 +412,6 @@
             $('#message-user-id').val('');
 
         });
-        /* var sound = new AudioContext({
-            src: ('public/storage/notification.mp3'),
-            autoplay: true,
-            loop: true
-        });*/
-      
-
                
 
         function playAudio() {
@@ -613,6 +600,28 @@
                  
             });  
         }
+        
+        $('#message-text').click(function(){
+            $('#message-text').keypress(function(event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13'){
+                    var receiver_id = $('#message-user-id').val();
+                    var message = $('#message-text').val();
+                    console.log(message);
+                    var url = "/chats/store"; 
+
+                    $.ajax({
+                        method:"POST",
+                        url: url,
+                        data: { receiver_id:receiver_id, message:message }
+                       
+                    }).done(function(data) {
+
+                        $('#message-text').val('');
+                    }); 
+                }
+             });   
+        });
 
  });
 </script>
