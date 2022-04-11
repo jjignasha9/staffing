@@ -254,13 +254,20 @@
                 <div class="flex items-center ">
                     <div id="back" class="flex items-center cursor-pointer">
                         <button>
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 font-bold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
                         <div id="message-user-name"></div>
                     </div>
-                    <input type="hidden" name="user-id" id="message-user-id">
+                       <input type="hidden" name="user-id" id="message-user-id">
+                </div>
+                <div>
+                    <button type="button" class="close flex text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -319,6 +326,10 @@
             $('#settings_box').toggle();
         });
 
+        $('.close').click(function() {
+        $('#message').hide();
+    });
+
         $(document).click(function(event) {
             var settings = $("#settings");
             
@@ -329,6 +340,16 @@
             var user = $("#user");
             if (!user.has(event.target).length) {
                 $('#user_box').hide(); 
+            }
+
+            var chatbutton = $(".chatbutton");
+            if (!chatbutton.has(event.target).length) {
+                $('#chatbox').hide();
+            }
+            
+            var chatbox = $("#chatbox");
+            if (!chatbox.has(event.target).length) {
+                $('#message').hide(); 
             }
         });
 
