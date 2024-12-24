@@ -18,7 +18,7 @@
                 </div>
             </div>   
         </div>
-
+    
         <div class="col-span-3 bg-white rounded-full text-center"> 
             <div class="grid grid-cols-12">
                 <div class="col-span-3 text-3xl rounded-l text-white h-full bg-blue-500 px-7 py-5">
