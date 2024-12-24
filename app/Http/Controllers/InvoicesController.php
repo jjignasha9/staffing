@@ -58,6 +58,7 @@ class InvoicesController extends Controller
         ->whereRaw('timesheets.client_id=rates.client_id')
         ->whereRaw('timesheets.employee_id = rates.employee_id')
         ->where('timesheets.is_invoiced', false)
+        ->where('timesheets.is_paid', true)
         ->get()
         ->groupBy('timesheet_id');
          return view('invoices.index',compact(['day_weekends','timesheets','active_day_weekend']));

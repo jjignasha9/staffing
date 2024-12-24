@@ -10,7 +10,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <h1 class="font-semibold mx-2">Pending Timesheets</h1>    
+                      <h1 class="font-semibold mx-2">Pending Timesheets</h1>
                  </div>
                  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-1">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -18,8 +18,8 @@
 
                           <table class="min-w-full divide-y divide-gray-200">
                               <thead class="bg-gray-50">
-                                 <tr>  
-                                    <th scope="col" class="px-6 py-3 text-left text-md font-medium text-gray-500 tracking-wider">Client</th>     
+                                 <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-md font-medium text-gray-500 tracking-wider">Client</th>
                                     <th scope="col" class="px-6 py-3 text-left text-md font-medium text-gray-500 tracking-wider">Temp</th>
                                     <th scope="col" class="px-6 py-3 text-left text-md font-medium text-gray-500 tracking-wider">Weekending date</th>
                                     <th scope="col" class="px-6 py-3 text-left text-md font-medium text-gray-500 tracking-wider">Total hours</th>
@@ -35,11 +35,11 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                               <div class="text-sm text-gray-900">{{ $timesheet->employee->name }}</div>
                                             </td>
-                                            
+
                                             <td class="px-6 py-4 whitespace-nowrap">
                                               <div class="text-sm text-gray-900">{{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d/y') }}</div>
                                             </td>
-                                            
+
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $timesheet->workdays->sum('total_hours') }} hrs</td>
                                         </tr>
                                     @endforeach
@@ -54,7 +54,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-700" viewBox="0 0 20 20" fill="currentColor">
                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                  </svg>
-                  <h1 class="font-semibold mx-2">Approved Timesheets</h1>    
+                  <h1 class="font-semibold mx-2">Approved Timesheets</h1>
                </div>
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-1">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -63,12 +63,12 @@
                            <table class="min-w-full divide-y divide-gray-200">
                                <thead class="bg-gray-50">
                                   <tr>
-                                    
+
                                   </tr>
                                </thead>
                                <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($approved_timesheets as $timesheet)
-                                       <tr class="hover:bg-gray-100">  
+                                       <tr class="hover:bg-gray-100">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                               <div class="text-sm text-gray-900">{{ Carbon\carbon::parse($timesheet->day_weekend)->format('m/d/y') }}</div>
                                             </td>
@@ -82,15 +82,15 @@
 
                                             <td class="py-4 whitespace-nowrap text-sm text-gray-500">
                                                 <div class="flex items-center">
-                                                    {{ $timesheet->total_hours }} hrs 
+                                                    {{ $timesheet->total_hours }} hrs
 
                                                     <a href="{{ route('timesheets.approved', $timesheet->day_weekend) }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                                        </svg> 
-                                                    </a> 
-                                                </div> 
-                                            </td>   
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                               </tbody>
@@ -100,7 +100,7 @@
                </div>
             </div>
         </div>
-        <div class="col-span-3">   
+        <div class="col-span-3">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mt-7 pl-4">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white p-3">
@@ -116,7 +116,7 @@
                         <div class="flex items-center justify-between">
                             <div class="py-2">{{ $user->email }}</div>
                             <div class="flex text-sm text-gray-500 justify-end items-center"><?php echo \Carbon\Carbon::createFromTimeStamp(strtotime($user->created_at))->diffForHumans() ?>
-                                
+
                             </div>
                         </div>
 
@@ -130,8 +130,7 @@
                         <div class="flex mb-4">
                             <h1 class="text-left text-md font-medium text-black-500 tracking-wider">Next holiday</h1>
                         </div>
-    
-                            <div>{{ $holidays->name }} - {{ Carbon\carbon::parse($holidays->date)->format('m/d/Y') }}</div>
+
                     </div>
                 </div>
            </div>
@@ -165,8 +164,8 @@
                     </div>
                 </div>
            </div> -->
-        </div> 
-   </div>   
+        </div>
+   </div>
 </div>
 
 @endsection
@@ -174,4 +173,4 @@
 @push('scripts')
 
 
-@endpush 
+@endpush

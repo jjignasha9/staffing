@@ -29,7 +29,8 @@
 		    		<div class="p-1 rounded-full w-auto text-center mr-10">
 		    			<span class="text-sm">NO INVOICED TIMESHEETS</span>		
 		    				@foreach($day_weekends as $day_weekend)
-							<a href="{{ route('invoices',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ $day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
+							<a href="{{ route('invoices',$day_weekend) }}" class="bg-white rounded-full py-1 px-4 text-sm mx-2 {{ 
+				$day_weekend == $active_day_weekend ? 'bg-teal-700 text-white' : '' }}">
 									{{ Carbon\carbon::parse($day_weekend)->format('m/d/Y') }}	
 							</a>
 					        @endforeach
